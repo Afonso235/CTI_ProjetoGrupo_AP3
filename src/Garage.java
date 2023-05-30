@@ -68,7 +68,7 @@ public class Garage {
 
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                String[] credentials = line.split(":"+"\n");
+                String[] credentials = line.split(":");
                 if (credentials.length == 2 && credentials[0].equals(username) && credentials[1].equals(password)) {
                     scanner.close();
                     return true;

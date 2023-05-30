@@ -1,6 +1,3 @@
-
-import java.io.File;
-
 public class User {
     private String login;
     private String password;
@@ -12,7 +9,7 @@ public class User {
         this.name = name;
     }
 
-public getUser(String login, String password) {
+public void getUser(String login, String password) {
 
 }
 
