@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class GestaoOficina {
     private static Garage garage;
     private static User currentUser;
+    private static GereUser user;
     private static Vehicle vehicle;
     private static Scanner scanner;
 
@@ -19,11 +20,11 @@ public class GestaoOficina {
 
 
         // Load data from file
-        garage.addUser(currentUser);
+        user.addUser(currentUser);
 
 
         // Verifica se existem utilizadores criados
-        if (garage.hasExistingUsersFile()) {
+        if (user.hasExistingUsersFile()) {
             System.out.println("O ficheiro ja contém utilizadores!");
             menuLogin();
         } else {
@@ -137,7 +138,7 @@ public class GestaoOficina {
         System.out.print("Registo\n");
         System.out.print("Nome: ");
         String name = scanner.next();
-        System.out.print("Login: ");
+        System.out.print("Username: ");
         String login = scanner.next();
         System.out.print("Password: ");
         String password = scanner.next();
@@ -154,7 +155,7 @@ public class GestaoOficina {
 
 
         User newUser = new User(login, password, name);
-        garage.addUser(newUser);
+        user.addUser(newUser);
     }
 
     private static boolean armazenarCredenciais(String login, String senha) {

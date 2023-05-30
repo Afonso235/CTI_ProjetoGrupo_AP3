@@ -1,3 +1,6 @@
+import java.io.File;
+import java.util.List;
+
 public class User {
     private String login;
     private String password;
@@ -25,6 +28,8 @@ public void getUser(String login, String password) {
                 ", password='" + password +
                 ", name='" + name;
     }
+
+
 
     // Getters e setters
 
