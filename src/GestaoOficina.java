@@ -33,9 +33,6 @@ public class GestaoOficina {
 
         menuLogic();
 
-        // Exibe mensagem de boas-vindas
-        System.out.println("Bem-vindo, " + currentUser.getName());
-
 
     }
 
@@ -68,8 +65,6 @@ public class GestaoOficina {
             }
         }
 
-        // Exibe mensagem de despedida
-        System.out.println("Adeus, " + currentUser.getName());
 
         // Fecha o scanner
         scanner.close();
@@ -79,6 +74,9 @@ public class GestaoOficina {
 
     private static void menuLogic() {
         // Menu principal
+
+        // Exibe mensagem de boas-vindas
+        System.out.println("Bem-vindo, " + currentUser.getName());
 
         boolean exit = false;
         while (!exit) {
@@ -99,6 +97,8 @@ public class GestaoOficina {
                     //listingsAndSearches();
                     break;
                 case 4:
+                    // Exibe mensagem de despedida
+                    System.out.println("Adeus, " + currentUser.getName());
                     // Terminar a aplicação
                     garage.writeDataToFile();
                     exit = true;
@@ -129,6 +129,7 @@ public class GestaoOficina {
             menuLogin();
         } else {
             System.out.println("Authentication successful!");
+            menuLogic();
         }
     }
 

@@ -20,11 +20,10 @@ public void getUser(String login, String password) {
 
     @Override
     public String toString() {
-        return "User{" +
-                "login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", name='" + name + '\'' +
-                '}';
+        return "User -> " +
+                "login='" + login +
+                ", password='" + password +
+                ", name='" + name;
     }
 
     // Getters e setters
