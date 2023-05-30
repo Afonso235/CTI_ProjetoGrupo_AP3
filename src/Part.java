@@ -1,4 +1,3 @@
-package Projeto1;
 
 public class Part {
     private String code;
