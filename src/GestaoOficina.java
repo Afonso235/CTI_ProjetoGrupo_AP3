@@ -15,6 +15,7 @@ public class GestaoOficina {
         garage = new Garage();
         currentUser = new User();
         vehicle = new Vehicle();
+        user = new GereUser();
 
         garage.readDataFromFile();
 

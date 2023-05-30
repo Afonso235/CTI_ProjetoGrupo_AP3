@@ -6,7 +6,7 @@ public class GereUser {
 
     private List<User> users;
 
-    public GereUser(List<User> users) {
+    public GereUser() {
         users = new ArrayList<>();
     }
 
