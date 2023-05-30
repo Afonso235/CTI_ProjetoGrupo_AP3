@@ -12,6 +12,9 @@ public class User {
         this.name = name;
     }
 
+public getUser(String login, String password) {
+
+}
 
     public User() {
         this.name = name;

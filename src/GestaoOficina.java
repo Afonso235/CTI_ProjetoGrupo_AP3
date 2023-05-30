@@ -145,6 +145,7 @@ public class GestaoOficina {
         if (armazenarCredenciais(login, password)) {
             System.out.println("Credenciais armazenadas com sucesso!");
             // Restante da lógica da sua aplicação
+            login();
         } else {
             System.out.println("Erro ao armazenar as credenciais.");
             // Lógica para lidar com o erro de armazenamento das credenciais
