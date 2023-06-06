@@ -1,5 +1,4 @@
-
-public class Peca {
+class Peca {
     private String codigo;
     private String designacao;
     private String marca;
@@ -8,7 +7,8 @@ public class Peca {
     private double preco;
     private Fornecedor fornecedor;
 
-    public Peca(String codigo, String designacao, String marca, String categoria, int quantidadeEmStock, double preco, Fornecedor fornecedor) {
+    public Peca(String codigo, String designacao, String marca, String categoria, int quantidadeEmStock,
+                double preco, Fornecedor fornecedor) {
         this.codigo = codigo;
         this.designacao = designacao;
         this.marca = marca;
@@ -18,18 +18,5 @@ public class Peca {
         this.fornecedor = fornecedor;
     }
 
-    // getters e setters
-
-    @Override
-    public String toString() {
-        return "Peca{" +
-                "codigo='" + codigo + '\'' +
-                ", designacao='" + designacao + '\'' +
-                ", marca='" + marca + '\'' +
-                ", categoria='" + categoria + '\'' +
-                ", quantidadeEmStock=" + quantidadeEmStock +
-                ", preco=" + preco +
-                ", fornecedor=" + fornecedor +
-                '}';
-    }
+    // Getters e setters
 }

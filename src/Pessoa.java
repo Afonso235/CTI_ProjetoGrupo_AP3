@@ -45,13 +45,4 @@
             this.contactoTelefonico = contactoTelefonico;
         }
 
-        @Override
-        public String toString() {
-            return "Pessoa{" +
-                    "nome='" + nome + '\'' +
-                    ", nif='" + nif + '\'' +
-                    ", morada='" + morada + '\'' +
-                    ", contactoTelefonico='" + contactoTelefonico + '\'' +
-                    '}';
-        }
     }

@@ -14,7 +14,6 @@ public class Oficina {
         fornecedores = new ArrayList<>();
     }
 
-    // métodos para gerir a oficina, como adicionar/utilizar/utilizar utilizadores, veículos, peças e fornecedores
     public void adicionarUtilizador(Utilizador utilizador) {
         utilizadores.add(utilizador);
     }
@@ -47,13 +46,4 @@ public class Oficina {
         return fornecedores;
     }
 
-    @Override
-    public String toString() {
-        return "Oficina{" +
-                "utilizadores=" + utilizadores +
-                ", veiculos=" + veiculos +
-                ", pecas=" + pecas +
-                ", fornecedores=" + fornecedores +
-                '}';
-    }
 }

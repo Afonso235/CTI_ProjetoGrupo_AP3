@@ -1,5 +1,7 @@
-public class Mecanico extends Utilizador {
-    public Mecanico(Pessoa pessoa) {
-        super(pessoa);
+class Mecanico extends Utilizador {
+    public Mecanico(String login, String password, String nome, boolean ativo, String email) {
+        super(login, password, nome, ativo, email, TipoUtilizador.MECANICO);
     }
+
+    // Outros métodos específicos para Mecanico
 }
