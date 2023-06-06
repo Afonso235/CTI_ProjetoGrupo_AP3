@@ -19,4 +19,17 @@ public class Peca {
     }
 
     // getters e setters
+
+    @Override
+    public String toString() {
+        return "Peca{" +
+                "codigo='" + codigo + '\'' +
+                ", designacao='" + designacao + '\'' +
+                ", marca='" + marca + '\'' +
+                ", categoria='" + categoria + '\'' +
+                ", quantidadeEmStock=" + quantidadeEmStock +
+                ", preco=" + preco +
+                ", fornecedor=" + fornecedor +
+                '}';
+    }
 }

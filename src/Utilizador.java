@@ -11,4 +11,10 @@ public class Utilizador {
         return pessoa;
     }
 
+    @Override
+    public String toString() {
+        return "Utilizador{" +
+                "pessoa=" + pessoa +
+                '}';
+    }
 }

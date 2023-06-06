@@ -47,4 +47,13 @@ public class Oficina {
         return fornecedores;
     }
 
+    @Override
+    public String toString() {
+        return "Oficina{" +
+                "utilizadores=" + utilizadores +
+                ", veiculos=" + veiculos +
+                ", pecas=" + pecas +
+                ", fornecedores=" + fornecedores +
+                '}';
+    }
 }
