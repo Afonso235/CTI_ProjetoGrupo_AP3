@@ -4,20 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="77c9f258-7ca2-44c5-9da7-f8eb17bab1d6" name="Changes" comment="delete main">
-      <change afterPath="$PROJECT_DIR$/src/Servico.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/SubTarefa.java" afterDir="false" />
+    <list default="true" id="77c9f258-7ca2-44c5-9da7-f8eb17bab1d6" name="Changes" comment="classes todas">
+      <change afterPath="$PROJECT_DIR$/src/GereUtilizadores.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cliente.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Fornecedor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Fornecedor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Gestor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gestor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Mecanico.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Mecanico.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Oficina.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Oficina.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Peca.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Peca.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Pessoa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pessoa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Pessoa.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Utilizador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilizador.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Veiculo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Veiculo.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +55,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="GestaoOficina" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="GestaoOficina" />
       <module name="CTI_Prog_2023_AP3" />
@@ -69,8 +63,16 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="CTI_Prog_2023_AP3" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="Application.GestaoOficina" />
       </list>
     </recent_temporary>
@@ -99,7 +101,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685457818907</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="classes todas">
+      <created>1686065386875</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1686065386875</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -119,6 +128,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="delete main" />
     <MESSAGE value="cena" />
-    <option name="LAST_COMMIT_MESSAGE" value="cena" />
+    <MESSAGE value="classes todas" />
+    <option name="LAST_COMMIT_MESSAGE" value="classes todas" />
   </component>
 </project>

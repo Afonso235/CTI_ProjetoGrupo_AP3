@@ -3,5 +3,4 @@ class Mecanico extends Utilizador {
         super(login, password, nome, ativo, email, TipoUtilizador.MECANICO);
     }
 
-    // Outros métodos específicos para Mecanico
 }
