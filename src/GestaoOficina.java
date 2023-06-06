@@ -18,6 +18,7 @@ public class GestaoOficina {
         currentUser = new User();
         vehicle = new Vehicle();
         user = new GereUser();
+        file = new FileIO();
 
         file.readDataFromFile();
 
