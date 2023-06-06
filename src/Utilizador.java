@@ -6,6 +6,9 @@ public class Utilizador {
         this.pessoa = pessoa;
     }
 
-    // getters e setters
+    // gettes e setters
+    public Pessoa getPessoa() {
+        return pessoa;
+    }
 
 }
