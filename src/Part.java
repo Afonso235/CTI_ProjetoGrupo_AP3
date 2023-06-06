@@ -20,15 +20,14 @@ public class Part {
 
     @Override
     public String toString() {
-        return "Part{" +
+        return "Part -> \n" +
                 "code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 ", brand='" + brand + '\'' +
                 ", category='" + category + '\'' +
                 ", stockQuantity=" + stockQuantity +
                 ", price=" + price +
-                ", supplier='" + supplier + '\'' +
-                '}';
+                ", supplier='" + supplier;
     }
 
     // Getters e setters

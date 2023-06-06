@@ -9,6 +9,8 @@ public class GestaoOficina {
     private static GereUser user;
     private static Vehicle vehicle;
     private static Scanner scanner;
+    private static FileIO file;
+    private static GereVehicle gVehicle;
 
     public static void main(String[] args) {
         scanner = new Scanner(System.in);
@@ -17,7 +19,7 @@ public class GestaoOficina {
         vehicle = new Vehicle();
         user = new GereUser();
 
-        garage.readDataFromFile();
+        file.readDataFromFile();
 
 
         // Load data from file
@@ -39,8 +41,6 @@ public class GestaoOficina {
     }
 
     private static void menuLogin() {
-
-
         boolean exit = false;
         while (!exit) {
             System.out.println("----- Menu Login -----");
@@ -51,62 +51,39 @@ public class GestaoOficina {
             int choice = getUserChoice();
 
             switch (choice) {
-                case 1:
-                    login();
-                    break;
-                case 2:
-                    createUser();
-                    break;
-                case 3:
+                case 1 -> login();
+                case 2 -> createUser();
+                case 3 -> {
                     // Terminar a aplicação
-                    garage.writeDataToFile();
+                    file.writeDataToFile();
                     exit = true;
-                    break;
-                default:
-                    System.out.println("Opção inválida. Tente novamente.");
+                }
+                default -> System.out.println("Opção inválida. Tente novamente.");
             }
         }
-
-
         // Fecha o scanner
         scanner.close();
-
     }
 
 
     private static void menuLogic() {
         // Menu principal
-
         // Exibe mensagem de boas-vindas
         System.out.println("Bem-vindo, " + currentUser.getName());
-
         boolean exit = false;
         while (!exit) {
             displayMainMenu();
             int choice = getUserChoice();
-
             switch (choice) {
-                case 1:
-                    // Gestão de veículos
-                    vehicleManagement();
-                    break;
-                case 2:
-                    // Gestão de serviços
-                    serviceManagement();
-                    break;
-                case 3:
-                    // Listagens e pesquisas
-                    //listingsAndSearches();
-                    break;
-                case 4:
-                    // Exibe mensagem de despedida
-                    System.out.println("Adeus, " + currentUser.getName());
+                case 1 -> vehicleManagement();
+                case 2 -> serviceManagement();
+               // case 3 -> listingsAndSearches();
+                case 4 -> {
                     // Terminar a aplicação
-                    garage.writeDataToFile();
+                    file.writeDataToFile();
                     exit = true;
-                    break;
-                default:
-                    System.out.println("Opção inválida. Tente novamente.");
+                }
+                default -> System.out.println("Opção inválida. Tente novamente.");
             }
         }
 
@@ -118,12 +95,12 @@ public class GestaoOficina {
     }
 
     private static void login() {
-        System.out.print("Login: ");
+        System.out.print("Username: ");
         String login = scanner.next();
         System.out.print("Password: ");
         String password = scanner.next();
 
-        boolean isAuthenticated = garage.authenticateUser(login, password);
+        boolean isAuthenticated = currentUser.authenticateUser(login, password);
 
         // If the authentication fails, prompt for credentials again
         if (!isAuthenticated) {
@@ -155,7 +132,7 @@ public class GestaoOficina {
         }
 
 
-        User newUser = new User(login, password, name);
+        User newUser = new User();
         user.addUser(newUser);
     }
 
@@ -201,44 +178,39 @@ public class GestaoOficina {
             int choice = getUserChoice();
 
             switch (choice) {
-                case 1:
-                    createVehicle();
-                    break;
-                case 2:
-                    deleteVehicle();
-                    break;
-                case 3:
-                    garage.writeDataToFile();
+                case 1 -> createVehicle();
+                case 2 -> deleteVehicle();
+                case 3 -> {
+                    file.writeDataToFile();
                     exit = true;
-                    break;
-                default:
-                    System.out.println("Opção inválida. Tente novamente.");
+                }
+                default -> System.out.println("Opção inválida. Tente novamente.");
             }
         }
     }
 
     private static void createVehicle() {
-        System.out.print("Cliente: "+ vehicle.getClient());
-        System.out.print("Matrícula: ");
+        System.out.println("Cliente: "+ vehicle.getClient());
+        System.out.println("Matrícula: ");
         String licensePlate = scanner.next();
-        System.out.print("Marca: ");
+        System.out.println("Marca: ");
         String brand = scanner.next();
-        System.out.print("Modelo: ");
+        System.out.println("Modelo: ");
         String model = scanner.next();
-        System.out.print("Ano: ");
+        System.out.println("Ano: ");
         int year = scanner.nextInt();
         scanner.next(); // Limpar a nova linha pendente
-        System.out.print("Número de chassi: ");
+        System.out.println("Número de chassi: ");
         String chassisNumber = scanner.next();
 
-        garage.createVehicle(vehicle.getClient(), licensePlate, brand, model, year, chassisNumber);
+        gVehicle.createVehicle(vehicle.getClient(), licensePlate, brand, model, year, chassisNumber);
     }
 
     private static void deleteVehicle() {
         System.out.print("Matrícula do veículo a eliminar: ");
         String licensePlate = scanner.next();
 
-        garage.deleteVehicleByLicensePlate(licensePlate);
+        gVehicle.deleteVehicleByLicensePlate(licensePlate);
     }
 
 
@@ -249,18 +221,13 @@ public class GestaoOficina {
             int choice = getUserChoice();
 
             switch (choice) {
-                case 1:
-                    Service.createService(scanner, garage);
-                    break;
-                case 2:
-                    Service.updateServiceStatus(scanner, garage);
-                    break;
-                case 3:
-                    garage.writeDataToFile();
+                case 1 -> Service.createService(scanner, garage);
+                case 2 -> Service.updateServiceStatus(scanner, garage);
+                case 3 -> {
+                    file.writeDataToFile();
                     exit = true;
-                    break;
-                default:
-                    System.out.println("Opção inválida. Tente novamente.");
+                }
+                default -> System.out.println("Opção inválida. Tente novamente.");
             }
         }
 

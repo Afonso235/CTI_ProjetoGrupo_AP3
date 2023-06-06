@@ -32,15 +32,14 @@ public class Vehicle {
 
     @Override
     public String toString() {
-        return "Vehicle{" +
-                "client='" + client + '\'' +
-                ", licensePlate='" + licensePlate + '\'' +
-                ", brand='" + brand + '\'' +
-                ", model='" + model + '\'' +
-                ", year=" + year +
-                ", chassisNumber='" + chassisNumber + '\'' +
-                ", services=" + services +
-                '}';
+        return "Vehicle: " +
+                "client= " + client + '\'' +
+                ", licensePlate= " + licensePlate + '\'' +
+                ", brand= " + brand + '\'' +
+                ", model= " + model + '\'' +
+                ", year= " + year +
+                ", chassisNumber= " + chassisNumber + '\'' +
+                ", services= " + services;
     }
 
     // Getters e setters

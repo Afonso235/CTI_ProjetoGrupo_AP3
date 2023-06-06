@@ -36,83 +36,8 @@ public class Garage {
         return false;
     }
 
-    public boolean authenticateUser(String username, String password) {
-        try {
-            File file = new File("credenciais_acesso.txt");
-            if (!file.exists()) {
-                file.createNewFile();
-                System.out.println("Ficheiro criado com sucesso!");
-            }
-            System.out.println("Ficheiro existe na base de dados!");
-            Scanner scanner = new Scanner(file);
-
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                String[] credentials = line.split(":");
-                if (credentials.length == 2 && credentials[0].equals(username) && credentials[1].equals(password)) {
-                    scanner.close();
-                    return true;
-                }
-            }
-
-            scanner.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return false;
-    }
 
 
-    public void readDataFromFile() {
-        try {
-            File file = new File("dados_apl.dat");
-            if (file.exists()) {
-                FileInputStream fileInputStream = new FileInputStream(file);
-                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-                // Lógica para ler os objetos do arquivo
-
-                objectInputStream.close();
-                System.out.println("Dados lidos com sucesso.");
-            } else {
-                System.out.println("O arquivo de dados não está disponível.");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void writeDataToFile() {
-        try {
-            FileOutputStream fileOutputStream = new FileOutputStream("dados_apl.dat");
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            // Lógica para escrever os objetos no arquivo
-
-            objectOutputStream.close();
-            System.out.println("Dados salvos com sucesso.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public void createVehicle(int client, String licensePlate, String brand, String model, int year, String chassisNumber) {
-        Vehicle newVehicle = new Vehicle(client, licensePlate, brand, model, year, chassisNumber);
-        vehicles.add(newVehicle);
-        System.out.println("Novo veículo criado com sucesso!");
-    }
-
-    public boolean deleteVehicleByLicensePlate(String licensePlate) {
-        for (Vehicle vehicle : vehicles) {
-            if (vehicle.getLicensePlate().equals(licensePlate)) {
-                vehicles.remove(vehicle);
-                System.out.println("Veículo eliminado com sucesso!");
-                return true;
-            }
-        }
-        System.out.println("Veículo não encontrado. Verifique a matrícula e tente novamente.");
-        return false;
-    }
 
     // Métodos para gestão dos veículos
     public void addVehicle(Vehicle vehicle) {
