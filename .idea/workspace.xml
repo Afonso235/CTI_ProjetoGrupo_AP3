@@ -4,14 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="77c9f258-7ca2-44c5-9da7-f8eb17bab1d6" name="Changes" comment="classes todas">
-      <change afterPath="$PROJECT_DIR$/src/GereUtilizadores.java" afterDir="false" />
+    <list default="true" id="77c9f258-7ca2-44c5-9da7-f8eb17bab1d6" name="Changes" comment="pontos R1 R2 R3 R5 R7 R8 feitos">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Fornecedor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Fornecedor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Mecanico.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Mecanico.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Pessoa.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Utilizador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilizador.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +27,19 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="9bb8a007-b806-4729-8469-3ca4d484749c" />
+        <option name="url" value="https://github.com/Afonso235/CTI_ProjetoGrupo_AP3.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -108,7 +115,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686065386875</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="pontos R1 R2 R3 R5 R7 R8 feitos">
+      <created>1686070657050</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1686070657050</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -129,6 +143,7 @@
     <MESSAGE value="delete main" />
     <MESSAGE value="cena" />
     <MESSAGE value="classes todas" />
-    <option name="LAST_COMMIT_MESSAGE" value="classes todas" />
+    <MESSAGE value="pontos R1 R2 R3 R5 R7 R8 feitos" />
+    <option name="LAST_COMMIT_MESSAGE" value="pontos R1 R2 R3 R5 R7 R8 feitos" />
   </component>
 </project>
