@@ -5,7 +5,6 @@ class Utilizador {
     private boolean ativo;
     private String email;
     private TipoUtilizador tipo;
-
     private String nif;
     private String morada;
     private String contactoTelefonico;
