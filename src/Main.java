@@ -113,7 +113,14 @@ public class Main {
                     int opcao = lerOpcao();
                     switch (opcao){
                         case 1:
-                            //funcao para alterar cenas
+                            System.out.println("Insira a nova Password: ");
+                            String newPassword = scanner.nextLine();
+                            System.out.println("Insira o novo Nome: ");
+                            String newNome = scanner.nextLine();
+                            System.out.println("Insira o novo Email");
+                            String newEmail = scanner.nextLine();
+
+                            gereUtilizadores.alterarInfos(utilizadorAutenticado.getLogin(), newPassword, newNome, newEmail);
                             break;
                         case 0:
                             xau = true;

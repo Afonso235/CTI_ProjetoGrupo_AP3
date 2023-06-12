@@ -86,4 +86,22 @@ public class GereUtilizadores {
             System.out.println("Erro ao salvar as credenciais de acesso.");
         }
     }
+
+
+    public void alterarInfos(String login, String aPassword, String aNome, String aEmail){
+
+        for(int i = 0; i < utilizadores.size(); i++){
+            Utilizador utilizador = utilizadores.get(i);
+            if(utilizador.getLogin().equals(login)){
+                utilizador.setPassword(aPassword);
+                utilizador.setNome(aNome);
+                utilizador.setEmail(aEmail);
+                salvarCredenciais();
+                System.out.println("Dados guardados com sucesso!");
+                return;
+            }
+        }
+        System.out.println("Utilizador inexistente!");
+
+    }
 }
