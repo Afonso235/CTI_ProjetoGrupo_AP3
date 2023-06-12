@@ -16,8 +16,6 @@ class Utilizador {
         this.ativo = ativo;
         this.email = email;
         this.tipo = tipo;
-
-
     }
 
     public Utilizador(String nome, String nif, String morada, String contactoTelefonico) {
