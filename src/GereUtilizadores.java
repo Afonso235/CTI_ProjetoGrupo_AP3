@@ -1,14 +1,21 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class GereUtilizadores {
     private List<Utilizador> utilizadores;
+    private static Scanner scanner;
+
     private String nomeArquivoCredenciais = "credenciais_acesso.txt";
 
     public GereUtilizadores() {
         this.utilizadores = new ArrayList<>();
         carregarCredenciais();
+    }
+
+    public List<Utilizador> getUtilizadores() {
+        return utilizadores;
     }
 
     public void criarConta(String login, String password, String nome, boolean ativo, String email, TipoUtilizador tipo) {
@@ -36,7 +43,10 @@ public class GereUtilizadores {
         return resultado;
     }
 
-    private void carregarCredenciais() {
+
+
+
+    public void carregarCredenciais() {
         try {
             File arquivo = new File(nomeArquivoCredenciais);
             if (arquivo.exists()) {
@@ -70,6 +80,8 @@ public class GereUtilizadores {
             }
             writer.close();
             System.out.println("Credenciais guardadas com sucesso no ficheiro!");
+
+
         } catch (IOException e) {
             System.out.println("Erro ao salvar as credenciais de acesso.");
         }

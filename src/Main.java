@@ -9,32 +9,46 @@ public class Main {
         gereUtilizadores = new GereUtilizadores();
         scanner = new Scanner(System.in);
         boolean sair = false;
-        while (!sair) {
-            exibirMenuPrincipal();
-            int opcao = lerOpcao();
 
-            switch (opcao) {
-                case 1:
-                    criarConta();
-                    break;
+        if (gereUtilizadores.getUtilizadores() == null || gereUtilizadores.getUtilizadores().isEmpty()) {
+            System.out.println("Nenhum utilizador encontrado, por favor criar conta!");
+            criarConta();
+    } else {
 
-                case 2:
-                    utilizadorAutenticado = fazerLogin(); // Armazena o utilizador autenticado na variável global
-                    break;
+            while (!sair) {
+                exibirMenuPrincipal();
+                int opcao = lerOpcao();
 
-                case 0:
-                    sair = true;
-                    break;
+                switch (opcao) {
+                    case 1:
+                        criarConta();
+                        break;
 
-                default:
-                    System.out.println("Opção inválida. Tente novamente.");
+                    case 2:
+                        utilizadorAutenticado = fazerLogin(); // Armazena o utilizador autenticado na variável global
+                        break;
+
+                    case 0:
+                        sair = true;
+                        break;
+
+                    default:
+                        System.out.println("Opção inválida. Tente novamente.");
+                }
+
             }
-
-        }    if (utilizadorAutenticado != null) {
-            System.out.println("Adeus " + utilizadorAutenticado.getLogin());
-        } else {
-            System.out.println("Adeus!");
+            if (utilizadorAutenticado != null) {
+                System.out.println("Adeus " + utilizadorAutenticado.getLogin());
+            } else {
+                System.out.println("Adeus!");
+            }
         }
+    }
+
+    static int lerOpcao() {
+        int opcao = scanner.nextInt();
+        scanner.nextLine();
+        return opcao;
     }
 
     private static void exibirMenuPrincipal() {
@@ -45,13 +59,7 @@ public class Main {
         System.out.print("Opção: ");
     }
 
-    private static int lerOpcao() {
-        int opcao = scanner.nextInt();
-        scanner.nextLine();
-        return opcao;
-    }
-
-    private static void criarConta() {
+    public static void criarConta() {
 
         System.out.println("===== Tipo Conta =====");
         System.out.println("1. Cliente");
@@ -72,17 +80,19 @@ public class Main {
 
         switch (tipo){
             case 1: gereUtilizadores.criarConta(login, password, nome, false, email, TipoUtilizador.CLIENTE);
-                    System.out.println("Conta de cliente criada com sucesso!");
-                    break;
+                System.out.println("Conta de cliente criada com sucesso!");
+                break;
             case 2: gereUtilizadores.criarConta(login, password, nome, false, email, TipoUtilizador.MECANICO);
-                    System.out.println("Conta de mecanico criada com sucesso!");
-                    break;
+                System.out.println("Conta de mecanico criada com sucesso!");
+                break;
             case 3: gereUtilizadores.criarConta(login, password, nome, false, email, TipoUtilizador.GESTOR);
-                    System.out.println("Conta de gestor criada com sucesso!");
-                    break;
+                System.out.println("Conta de gestor criada com sucesso!");
+                break;
         }
 
     }
+
+
 
 
     private static Utilizador fazerLogin() {
