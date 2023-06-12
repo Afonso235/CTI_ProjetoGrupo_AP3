@@ -5,44 +5,25 @@ public class Main {
     private static Scanner scanner;
     private static Utilizador utilizadorAutenticado;
 
+
     public static void main(String[] args) {
         gereUtilizadores = new GereUtilizadores();
         scanner = new Scanner(System.in);
-        boolean sair = false;
 
-        if (gereUtilizadores.getUtilizadores() == null || gereUtilizadores.getUtilizadores().isEmpty()) {
-            System.out.println("Nenhum utilizador encontrado, por favor criar conta!");
-            criarConta();
-    } else {
+        realizarOperacoes();
 
-            while (!sair) {
-                exibirMenuPrincipal();
-                int opcao = lerOpcao();
-
-                switch (opcao) {
-                    case 1:
-                        criarConta();
-                        break;
-
-                    case 2:
-                        utilizadorAutenticado = fazerLogin(); // Armazena o utilizador autenticado na variável global
-                        break;
-
-                    case 0:
-                        sair = true;
-                        break;
-
-                    default:
-                        System.out.println("Opção inválida. Tente novamente.");
-                }
-
-            }
-            if (utilizadorAutenticado != null) {
-                System.out.println("Adeus " + utilizadorAutenticado.getLogin());
-            } else {
-                System.out.println("Adeus!");
-            }
+        if (utilizadorAutenticado != null) {
+            System.out.println("Adeus " + utilizadorAutenticado.getLogin());
+        } else {
+            System.out.println("Adeus!");
         }
+    }
+
+    private static void exibirMenuUtilizador() {
+        System.out.println("===== Menu Cenas =====");
+        System.out.println("1. Alterar Dados");
+        System.out.println("0. xau");
+        System.out.print("Opção: ");
     }
 
     static int lerOpcao() {
@@ -78,21 +59,22 @@ public class Main {
         System.out.print("Email: ");
         String email = scanner.nextLine();
 
-        switch (tipo){
-            case 1: gereUtilizadores.criarConta(login, password, nome, false, email, TipoUtilizador.CLIENTE);
+        switch (tipo) {
+            case 1:
+                gereUtilizadores.criarConta(login, password, nome, false, email, TipoUtilizador.CLIENTE);
                 System.out.println("Conta de cliente criada com sucesso!");
                 break;
-            case 2: gereUtilizadores.criarConta(login, password, nome, false, email, TipoUtilizador.MECANICO);
+            case 2:
+                gereUtilizadores.criarConta(login, password, nome, false, email, TipoUtilizador.MECANICO);
                 System.out.println("Conta de mecanico criada com sucesso!");
                 break;
-            case 3: gereUtilizadores.criarConta(login, password, nome, false, email, TipoUtilizador.GESTOR);
+            case 3:
+                gereUtilizadores.criarConta(login, password, nome, false, email, TipoUtilizador.GESTOR);
                 System.out.println("Conta de gestor criada com sucesso!");
                 break;
         }
 
     }
-
-
 
 
     private static Utilizador fazerLogin() {
@@ -112,4 +94,57 @@ public class Main {
         }
         return utilizador;
     }
+
+    private static void realizarOperacoes() {
+
+        boolean sair = false;
+        boolean xau = false;
+
+        while (gereUtilizadores.getUtilizadores() == null || gereUtilizadores.getUtilizadores().isEmpty()) {
+            System.out.println("Nenhum utilizador encontrado, por favor criar conta!");
+            criarConta();
+        }
+
+        while (!sair) {
+
+            if(utilizadorAutenticado != null){
+                while(!xau){
+                    exibirMenuUtilizador();
+                    int opcao = lerOpcao();
+                    switch (opcao){
+                        case 1:
+                            //funcao para alterar cenas
+                            break;
+                        case 0:
+                            xau = true;
+                            break;
+                        default:
+                            System.out.println("Opção inválida. Tente novamente.");
+                    }
+                }
+            }
+            exibirMenuPrincipal();
+            int opcao = lerOpcao();
+
+            switch (opcao) {
+                case 1:
+                    criarConta();
+                    break;
+
+                case 2:
+                    utilizadorAutenticado = fazerLogin(); // Armazena o utilizador autenticado na variável global
+                    break;
+
+                case 0:
+                    sair = true;
+                    break;
+
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+            }
+
+        }
+    }
+
 }
+
