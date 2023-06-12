@@ -54,6 +54,7 @@ public class GereUtilizadores {
                     }
                 }
                 reader.close();
+                System.out.println("Credenciais carregadas com sucesso!");
             }
         } catch (IOException e) {
             System.out.println("Erro ao carregar as credenciais de acesso.");
@@ -68,6 +69,7 @@ public class GereUtilizadores {
                 writer.write(linha + System.lineSeparator());
             }
             writer.close();
+            System.out.println("Credenciais guardadas com sucesso no ficheiro!");
         } catch (IOException e) {
             System.out.println("Erro ao salvar as credenciais de acesso.");
         }
