@@ -65,12 +65,18 @@ public class Main {
             boolean ativo = true; // Default value for 'ativo' is true
 
             switch (tipo) {
-                case 1, 2 -> ativo = false; // Set 'ativo' to false for client accounts
-                case 3 -> System.out.println("Conta de gestor criada com sucesso!");
+                case 1, 2 -> ativo = false;
+                case 3 -> {
+                    System.out.println("Conta de gestor criada com sucesso!");
+                    Utilizador gestor = new Utilizador(login, password, nome, true, email, TipoUtilizador.fromInt(tipo));
+                    gereUtilizadores.getUtilizadores().add(gestor);
+                    gereUtilizadores.salvarCredenciais();
+                }
                 default -> System.out.println("Opção inválida. Tente novamente.");
             }
             if (tipo != 3) {
-                gereUtilizadores.criarConta(login, password, nome, email, TipoUtilizador.fromInt(tipo));
+                gereUtilizadores.criarConta(login, password, nome ,email, TipoUtilizador.fromInt(tipo));
+                utilizadorAutenticado.setAtivo(false);
                 System.out.println("Precisa de ter a sua conta ativada para poder usufruir da aplicação na totalidade!");
                 mostrarDespedida();
                 sair = true;
@@ -79,6 +85,7 @@ public class Main {
             }
         }
     }
+
 
     public static void exibirMenuGestor() {
         boolean sair = false;

@@ -54,7 +54,6 @@ public class GereUtilizadores {
         salvarCredenciais();
     }
 
-
     public Utilizador login(String login, String password) {
         return utilizadores.stream()
                 .filter(utilizador -> utilizador.getLogin().equals(login) && utilizador.getPassword().equals(password))
@@ -72,14 +71,18 @@ public class GereUtilizadores {
         try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivoCredenciais))) {
             utilizadores = reader.lines()
                     .map(linha -> linha.split(":"))
-                    .filter(partes -> partes.length == 3)
-                    .map(partes -> new Utilizador(partes[0], partes[1], "", true, "", TipoUtilizador.valueOf(partes[2])))
+                    .filter(partes -> partes.length == 4) // Verificar se a linha possui 4 partes
+                    .map(partes -> {
+                        boolean ativo = Boolean.parseBoolean(partes[3]);
+                        return new Utilizador(partes[0], partes[1], "", ativo, "", TipoUtilizador.valueOf(partes[2]));
+                    })
                     .collect(Collectors.toList());
             System.out.println("Credenciais carregadas com sucesso!");
         } catch (IOException e) {
             System.out.println("Erro ao carregar as credenciais de acesso.");
         }
     }
+
     public Utilizador encontrarUtilizadorPorLogin(String login) {
         for (Utilizador utilizador : utilizadores) {
             if (utilizador.getLogin().equals(login)) {
@@ -92,23 +95,35 @@ public class GereUtilizadores {
     public void definirAtivo(String login, boolean ativo) {
         Utilizador utilizador = encontrarUtilizadorPorLogin(login);
         if (utilizador != null) {
-            if (utilizador.getTipo() != TipoUtilizador.GESTOR) {
-                utilizador.setAtivo(ativo);
-                salvarCredenciais();
-                System.out.println("Status de ativação do utilizador '" + login + "' atualizado com sucesso!");
-            } else {
-                System.out.println("O gestor não precisa esperar pela ativação da conta.");
+            utilizador.setAtivo(ativo);
+            salvarCredenciais();
+            System.out.println("Status de ativação do utilizador '" + login + "' atualizado com sucesso!");
+
+            try {
+                List<String> linhas = Files.readAllLines(Path.of(nomeArquivoCredenciais));
+                for (int i = 0; i < linhas.size(); i++) {
+                    String linha = linhas.get(i);
+                    String[] partes = linha.split(":");
+                    if (partes.length == 4 && partes[0].equals(login)) {
+                        partes[3] = String.valueOf(ativo);
+                        linhas.set(i, String.join(":", partes));
+                        break;
+                    }
+                }
+                Files.write(Path.of(nomeArquivoCredenciais), linhas, StandardOpenOption.WRITE);
+            } catch (IOException e) {
+                System.out.println("Erro ao atualizar o status de ativação no arquivo.");
             }
         } else {
             System.out.println("Utilizador não encontrado!");
         }
     }
 
-
-    private void salvarCredenciais() {
-        try (BufferedWriter writer = Files.newBufferedWriter(Path.of(nomeArquivoCredenciais), StandardOpenOption.CREATE)) {
+    public void salvarCredenciais() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivoCredenciais))) {
             for (Utilizador utilizador : utilizadores) {
-                String linha = utilizador.getLogin() + ":" + utilizador.getPassword() + ":" + utilizador.getTipo();
+                String linha = utilizador.getLogin() + ":" + utilizador.getPassword() + ":" +
+                        utilizador.getTipo().toString() + ":" + utilizador.isAtivo();
                 writer.write(linha);
                 writer.newLine();
             }
