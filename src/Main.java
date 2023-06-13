@@ -5,13 +5,14 @@ public class Main {
     private static Scanner scanner;
     private static Utilizador utilizadorAutenticado;
 
-
     public static void main(String[] args) {
         gereUtilizadores = new GereUtilizadores();
         scanner = new Scanner(System.in);
 
         realizarOperacoes();
+    }
 
+    private static void mostrarDespedida() {
         if (utilizadorAutenticado != null) {
             System.out.println("Adeus " + utilizadorAutenticado.getLogin());
         } else {
@@ -72,10 +73,11 @@ public class Main {
                 gereUtilizadores.criarConta(login, password, nome, false, email, TipoUtilizador.GESTOR);
                 System.out.println("Conta de gestor criada com sucesso!");
                 break;
+            default:
+                System.out.println("Opção inválida. Tente novamente.");
         }
 
     }
-
 
     private static Utilizador fazerLogin() {
         System.out.println("===== Fazer Login =====");
@@ -106,7 +108,6 @@ public class Main {
         }
 
         while (!sair) {
-
             if(utilizadorAutenticado != null){
                 while(!xau){
                     exibirMenuUtilizador();
@@ -123,6 +124,7 @@ public class Main {
                             gereUtilizadores.alterarInfos(utilizadorAutenticado.getLogin(), newPassword, newNome, newEmail);
                             break;
                         case 0:
+                            mostrarDespedida();
                             xau = true;
                             break;
                         default:
@@ -137,21 +139,17 @@ public class Main {
                 case 1:
                     criarConta();
                     break;
-
                 case 2:
                     utilizadorAutenticado = fazerLogin(); // Armazena o utilizador autenticado na variável global
                     break;
-
                 case 0:
+                    mostrarDespedida();
                     sair = true;
                     break;
-
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
             }
-
         }
     }
-
 }
 
