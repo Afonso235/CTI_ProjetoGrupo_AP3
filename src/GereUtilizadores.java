@@ -16,6 +16,8 @@ public class GereUtilizadores {
 
     public GereUtilizadores() {
         this.utilizadores = new ArrayList<>();
+        this.pedidosPendentes = new ArrayList<>();
+
         carregarCredenciais();
     }
     public List<Utilizador> getUtilizadoresPorAprovarLogin() {
@@ -26,10 +28,6 @@ public class GereUtilizadores {
             }
         }
         return utilizadoresPorAprovar;
-    }
-
-    public void gerePedidos() {
-        pedidosPendentes = new ArrayList<>();
     }
     public void adicionarPedido(Utilizador utilizador) {
         pedidosPendentes.add(utilizador);

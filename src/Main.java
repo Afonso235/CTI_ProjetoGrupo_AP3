@@ -105,6 +105,7 @@ public class Main {
             case 1:
                 List<Utilizador> utilizadoresPorAprovar = gereUtilizadores.getUtilizadoresPorAprovarLogin();
                 aprovarUtilizador(utilizadoresPorAprovar);
+                gereUtilizadores.processarPedidos();
                 break;
             case 2:
                 // Lógica para gerir utilizadores
@@ -159,6 +160,9 @@ public class Main {
             } else if (!utilizador.isAtivo()) {
                 System.out.println("Precisa de ter a sua conta ativada para poder usufruir da aplicação na totalidade!");
                 exibirMenuPrincipal();
+            } else {
+                System.out.println("A sua conta já está ativada!");
+                exibirMenuUtilizador();
             }
         } else {
             System.out.println("Login falhou. Verifique o login e a password.");
