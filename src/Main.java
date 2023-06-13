@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -43,40 +44,101 @@ public class Main {
 
     public static void criarConta() {
 
-        System.out.println("===== Tipo Conta =====");
-        System.out.println("1. Cliente");
-        System.out.println("2. Mecanico");
-        System.out.println("3. Gestor");
-        System.out.print("Opção: ");
-        int tipo = lerOpcao();
+        boolean sair = false;
+        while (!sair) {
+            System.out.println("===== Tipo Conta =====");
+            System.out.println("1. Cliente");
+            System.out.println("2. Mecanico");
+            System.out.println("3. Gestor");
+            System.out.print("Opção: ");
+            int tipo = lerOpcao();
 
-        System.out.println("\n===== Criar Conta =====");
-        System.out.print("Login: ");
-        String login = scanner.nextLine();
-        System.out.print("Password: ");
-        String password = scanner.nextLine();
-        System.out.print("Nome: ");
-        String nome = scanner.nextLine();
-        System.out.print("Email: ");
-        String email = scanner.nextLine();
+            System.out.println("\n===== Criar Conta =====");
+            System.out.print("Login: ");
+            String login = scanner.nextLine();
+            System.out.print("Password: ");
+            String password = scanner.nextLine();
+            System.out.print("Nome: ");
+            String nome = scanner.nextLine();
+            System.out.print("Email: ");
+            String email = scanner.nextLine();
 
-        switch (tipo) {
+            switch (tipo) {
+                case 1:
+                    gereUtilizadores.criarConta(login, password, nome, false, email, TipoUtilizador.CLIENTE);
+                    System.out.println("Conta de cliente criada com sucesso!");
+                    System.out.println("Precisa de ter a sua conta ativada para poder usufruir da aplicação na totalidade!");
+                    mostrarDespedida();
+                    sair = true;
+                    break;
+                case 2:
+                    gereUtilizadores.criarConta(login, password, nome, false, email, TipoUtilizador.MECANICO);
+                    System.out.println("Conta de mecanico criada com sucesso!");
+                    System.out.println("Precisa de ter a sua conta ativada para poder usufruir da aplicação na totalidade!");
+                    mostrarDespedida();
+                    sair = true;
+                    break;
+                case 3:
+                    gereUtilizadores.criarConta(login, password, nome, false, email, TipoUtilizador.GESTOR);
+                    System.out.println("Conta de gestor criada com sucesso!");
+                    break;
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+            }
+            if (tipo == 3) {
+
+                exibirMenuGestor();
+            }
+        }
+    }
+    public static void exibirMenuGestor() {
+        boolean sair = false;
+        while (!sair) {
+            System.out.println("\n===== Menu do Gestor =====");
+            System.out.println("1. Aprovar pedidos");
+            System.out.println("2. Gerir utilizadores");
+            System.out.println("3. Sair");
+            System.out.print("Opção: ");
+            int opcao = lerOpcao();
+
+        switch (opcao) {
             case 1:
-                gereUtilizadores.criarConta(login, password, nome, false, email, TipoUtilizador.CLIENTE);
-                System.out.println("Conta de cliente criada com sucesso!");
+                List<Utilizador> utilizadoresPorAprovar = gereUtilizadores.getUtilizadoresPorAprovarLogin();
+                aprovarUtilizador(utilizadoresPorAprovar);
                 break;
             case 2:
-                gereUtilizadores.criarConta(login, password, nome, false, email, TipoUtilizador.MECANICO);
-                System.out.println("Conta de mecanico criada com sucesso!");
+                // Lógica para gerir utilizadores
                 break;
             case 3:
-                gereUtilizadores.criarConta(login, password, nome, false, email, TipoUtilizador.GESTOR);
-                System.out.println("Conta de gestor criada com sucesso!");
+                sair = true;
                 break;
             default:
                 System.out.println("Opção inválida. Tente novamente.");
+                exibirMenuGestor();
+                break;
+            }
         }
+    }
+    private static void aprovarUtilizador(List<Utilizador> utilizadoresPorAprovar) {
+        if (utilizadoresPorAprovar.isEmpty()) {
+            System.out.println("Não há utilizadores por aprovar login.");
+        } else {
+            System.out.println("Utilizadores por aprovar login:");
+            for (int i = 0; i < utilizadoresPorAprovar.size(); i++) {
+                Utilizador utilizador = utilizadoresPorAprovar.get(i);
+                System.out.println((i+1) + ". " + utilizador.getLogin());
+            }
+            System.out.print("Selecione o número do utilizador que deseja aprovar: ");
+            int numeroSelecionado = lerOpcao();
 
+            if (numeroSelecionado >= 1 && numeroSelecionado <= utilizadoresPorAprovar.size()) {
+                Utilizador utilizadorSelecionado = utilizadoresPorAprovar.get(numeroSelecionado - 1);
+                utilizadorSelecionado.setAtivo(true);
+                System.out.println("Utilizador " + utilizadorSelecionado.getLogin() + " aprovado com sucesso.");
+            } else {
+                System.out.println("Número inválido. Tente novamente.");
+            }
+        }
     }
 
     private static Utilizador fazerLogin() {
@@ -89,16 +151,23 @@ public class Main {
         Utilizador utilizador = gereUtilizadores.login(loginLogin, passwordLogin);
         if (utilizador != null) {
             System.out.println("Login efetuado com sucesso!");
-            System.out.println("Bem Vindo " + utilizador.getLogin());
+            System.out.println("Bem-vindo " + utilizador.getLogin());
             System.out.println("Tipo: " + utilizador.getTipo());
+
+            if (utilizador.getTipo() == TipoUtilizador.GESTOR) {
+                exibirMenuGestor();
+            } else if (!utilizador.isAtivo()) {
+                System.out.println("Precisa de ter a sua conta ativada para poder usufruir da aplicação na totalidade!");
+                exibirMenuPrincipal();
+            }
         } else {
             System.out.println("Login falhou. Verifique o login e a password.");
         }
         return utilizador;
     }
 
-    private static void realizarOperacoes() {
 
+    private static void realizarOperacoes() {
         boolean sair = false;
         boolean xau = false;
 
@@ -106,7 +175,6 @@ public class Main {
             System.out.println("Nenhum utilizador encontrado, por favor criar conta!");
             criarConta();
         }
-
         while (!sair) {
             if(utilizadorAutenticado != null){
                 while(!xau){

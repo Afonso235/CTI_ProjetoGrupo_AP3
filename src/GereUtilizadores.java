@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 public class GereUtilizadores {
     private List<Utilizador> utilizadores;
+    private List<Utilizador> pedidosPendentes;
     private static Scanner scanner;
 
     private String nomeArquivoCredenciais = "credenciais_acesso.txt";
@@ -16,6 +17,33 @@ public class GereUtilizadores {
     public GereUtilizadores() {
         this.utilizadores = new ArrayList<>();
         carregarCredenciais();
+    }
+    public List<Utilizador> getUtilizadoresPorAprovarLogin() {
+        List<Utilizador> utilizadoresPorAprovar = new ArrayList<>();
+        for (Utilizador utilizador : utilizadores) {
+            if (!utilizador.isAtivo()) {
+                utilizadoresPorAprovar.add(utilizador);
+            }
+        }
+        return utilizadoresPorAprovar;
+    }
+
+    public void gerePedidos() {
+        pedidosPendentes = new ArrayList<>();
+    }
+    public void adicionarPedido(Utilizador utilizador) {
+        pedidosPendentes.add(utilizador);
+    }
+
+    public void processarPedidos() {
+        for (Utilizador utilizador : pedidosPendentes) {
+            if (utilizador.isAtivo()) {
+                // Realizar ações adicionais, como enviar um email de boas-vindas, por exemplo
+                System.out.println("Pedido de " + utilizador.getNome() + " aprovado!");
+            } else {
+                System.out.println("Pedido de " + utilizador.getNome() + " rejeitado!");
+            }
+        }
     }
 
     public List<Utilizador> getUtilizadores() {
@@ -90,8 +118,6 @@ public class GereUtilizadores {
             System.out.println("Erro ao salvar as credenciais de acesso.");
         }
     }
-
-
     public void alterarInfos(String login, String aPassword, String aNome, String aEmail){
 
         for(int i = 0; i < utilizadores.size(); i++){
@@ -106,6 +132,10 @@ public class GereUtilizadores {
             }
         }
         System.out.println("Utilizador inexistente!");
+    }
 
+    @Override
+    public String toString() {
+        return "pedidosPendentes= " + pedidosPendentes;
     }
 }
