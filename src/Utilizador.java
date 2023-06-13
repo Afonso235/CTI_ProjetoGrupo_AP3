@@ -2,7 +2,7 @@ class Utilizador {
     private String login;
     private String password;
     private String nome;
-    private boolean ativo;
+    private static boolean ativo;
     private String email;
     private TipoUtilizador tipo;
     private String nif;
@@ -108,5 +108,18 @@ class Utilizador {
 enum TipoUtilizador {
     GESTOR,
     MECANICO,
-    CLIENTE
+    CLIENTE;
+
+    public static TipoUtilizador fromInt(int value) {
+        switch (value) {
+            case 1:
+                return CLIENTE;
+            case 2:
+                return MECANICO;
+            case 3:
+                return GESTOR;
+            default:
+                throw new IllegalArgumentException("Invalid integer value for TipoUtilizador");
+        }
+    }
 }

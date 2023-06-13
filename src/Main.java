@@ -43,7 +43,6 @@ public class Main {
     }
 
     public static void criarConta() {
-
         boolean sair = false;
         while (!sair) {
             System.out.println("===== Tipo Conta =====");
@@ -63,41 +62,31 @@ public class Main {
             System.out.print("Email: ");
             String email = scanner.nextLine();
 
-            switch (tipo) {
-                case 1:
-                    gereUtilizadores.criarConta(login, password, nome, false, email, TipoUtilizador.CLIENTE);
-                    System.out.println("Conta de cliente criada com sucesso!");
-                    System.out.println("Precisa de ter a sua conta ativada para poder usufruir da aplicação na totalidade!");
-                    mostrarDespedida();
-                    sair = true;
-                    break;
-                case 2:
-                    gereUtilizadores.criarConta(login, password, nome, false, email, TipoUtilizador.MECANICO);
-                    System.out.println("Conta de mecanico criada com sucesso!");
-                    System.out.println("Precisa de ter a sua conta ativada para poder usufruir da aplicação na totalidade!");
-                    mostrarDespedida();
-                    sair = true;
-                    break;
-                case 3:
-                    gereUtilizadores.criarConta(login, password, nome, false, email, TipoUtilizador.GESTOR);
-                    System.out.println("Conta de gestor criada com sucesso!");
-                    break;
-                default:
-                    System.out.println("Opção inválida. Tente novamente.");
-            }
-            if (tipo == 3) {
+            boolean ativo = true; // Default value for 'ativo' is true
 
+            switch (tipo) {
+                case 1, 2 -> ativo = false; // Set 'ativo' to false for client accounts
+                case 3 -> System.out.println("Conta de gestor criada com sucesso!");
+                default -> System.out.println("Opção inválida. Tente novamente.");
+            }
+            if (tipo != 3) {
+                gereUtilizadores.criarConta(login, password, nome, email, TipoUtilizador.fromInt(tipo));
+                System.out.println("Precisa de ter a sua conta ativada para poder usufruir da aplicação na totalidade!");
+                mostrarDespedida();
+                sair = true;
+            } else {
                 exibirMenuGestor();
             }
         }
     }
+
     public static void exibirMenuGestor() {
         boolean sair = false;
         while (!sair) {
             System.out.println("\n===== Menu do Gestor =====");
             System.out.println("1. Aprovar pedidos");
             System.out.println("2. Gerir utilizadores");
-            System.out.println("3. Sair");
+            System.out.println("0. Sair");
             System.out.print("Opção: ");
             int opcao = lerOpcao();
 
@@ -105,13 +94,15 @@ public class Main {
             case 1:
                 List<Utilizador> utilizadoresPorAprovar = gereUtilizadores.getUtilizadoresPorAprovarLogin();
                 aprovarUtilizador(utilizadoresPorAprovar);
+                gereUtilizadores.definirAtivo("", true);
                 gereUtilizadores.processarPedidos();
                 break;
             case 2:
                 // Lógica para gerir utilizadores
                 break;
-            case 3:
+            case 0:
                 sair = true;
+                realizarOperacoes();
                 break;
             default:
                 System.out.println("Opção inválida. Tente novamente.");
@@ -142,7 +133,7 @@ public class Main {
         }
     }
 
-    private static Utilizador fazerLogin() {
+    private static void fazerLogin() {
         System.out.println("===== Fazer Login =====");
         System.out.print("Login: ");
         String loginLogin = scanner.nextLine();
@@ -155,21 +146,23 @@ public class Main {
             System.out.println("Bem-vindo " + utilizador.getLogin());
             System.out.println("Tipo: " + utilizador.getTipo());
 
-            if (utilizador.getTipo() == TipoUtilizador.GESTOR) {
-                exibirMenuGestor();
-            } else if (!utilizador.isAtivo()) {
-                System.out.println("Precisa de ter a sua conta ativada para poder usufruir da aplicação na totalidade!");
-                exibirMenuPrincipal();
-            } else {
-                System.out.println("A sua conta já está ativada!");
-                exibirMenuUtilizador();
+            switch (utilizador.getTipo()) {
+                case GESTOR -> exibirMenuGestor();
+                case CLIENTE, MECANICO -> processarConta(utilizador);
+                default -> System.out.println("Tipo de utilizador desconhecido.");
             }
         } else {
             System.out.println("Login falhou. Verifique o login e a password.");
         }
-        return utilizador;
     }
-
+    private static void processarConta(Utilizador utilizador) {
+        if (utilizador.isAtivo()) {
+            System.out.println("A sua conta já está ativada!");
+            exibirMenuUtilizador();
+        } else {
+            System.out.println("Precisa de ter a sua conta ativada para poder usufruir da aplicação na totalidade!");
+        }
+    }
 
     private static void realizarOperacoes() {
         boolean sair = false;
@@ -184,23 +177,21 @@ public class Main {
                 while(!xau){
                     exibirMenuUtilizador();
                     int opcao = lerOpcao();
-                    switch (opcao){
-                        case 1:
+                    switch (opcao) {
+                        case 1 -> {
                             System.out.println("Insira a nova Password: ");
                             String newPassword = scanner.nextLine();
                             System.out.println("Insira o novo Nome: ");
                             String newNome = scanner.nextLine();
                             System.out.println("Insira o novo Email");
                             String newEmail = scanner.nextLine();
-
                             gereUtilizadores.alterarInfos(utilizadorAutenticado.getLogin(), newPassword, newNome, newEmail);
-                            break;
-                        case 0:
+                        }
+                        case 0 -> {
                             mostrarDespedida();
                             xau = true;
-                            break;
-                        default:
-                            System.out.println("Opção inválida. Tente novamente.");
+                        }
+                        default -> System.out.println("Opção inválida. Tente novamente.");
                     }
                 }
             }
@@ -208,18 +199,13 @@ public class Main {
             int opcao = lerOpcao();
 
             switch (opcao) {
-                case 1:
-                    criarConta();
-                    break;
-                case 2:
-                    utilizadorAutenticado = fazerLogin(); // Armazena o utilizador autenticado na variável global
-                    break;
-                case 0:
+                case 1 -> criarConta();
+                case 2 -> fazerLogin(); // Armazena o utilizador autenticado na variável global
+                case 0 -> {
                     mostrarDespedida();
                     sair = true;
-                    break;
-                default:
-                    System.out.println("Opção inválida. Tente novamente.");
+                }
+                default -> System.out.println("Opção inválida. Tente novamente.");
             }
         }
     }

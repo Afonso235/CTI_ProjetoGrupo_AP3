@@ -1,17 +1,18 @@
-import java.io.File;
 import java.io.BufferedReader;
-import java.io.FileWriter;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class GereUtilizadores {
     private List<Utilizador> utilizadores;
     private List<Utilizador> pedidosPendentes;
-    private static Scanner scanner;
-
     private String nomeArquivoCredenciais = "credenciais_acesso.txt";
 
     public GereUtilizadores() {
@@ -20,15 +21,13 @@ public class GereUtilizadores {
 
         carregarCredenciais();
     }
+
     public List<Utilizador> getUtilizadoresPorAprovarLogin() {
-        List<Utilizador> utilizadoresPorAprovar = new ArrayList<>();
-        for (Utilizador utilizador : utilizadores) {
-            if (!utilizador.isAtivo()) {
-                utilizadoresPorAprovar.add(utilizador);
-            }
-        }
-        return utilizadoresPorAprovar;
+        return utilizadores.stream()
+                .filter(utilizador -> !utilizador.isAtivo())
+                .collect(Collectors.toList());
     }
+
     public void adicionarPedido(Utilizador utilizador) {
         pedidosPendentes.add(utilizador);
     }
@@ -48,79 +47,80 @@ public class GereUtilizadores {
         return utilizadores;
     }
 
-    public void criarConta(String login, String password, String nome, boolean ativo, String email, TipoUtilizador tipo) {
+    public void criarConta(String login, String password, String nome, String email, TipoUtilizador tipo) {
+        boolean ativo = tipo == TipoUtilizador.GESTOR; // Definir como ativo se for um gestor
         Utilizador utilizador = new Utilizador(login, password, nome, ativo, email, tipo);
         utilizadores.add(utilizador);
         salvarCredenciais();
     }
 
+
     public Utilizador login(String login, String password) {
+        return utilizadores.stream()
+                .filter(utilizador -> utilizador.getLogin().equals(login) && utilizador.getPassword().equals(password))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public List<Utilizador> pesquisa(String nome) {
+        return utilizadores.stream()
+                .filter(utilizador -> utilizador.getNome().equalsIgnoreCase(nome))
+                .collect(Collectors.toList());
+    }
+
+    public void carregarCredenciais() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivoCredenciais))) {
+            utilizadores = reader.lines()
+                    .map(linha -> linha.split(":"))
+                    .filter(partes -> partes.length == 3)
+                    .map(partes -> new Utilizador(partes[0], partes[1], "", true, "", TipoUtilizador.valueOf(partes[2])))
+                    .collect(Collectors.toList());
+            System.out.println("Credenciais carregadas com sucesso!");
+        } catch (IOException e) {
+            System.out.println("Erro ao carregar as credenciais de acesso.");
+        }
+    }
+    public Utilizador encontrarUtilizadorPorLogin(String login) {
         for (Utilizador utilizador : utilizadores) {
-            if (utilizador.getLogin().equals(login) && utilizador.getPassword().equals(password)) {
+            if (utilizador.getLogin().equals(login)) {
                 return utilizador;
             }
         }
         return null;
     }
 
-    public List<Utilizador> pesquisa(String nome) {
-        List<Utilizador> resultado = new ArrayList<>();
-        for (Utilizador utilizador : utilizadores) {
-            if (utilizador.getNome().equalsIgnoreCase(nome)) {
-                resultado.add(utilizador);
+    public void definirAtivo(String login, boolean ativo) {
+        Utilizador utilizador = encontrarUtilizadorPorLogin(login);
+        if (utilizador != null) {
+            if (utilizador.getTipo() != TipoUtilizador.GESTOR) {
+                utilizador.setAtivo(ativo);
+                salvarCredenciais();
+                System.out.println("Status de ativação do utilizador '" + login + "' atualizado com sucesso!");
+            } else {
+                System.out.println("O gestor não precisa esperar pela ativação da conta.");
             }
-        }
-        return resultado;
-    }
-
-
-
-
-    public void carregarCredenciais() {
-        try {
-            File arquivo = new File(nomeArquivoCredenciais);
-            if (arquivo.exists()) {
-                //limpar memoria antes de ler
-                BufferedReader reader = new BufferedReader(new FileReader(arquivo));
-                String linha;
-                while ((linha = reader.readLine()) != null) {
-                    String[] partes = linha.split(":");
-                    if (partes.length == 3) {
-                        String login = partes[0];
-                        String password = partes[1];
-                        TipoUtilizador tipo = TipoUtilizador.valueOf(partes[2]);
-                        Utilizador utilizador = new Utilizador(login, password, "", false, "", tipo);
-                        utilizadores.add(utilizador);
-                    }
-                }
-                reader.close();
-                System.out.println("Credenciais carregadas com sucesso!");
-            }
-        } catch (IOException e) {
-            System.out.println("Erro ao carregar as credenciais de acesso.");
+        } else {
+            System.out.println("Utilizador não encontrado!");
         }
     }
+
 
     private void salvarCredenciais() {
-        try {
-            FileWriter writer = new FileWriter(nomeArquivoCredenciais);
+        try (BufferedWriter writer = Files.newBufferedWriter(Path.of(nomeArquivoCredenciais), StandardOpenOption.CREATE)) {
             for (Utilizador utilizador : utilizadores) {
                 String linha = utilizador.getLogin() + ":" + utilizador.getPassword() + ":" + utilizador.getTipo();
-                writer.write(linha + System.lineSeparator());
+                writer.write(linha);
+                writer.newLine();
             }
-            writer.close();
             System.out.println("Credenciais guardadas com sucesso no ficheiro!");
-
-
         } catch (IOException e) {
             System.out.println("Erro ao salvar as credenciais de acesso.");
         }
     }
-    public void alterarInfos(String login, String aPassword, String aNome, String aEmail){
 
-        for(int i = 0; i < utilizadores.size(); i++){
-            Utilizador utilizador = utilizadores.get(i);
-            if(utilizador.getLogin().equals(login)){
+    public void alterarInfos(String login, String aPassword, String aNome, String aEmail) {
+        for (Utilizador utilizador : utilizadores) {
+            if (utilizador.getLogin().equals(login)) {
                 utilizador.setPassword(aPassword);
                 utilizador.setNome(aNome);
                 utilizador.setEmail(aEmail);
