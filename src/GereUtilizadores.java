@@ -105,7 +105,7 @@ public class GereUtilizadores {
                     String linha = linhas.get(i);
                     String[] partes = linha.split(":");
                     if (partes.length == 4 && partes[0].equals(login)) {
-                        partes[3] = String.valueOf(ativo);
+                        partes[3] = "true";
                         linhas.set(i, String.join(":", partes));
                         break;
                     }
@@ -120,13 +120,14 @@ public class GereUtilizadores {
     }
 
     public void salvarCredenciais() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivoCredenciais))) {
+        try {
+            List<String> linhas = new ArrayList<>();
             for (Utilizador utilizador : utilizadores) {
                 String linha = utilizador.getLogin() + ":" + utilizador.getPassword() + ":" +
-                        utilizador.getTipo().toString() + ":" + utilizador.isAtivo();
-                writer.write(linha);
-                writer.newLine();
+                        utilizador.getTipo() + ":" + utilizador.isAtivo();
+                linhas.add(linha);
             }
+            Files.write(Path.of(nomeArquivoCredenciais), linhas, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
             System.out.println("Credenciais guardadas com sucesso no ficheiro!");
         } catch (IOException e) {
             System.out.println("Erro ao salvar as credenciais de acesso.");

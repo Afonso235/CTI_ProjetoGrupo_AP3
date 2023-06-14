@@ -18,6 +18,8 @@ class Utilizador {
         this.tipo = tipo;
     }
 
+    public Utilizador() {
+    }
     public Utilizador(String nome, String nif, String morada, String contactoTelefonico) {
         this.nome = nome;
         this.nif = nif;
