@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="77c9f258-7ca2-44c5-9da7-f8eb17bab1d6" name="Changes" comment="pontos R1 R2 R3 R5 R7 R8 feitos, changes made" />
+    <list default="true" id="77c9f258-7ca2-44c5-9da7-f8eb17bab1d6" name="Changes" comment="login true false">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -121,7 +123,28 @@
       <option name="project" value="LOCAL" />
       <updated>1686070657050</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="ponto R6 feito">
+      <created>1686583445958</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1686583445958</updated>
+    </task>
+    <task id="LOCAL-00006" summary="ponto R4 feito">
+      <created>1686584836462</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1686584836462</updated>
+    </task>
+    <task id="LOCAL-00007" summary="login true false">
+      <created>1686671334997</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1686671334997</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -143,6 +166,9 @@
     <MESSAGE value="cena" />
     <MESSAGE value="classes todas" />
     <MESSAGE value="pontos R1 R2 R3 R5 R7 R8 feitos" />
-    <option name="LAST_COMMIT_MESSAGE" value="pontos R1 R2 R3 R5 R7 R8 feitos" />
+    <MESSAGE value="ponto R6 feito" />
+    <MESSAGE value="ponto R4 feito" />
+    <MESSAGE value="login true false" />
+    <option name="LAST_COMMIT_MESSAGE" value="login true false" />
   </component>
 </project>
