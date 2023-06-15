@@ -2,7 +2,7 @@ class Utilizador {
     private String login;
     private String password;
     private String nome;
-    private static boolean ativo;
+    private boolean ativo;
     private String email;
     private TipoUtilizador tipo;
     private String nif;
