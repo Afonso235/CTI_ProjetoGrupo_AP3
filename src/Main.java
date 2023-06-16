@@ -13,7 +13,7 @@ public class Main {
 
         realizarOperacoes();
     }
-
+ 
     private static void mostrarDespedida() {
         if (utilizadorAutenticado != null) {
             System.out.println("Adeus " + utilizadorAutenticado.getLogin());

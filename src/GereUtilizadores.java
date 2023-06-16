@@ -55,17 +55,25 @@ public class GereUtilizadores {
     }
 
     public Utilizador login(String login, String password) {
-        return utilizadores.stream()
-                .filter(utilizador -> utilizador.getLogin().equals(login) && utilizador.getPassword().equals(password))
-                .findFirst()
-                .orElse(null);
+        for (Utilizador utilizador : utilizadores) {
+            if (utilizador.getLogin().equals(login) && utilizador.getPassword().equals(password)) {
+                return utilizador;
+            }
+        }
+        return null;
     }
 
+
     public List<Utilizador> pesquisa(String nome) {
-        return utilizadores.stream()
-                .filter(utilizador -> utilizador.getNome().equalsIgnoreCase(nome))
-                .collect(Collectors.toList());
+        List<Utilizador> resultados = new ArrayList<>();
+        for (Utilizador utilizador : utilizadores) {
+            if (utilizador.getNome().equalsIgnoreCase(nome)) {
+                resultados.add(utilizador);
+            }
+        }
+        return resultados;
     }
+
 
     public void carregarCredenciais() {
         try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivoCredenciais))) {
