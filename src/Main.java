@@ -185,27 +185,44 @@ public class Main {
         boolean xau = false;
 
         while (gereUtilizadores.getUtilizadores() == null || gereUtilizadores.getUtilizadores().isEmpty()) {
-            System.out.println("Nenhum utilizador encontrado, por favor criar uma conta para continuar.");
+            System.out.println("Nenhum utilizador encontrado, por favor criar conta!");
             criarConta();
         }
+        exibirMenuPrincipal();
+        int opcao = lerOpcao();
 
-        while (!sair) {
-            exibirMenuPrincipal();
-            int opcao = lerOpcao();
-
-            switch (opcao) {
-                case 1 -> criarConta();
-                case 2 -> fazerLogin();
-                case 0 -> {
-                    xau = true;
-                    sair = true;
-                }
-                default -> System.out.println("Opção inválida. Tente novamente.");
+        switch (opcao) {
+            case 1 -> criarConta();
+            case 2 -> fazerLogin(); // Armazena o utilizador autenticado na variável global
+            case 0 -> {
+                mostrarDespedida();
+                sair = true;
             }
+            default -> System.out.println("Opção inválida. Tente novamente.");
         }
-
-        if (xau) {
-            mostrarDespedida();
+        while (!sair) {
+            if(utilizadorAutenticado != null){
+                while(!xau){
+                    exibirMenuUtilizador();
+                    int nmr = lerOpcao();
+                    switch (nmr) {
+                        case 1 -> {
+                            System.out.println("Insira a nova Password: ");
+                            String newPassword = scanner.nextLine();
+                            System.out.println("Insira o novo Nome: ");
+                            String newNome = scanner.nextLine();
+                            System.out.println("Insira o novo Email");
+                            String newEmail = scanner.nextLine();
+                            gereUtilizadores.alterarInfos(utilizadorAutenticado.getLogin(), newPassword, newNome, newEmail);
+                        }
+                        case 0 -> {
+                            mostrarDespedida();
+                            xau = true;
+                        }
+                        default -> System.out.println("Opção inválida. Tente novamente.");
+                    }
+                }
+            }
         }
     }
 }
