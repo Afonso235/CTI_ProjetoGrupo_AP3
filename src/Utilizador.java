@@ -15,12 +15,12 @@ class Utilizador {
     private String contactoTelefonico;
 
     public Utilizador(String login, String password, String nome, boolean ativo, String email, TipoUtilizador tipo) {
-        if (logins.contains(login)) {
+        /*if (logins.contains(login)) {
             throw new IllegalArgumentException("Login already exists: " + login);
         }
         if (emails.contains(email)) {
             throw new IllegalArgumentException("Email already exists: " + email);
-        }
+        }*/
 
         this.login = login;
         this.password = password;

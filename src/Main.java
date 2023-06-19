@@ -6,7 +6,6 @@ public class Main {
     private static Scanner scanner;
     private static Utilizador utilizadorAutenticado = new Utilizador();
 
-
     public static void main(String[] args) {
         gereUtilizadores = new GereUtilizadores();
         scanner = new Scanner(System.in);
@@ -168,6 +167,7 @@ public class Main {
             utilizadorAutenticado = utilizador;
         } else {
             System.out.println("Login falhou. Verifique o login e a password.");
+            exibirMenuPrincipal();
         }
     }
 
