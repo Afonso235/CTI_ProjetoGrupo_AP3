@@ -15,7 +15,7 @@ class GereMecanico {
             }
         }
     }
-    public Mecanico loginMecanico(String login, String password) {
+    public Mecanico loginMecanico(String login, String password, TipoUtilizador tipo) {
         for (Mecanico mecanico : mecanicos) {
             if (mecanico.getLogin().equals(login) && mecanico.getPassword().equals(password)) {
                 return mecanico;
