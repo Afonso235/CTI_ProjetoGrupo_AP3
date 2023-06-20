@@ -28,6 +28,86 @@ class Servico {
     }
 
     // Getters e setters
+
+    public Mecanico getMecanicoResponsavel() {
+        return mecanicoResponsavel;
+    }
+
+    public void setMecanicoResponsavel(Mecanico mecanicoResponsavel) {
+        this.mecanicoResponsavel = mecanicoResponsavel;
+    }
+
+    public Mecanico getMecanicoPrincipal() {
+        return mecanicoPrincipal;
+    }
+
+    public void setMecanicoPrincipal(Mecanico mecanicoPrincipal) {
+        this.mecanicoPrincipal = mecanicoPrincipal;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public int getTempoDespendido() {
+        return tempoDespendido;
+    }
+
+    public void setTempoDespendido(int tempoDespendido) {
+        this.tempoDespendido = tempoDespendido;
+    }
+
+    public double getCustoReparacao() {
+        return custoReparacao;
+    }
+
+    public void setCustoReparacao(double custoReparacao) {
+        this.custoReparacao = custoReparacao;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public List<Peca> getPecasUsadas() {
+        return pecasUsadas;
+    }
+
+    public void setPecasUsadas(List<Peca> pecasUsadas) {
+        this.pecasUsadas = pecasUsadas;
+    }
+
+    public TipoServico getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoServico tipo) {
+        this.tipo = tipo;
+    }
+
+    public EstadoServico getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoServico estado) {
+        this.estado = estado;
+    }
+
+    public List<SubTarefa> getSubTarefas() {
+        return subTarefas;
+    }
+
+    public void setSubTarefas(List<SubTarefa> subTarefas) {
+        this.subTarefas = subTarefas;
+    }
 }
 
 // Enumeração para os tipos de serviço

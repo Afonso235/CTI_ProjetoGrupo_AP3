@@ -3,16 +3,20 @@ import java.util.Scanner;
 
 public class Main {
     private static GereUtilizadores gereUtilizadores;
+    private static GereVeiculos gereVeiculos;
+    private static GereMecanico gereMecanicos;
+    private static Mecanico mecanicoAtual;
     private static Scanner scanner;
     private static Utilizador utilizadorAutenticado = new Utilizador();
 
     public static void main(String[] args) {
         gereUtilizadores = new GereUtilizadores();
+        gereMecanicos = new GereMecanico();
         scanner = new Scanner(System.in);
 
         realizarOperacoes();
     }
- 
+
     private static void mostrarDespedida() {
         if (utilizadorAutenticado != null) {
             System.out.println("Adeus " + utilizadorAutenticado.getLogin());
@@ -201,8 +205,8 @@ public class Main {
             default -> System.out.println("Opção inválida. Tente novamente.");
         }
         while (!sair) {
-            if(utilizadorAutenticado != null){
-                while(!xau){
+            if (utilizadorAutenticado != null) {
+                while (!xau) {
                     exibirMenuUtilizador();
                     int nmr = lerOpcao();
                     switch (nmr) {
@@ -225,4 +229,336 @@ public class Main {
             }
         }
     }
+    //  GereVeículos
+
+    private void menuVeiculo() {
+        gereVeiculos = new GereVeiculos();
+        Scanner scanner = new Scanner(System.in);
+
+        int choice;
+        do {
+            System.out.println("=== Menu ===");
+            System.out.println("1. Inserir veículo");
+            System.out.println("2. Remover veículo");
+            System.out.println("3. Listar veículos");
+            System.out.println("4. Listar veículos por cliente");
+            System.out.println("5. Listar veículos com serviço concluído");
+            System.out.println("6. Listar veículos com serviço em andamento");
+            System.out.println("7. Listar veículos por mecânico");
+            System.out.println("8. Pesquisar veículo por matrícula");
+            System.out.println("9. Pesquisar veículos por peça");
+            System.out.println("10. Pesquisar veículos após um determinado ano");
+            System.out.println("11. Pesquisar veículos com tempo despendido superior a um limite");
+            System.out.println("0. Sair");
+            System.out.print("Escolha uma opção: ");
+            choice = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
+
+            switch (choice) {
+                case 1:
+                    inserirVeiculo(scanner);
+                    break;
+                case 2:
+                    removerVeiculo(scanner);
+                    break;
+                case 3:
+                    listarVeiculos();
+                    break;
+                case 4:
+                    listarVeiculosPorCliente(scanner);
+                    break;
+                case 5:
+                    listarVeiculosComServicoConcluido();
+                    break;
+                case 6:
+                    listarVeiculosComServicoEmAndamento();
+                    break;
+                case 7:
+                    listarVeiculosPorMecanico(scanner);
+                    break;
+                case 8:
+                    pesquisarVeiculoPorMatricula(scanner);
+                    break;
+                case 9:
+                    pesquisarVeiculosPorPeca(scanner);
+                    break;
+                case 10:
+                    pesquisarVeiculosAposAno(scanner);
+                    break;
+                case 11:
+                    pesquisarVeiculosComTempoDespendidoSuperior(scanner);
+                    break;
+                case 0:
+                    System.out.println("Saindo do programa...");
+                    break;
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+            }
+        } while (choice != 0);
+
+        scanner.close();
+    }
+
+    private static void inserirVeiculo(Scanner scanner) {
+        System.out.println("=== Inserir Veículo ===");
+        // Read input values from the user
+        // Example:
+        // Cliente cliente = ...;
+        // String matricula = ...;
+        // String marca = ...;
+        // String modelo = ...;
+        // int anoFabrico = ...;
+        // String numeroChassis = ...;
+        // List<String> listagemReparacoes = ...;
+        // String dataEntrada = ...;
+        // String dataConclusao = ...;
+        // Mecanico mecanicoResponsavel = ...;
+
+        // Create a new Veiculo object and add it to the GereVeiculos instance
+        // Veiculo veiculo = new Veiculo(cliente, matricula, marca, modelo, anoFabrico,
+        //                               numeroChassis, listagemReparacoes, dataEntrada, dataConclusao,
+        //                               mecanicoResponsavel);
+        // gereVeiculos.inserirVeiculo(veiculo);
+
+        System.out.println("Veículo inserido com sucesso.");
+    }
+
+    private static void removerVeiculo(Scanner scanner) {
+        System.out.println("=== Remover Veículo ===");
+        System.out.print("Informe a matrícula do veículo a ser removido: ");
+        String matricula = scanner.nextLine();
+
+        // Call the removeVeiculo method of GereVeiculos
+        // gereVeiculos.removerVeiculo(matricula);
+
+        System.out.println("Veículo removido com sucesso.");
+    }
+
+    private static void listarVeiculos() {
+        System.out.println("=== Listar Veículos ===");
+        // Call the listarVeiculos method of GereVeiculos and display the list of vehicles
+        // List<Veiculo> veiculos = gereVeiculos.listarVeiculos();
+        // for (Veiculo veiculo : veiculos) {
+        //     System.out.println(veiculo);
+        // }
+    }
+
+    private static void listarVeiculosPorCliente(Scanner scanner) {
+        System.out.println("=== Listar Veículos por Cliente ===");
+        // Read input values from the user
+        // Example:
+        // String clienteId = ...;
+
+        // Call the listarVeiculosPorCliente method of GereVeiculos and display the list of vehicles
+        // List<Veiculo> veiculos = gereVeiculos.listarVeiculosPorCliente(clienteId);
+        // for (Veiculo veiculo : veiculos) {
+        //     System.out.println(veiculo);
+        // }
+    }
+
+    private static void listarVeiculosComServicoConcluido() {
+        System.out.println("=== Listar Veículos com Serviço Concluído ===");
+        // Call the listarVeiculosComServico method of GereVeiculos and display the list of vehicles
+        // List<Veiculo> veiculos = gereVeiculos.listarVeiculosComServico();
+        // for (Veiculo veiculo : veiculos) {
+        //     if (veiculo.getDataConclusao() != null) {
+        //         System.out.println(veiculo);
+        //     }
+        // }
+    }
+
+    private static void listarVeiculosComServicoEmAndamento() {
+        System.out.println("=== Listar Veículos com Serviço em Andamento ===");
+        // Call the listarVeiculosComServico method of GereVeiculos and display the list of vehicles
+        // List<Veiculo> veiculos = gereVeiculos.listarVeiculosComServico();
+        // for (Veiculo veiculo : veiculos) {
+        //     if (veiculo.getDataConclusao() == null) {
+        //         System.out.println(veiculo);
+        //     }
+        // }
+    }
+
+    private static void listarVeiculosPorMecanico(Scanner scanner) {
+        System.out.println("=== Listar Veículos por Mecânico ===");
+        // Read input values from the user
+        // Example:
+        // String mecanicoId = ...;
+
+        // Call the listarVeiculosPorMecanico method of GereVeiculos and display the list of vehicles
+        // List<Veiculo> veiculos = gereVeiculos.listarVeiculosPorMecanico(mecanicoId);
+        // for (Veiculo veiculo : veiculos) {
+        //     System.out.println(veiculo);
+        // }
+    }
+
+    private static void pesquisarVeiculoPorMatricula(Scanner scanner) {
+        System.out.println("=== Pesquisar Veículo por Matrícula ===");
+        System.out.print("Informe a matrícula do veículo: ");
+        String matricula = scanner.nextLine();
+
+        // Call the pesquisarVeiculoPorMatricula method of GereVeiculos and display the result
+        // Veiculo veiculo = gereVeiculos.pesquisarVeiculoPorMatricula(matricula);
+        // System.out.println(veiculo);
+    }
+
+    private static void pesquisarVeiculosPorPeca(Scanner scanner) {
+        System.out.println("=== Pesquisar Veículos por Peça ===");
+        System.out.print("Informe o código ou a designação da peça: ");
+        String peca = scanner.nextLine();
+
+        // Call the pesquisarVeiculosPorPeca method of GereVeiculos and display the list of vehicles
+        // List<Veiculo> veiculos = gereVeiculos.pesquisarVeiculosPorPeca(peca);
+        // for (Veiculo veiculo : veiculos) {
+        //     System.out.println(veiculo);
+        // }
+    }
+
+    private static void pesquisarVeiculosAposAno(Scanner scanner) {
+        System.out.println("=== Pesquisar Veículos após um Determinado Ano ===");
+        System.out.print("Informe o ano: ");
+        int ano = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character
+
+        // Call the pesquisarVeiculosAposAno method of GereVeiculos and display the list of vehicles
+        // List<Veiculo> veiculos = gereVeiculos.pesquisarVeiculosAposAno(ano);
+        // for (Veiculo veiculo : veiculos) {
+        //     System.out.println(veiculo);
+        // }
+    }
+
+    private static void pesquisarVeiculosComTempoDespendidoSuperior(Scanner scanner) {
+        System.out.println("=== Pesquisar Veículos com Tempo Despendido Superior a um Limite ===");
+        System.out.print("Informe o limite de tempo: ");
+        int limiteTempo = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character
+
+        // Call the pesquisarVeiculosComTempoDespendidoSuperior method of GereVeiculos and display the list of vehicles
+        // List<Veiculo> veiculos = gereVeiculos.pesquisarVeiculosComTempoDespendidoSuperior(limiteTempo);
+        // for (Veiculo veiculo : veiculos) {
+        //     System.out.println(veiculo);
+        // }
+    }
+
+    // GereMecanicos
+    public void iniciarMecanico() {
+        boolean sair = false;
+        while (!sair) {
+            exibirMenuMecanico();
+            int opcao = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
+
+            switch (opcao) {
+                case 1:
+                    criarMecanico();
+                    break;
+                case 2:
+                    realizarLoginMecanico();
+                    break;
+                case 3:
+                    if (mecanicoAtual != null) {
+                        consultarServicosMecanicoAtual();
+                    } else {
+                        System.out.println("Faça o login como mecânico primeiro.");
+                    }
+                    break;
+                case 4:
+                    if (mecanicoAtual != null) {
+                        listarServicosRealizadosMecanicoAtual();
+                    } else {
+                        System.out.println("Faça o login como mecânico primeiro.");
+                    }
+                    break;
+                case 5:
+                    if (mecanicoAtual != null) {
+                        pesquisarServicosRealizadosMecanicoAtual();
+                    } else {
+                        System.out.println("Faça o login como mecânico primeiro.");
+                    }
+                    break;
+                case 6:
+                    if (mecanicoAtual != null) {
+                        logoutMecanico();
+                    } else {
+                        System.out.println("Faça o login como mecânico primeiro.");
+                    }
+                    break;
+                case 7:
+                    sair = true;
+                    System.out.println("Saindo do programa...");
+                    break;
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+                    break;
+            }
+        }
+    }
+
+    private void exibirMenuMecanico() {
+        System.out.println("------ MENU PRINCIPAL ------");
+        System.out.println("1. Criar Mecânico");
+        System.out.println("2. Realizar Login como Mecânico");
+        System.out.println("3. Consultar Serviços (Mecânico Atual)");
+        System.out.println("4. Listar Serviços Realizados (Mecânico Atual)");
+        System.out.println("5. Pesquisar Serviços Realizados (Mecânico Atual)");
+        System.out.println("6. Logout (Mecânico Atual)");
+        System.out.println("7. Sair");
+        System.out.print("Escolha uma opção: ");
+    }
+
+    private void criarMecanico() {
+        System.out.print("Login: ");
+        String login = scanner.nextLine();
+        System.out.print("Password: ");
+        String password = scanner.nextLine();
+        System.out.print("Nome: ");
+        String nome = scanner.nextLine();
+        System.out.print("Ativo (true/false): ");
+        boolean ativo = scanner.nextBoolean();
+        System.out.print("Email: ");
+        String email = scanner.nextLine();
+        scanner.nextLine(); // Consume the newline character
+
+        Mecanico mecanico = new Mecanico(login, password, nome, ativo, email);
+        gereMecanicos.adicionarMecanico(mecanico);
+        System.out.println("Mecânico criado com sucesso!");
+    }
+
+    private void realizarLoginMecanico() {
+        System.out.print("Login: ");
+        String login = scanner.nextLine();
+        System.out.print("Password: ");
+        String password = scanner.nextLine();
+
+        Mecanico mecanico = gereMecanicos.loginMecanico(login, password);
+        if (mecanico != null) {
+            mecanicoAtual = mecanico;
+            System.out.println("Login realizado com sucesso como " + mecanico.getNome());
+        } else {
+            System.out.println("Login inválido. Tente novamente.");
+        }
+    }
+
+    private void consultarServicosMecanicoAtual() {
+        mecanicoAtual.consultarServicos();
+    }
+
+    private void listarServicosRealizadosMecanicoAtual() {
+        mecanicoAtual.listarServicosRealizados();
+    }
+
+    private void pesquisarServicosRealizadosMecanicoAtual() {
+        System.out.print("Termo de Pesquisa: ");
+        String termoPesquisa = scanner.nextLine();
+
+        mecanicoAtual.pesquisarServicosRealizados(termoPesquisa);
+    }
+
+    private void logoutMecanico() {
+        mecanicoAtual = null;
+        System.out.println("Logout realizado com sucesso.");
+    }
 }
+
+
+
+
