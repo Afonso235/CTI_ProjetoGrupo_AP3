@@ -4,12 +4,10 @@ import java.util.List;
 class Mecanico extends Utilizador {
 
     private List<Servico> servicosRealizados;
-
     public Mecanico(String login, String password, String nome, boolean ativo, String email) {
         super(login, password, nome, ativo, email, TipoUtilizador.MECANICO);
         servicosRealizados = new ArrayList<>();
     }
-
     public void consultarServicos() {
         // Implement logic to allow mechanics to view their services
     }
@@ -45,4 +43,5 @@ class Mecanico extends Utilizador {
     public void setServicosRealizados(List<Servico> servicosRealizados) {
         this.servicosRealizados = servicosRealizados;
     }
+
 }

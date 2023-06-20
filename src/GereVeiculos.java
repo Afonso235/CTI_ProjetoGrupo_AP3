@@ -1,9 +1,12 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 class GereVeiculos {
     private List<Veiculo> veiculos;
+    private GereMecanico gereMecanico = new GereMecanico();
+    private GereUtilizadores gereUtilizadores = new GereUtilizadores();
 
     public GereVeiculos() {
         veiculos = new ArrayList<>();
@@ -107,27 +110,63 @@ class GereVeiculos {
     }
     public void inserirVeiculo(Scanner scanner) {
         System.out.println("=== Inserir Veículo ===");
+
         // Read input values from the user
-        // Example:
-        // Cliente cliente = ...;
-        // String matricula = ...;
-        // String marca = ...;
-        // String modelo = ...;
-        // int anoFabrico = ...;
-        // String numeroChassis = ...;
-        // List<String> listagemReparacoes = ...;
-        // String dataEntrada = ...;
-        // String dataConclusao = ...;
-        // Mecanico mecanicoResponsavel = ...;
+        System.out.print("Login do Cliente: ");
+        String loginCliente = scanner.nextLine();
+
+        System.out.print("Matrícula: ");
+        String matricula = scanner.nextLine();
+
+        System.out.print("Marca: ");
+        String marca = scanner.nextLine();
+
+        System.out.print("Modelo: ");
+        String modelo = scanner.nextLine();
+
+        System.out.print("Ano de Fabrico: ");
+        int anoFabrico = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Número de Chassis: ");
+        String numeroChassis = scanner.nextLine();
+
+        System.out.print("Listagem de Reparações (separadas por vírgula): ");
+        String listagemReparacoesInput = scanner.nextLine();
+        List<String> listagemReparacoes = Arrays.asList(listagemReparacoesInput.split(","));
+
+        System.out.print("Data de Entrada: ");
+        String dataEntrada = scanner.nextLine();
+
+        System.out.print("Data de Conclusão: ");
+        String dataConclusao = scanner.nextLine();
+
+        System.out.print("Mecânico Responsável: ");
+        String nomeMecanico = scanner.nextLine();
+
+        Mecanico mecanicoResponsavel = gereMecanico.getMecanicoByNome(nomeMecanico);
+
+        if (mecanicoResponsavel == null) {
+            System.out.println("Mecânico não encontrado. Veículo não inserido.");
+            return;
+        }
+
+        Cliente cliente = gereUtilizadores.getClienteByLogin(loginCliente);
+
+        if (cliente == null) {
+            System.out.println("Cliente não encontrado. Veículo não inserido.");
+            return;
+        }
 
         // Create a new Veiculo object and add it to the GereVeiculos instance
-        // Veiculo veiculo = new Veiculo(cliente, matricula, marca, modelo, anoFabrico,
-        //                               numeroChassis, listagemReparacoes, dataEntrada, dataConclusao,
-        //                               mecanicoResponsavel);
-        // gereVeiculos.inserirVeiculo(veiculo);
+        Veiculo veiculo = new Veiculo(cliente, matricula, marca, modelo, anoFabrico,
+                numeroChassis, listagemReparacoes, dataEntrada, dataConclusao,
+                mecanicoResponsavel);
+        inserirVeiculo(veiculo);
 
         System.out.println("Veículo inserido com sucesso.");
     }
+
 
     public void removerVeiculo(Scanner scanner) {
         System.out.println("=== Remover Veículo ===");

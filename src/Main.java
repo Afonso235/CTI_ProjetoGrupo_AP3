@@ -14,7 +14,8 @@ public class Main {
         gereMecanicos = new GereMecanico();
         scanner = new Scanner(System.in);
 
-        realizarOperacoes();
+        menuVeiculo();
+        //realizarOperacoes();
     }
 
     private static void mostrarDespedida() {
@@ -75,15 +76,16 @@ public class Main {
                     break;
                 case 2:
                     ativo = false;
-                    gereMecanicos.loginMecanico(login, password, TipoUtilizador.MECANICO);
+                    //gereMecanicos.loginMecanico(login, password, TipoUtilizador.MECANICO);
                     iniciarMecanico();
-                    //gereUtilizadores.criarConta(login, password, nome, email, TipoUtilizador.MECANICO);
+                    gereUtilizadores.criarConta(login, password, nome, email, TipoUtilizador.MECANICO);
                     break;
                 case 3:
-                    System.out.println("Conta de gestor criada com sucesso!");
                     Utilizador gestor = new Utilizador(login, password, nome, true, email, TipoUtilizador.GESTOR);
                     gereUtilizadores.getUtilizadores().add(gestor);
                     gereUtilizadores.salvarCredenciais();
+                    System.out.println("Conta de gestor criada com sucesso!");
+
                     break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");

@@ -30,4 +30,13 @@ class GereMecanico {
     public void removerMecanico(Mecanico mecanico) {
         mecanicos.remove(mecanico);
     }
+
+    public Mecanico getMecanicoByNome(String nome) {
+        for (Mecanico mecanico : mecanicos) {
+            if (mecanico.getNome().equals(nome)) {
+                return mecanico;
+            }
+        }
+        return null;
+    }
 }

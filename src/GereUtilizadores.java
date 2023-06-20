@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class GereUtilizadores {
+    private List<Cliente> clientes;
     private List<Utilizador> utilizadores;
     private List<Utilizador> pedidosPendentes;
     private String nomeArquivoCredenciais = "credenciais_acesso.txt";
@@ -41,6 +42,14 @@ public class GereUtilizadores {
         }
     }
 
+    public Cliente getClienteByLogin(String login) {
+        for (Cliente cliente : clientes) {
+            if (cliente.getLogin().equals(login)) {
+                return cliente;
+            }
+        }
+        return null; // If the cliente is not found
+    }
     public List<Utilizador> getUtilizadores() {
         return utilizadores;
     }
@@ -129,8 +138,10 @@ public class GereUtilizadores {
         try {
             List<String> linhas = new ArrayList<>();
             for (Utilizador utilizador : utilizadores) {
-                String linha = utilizador.getLogin() + ":" + utilizador.getPassword() + ":" +
-                        utilizador.getTipo() + ":" + utilizador.isAtivo();
+                String linha = utilizador.getLogin() + ":" +
+                                utilizador.getPassword() + ":" +
+                                utilizador.getTipo() + ":" +
+                                utilizador.isAtivo();
                 linhas.add(linha);
             }
             Files.write(Path.of(nomeArquivoCredenciais), linhas, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
