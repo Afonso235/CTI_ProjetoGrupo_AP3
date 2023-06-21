@@ -110,6 +110,7 @@ public class GereUtilizadores {
     public void definirAtivo(String login, boolean ativo) {
         Utilizador utilizador = encontrarUtilizadorPorLogin(login);
         if (utilizador != null) {
+            System.out.println("Utilizador encontrado: " + utilizador.getLogin());
             utilizador.setAtivo(ativo);
             salvarCredenciais();
             System.out.println("Status de ativação do utilizador '" + login + "' atualizado com sucesso!");

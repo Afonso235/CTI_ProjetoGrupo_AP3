@@ -111,7 +111,6 @@ public class Main {
                 case 1 -> {
                     List<Utilizador> utilizadoresPorAprovar = gereUtilizadores.getUtilizadoresPorAprovarLogin();
                     aprovarUtilizador(utilizadoresPorAprovar);
-                    gereUtilizadores.definirAtivo("", true);
                     gereUtilizadores.processarPedidos();
                 }
                 case 2 -> {
@@ -139,7 +138,8 @@ public class Main {
 
             if (numeroSelecionado >= 1 && numeroSelecionado <= utilizadoresPorAprovar.size()) {
                 Utilizador utilizadorSelecionado = utilizadoresPorAprovar.get(numeroSelecionado - 1);
-                gereUtilizadores.definirAtivo(utilizadorSelecionado.getLogin(), true);
+                String loginUtilizadorSelecionado = utilizadorSelecionado.getLogin();
+                gereUtilizadores.definirAtivo(loginUtilizadorSelecionado, true);
                 System.out.println("Utilizador " + utilizadorSelecionado.getLogin() + " aprovado com sucesso.");
             } else {
                 System.out.println("Número inválido. Tente novamente.");
