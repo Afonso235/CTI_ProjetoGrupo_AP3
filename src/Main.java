@@ -14,10 +14,9 @@ public class Main {
         gereMecanicos = new GereMecanico();
         scanner = new Scanner(System.in);
 
-        menuVeiculo();
-        //realizarOperacoes();
+        //menuVeiculo();
+        realizarOperacoes();
     }
-
     private static void mostrarDespedida() {
         if (utilizadorAutenticado != null) {
             System.out.println("Adeus " + utilizadorAutenticado.getLogin());
@@ -25,20 +24,17 @@ public class Main {
             System.out.println("Adeus!");
         }
     }
-
     private static void exibirMenuUtilizador() {
         System.out.println("===== Menu Cenas =====");
         System.out.println("1. Alterar Dados");
         System.out.println("0. xau");
         System.out.print("Opção: ");
     }
-
     private static int lerOpcao() {
         int opcao = scanner.nextInt();
         scanner.nextLine();
         return opcao;
     }
-
     private static void exibirMenuPrincipal() {
         System.out.println("===== Menu Principal =====");
         System.out.println("1. Criar conta");
@@ -46,7 +42,6 @@ public class Main {
         System.out.println("0. Sair");
         System.out.print("Opção: ");
     }
-
     public static void criarConta() {
         boolean sair = false;
         while (!sair) {
@@ -102,7 +97,6 @@ public class Main {
             sair = true;
         }
     }
-
     public static void exibirMenuGestor() {
         boolean sair = false;
         while (!sair) {
@@ -131,7 +125,6 @@ public class Main {
             }
         }
     }
-
     private static void aprovarUtilizador(List<Utilizador> utilizadoresPorAprovar) {
         if (utilizadoresPorAprovar.isEmpty()) {
             System.out.println("Não há utilizadores por aprovar login.");
@@ -146,14 +139,13 @@ public class Main {
 
             if (numeroSelecionado >= 1 && numeroSelecionado <= utilizadoresPorAprovar.size()) {
                 Utilizador utilizadorSelecionado = utilizadoresPorAprovar.get(numeroSelecionado - 1);
-                utilizadorSelecionado.setAtivo(true);
+                gereUtilizadores.definirAtivo(utilizadorSelecionado.getLogin(), true);
                 System.out.println("Utilizador " + utilizadorSelecionado.getLogin() + " aprovado com sucesso.");
             } else {
                 System.out.println("Número inválido. Tente novamente.");
             }
         }
     }
-
     private static void fazerLogin() {
         System.out.println("===== Fazer Login =====");
         System.out.print("Login: ");
@@ -178,7 +170,6 @@ public class Main {
             exibirMenuPrincipal();
         }
     }
-
     private static void processarConta(Utilizador utilizador) {
         if (utilizador.isAtivo()) {
             System.out.println("A sua conta já está ativada!");
@@ -187,7 +178,6 @@ public class Main {
             System.out.println("Precisa de ter a sua conta ativada para poder usufruir da aplicação na totalidade!");
         }
     }
-
     private static void realizarOperacoes() {
         boolean sair = false;
         boolean xau = false;
@@ -234,7 +224,6 @@ public class Main {
         }
     }
     //  GereVeículos
-
     private static void menuVeiculo() {
         gereVeiculos = new GereVeiculos();
         Scanner scanner = new Scanner(System.in);
@@ -302,9 +291,6 @@ public class Main {
 
         scanner.close();
     }
-
-
-
     // GereMecanicos
     public static void iniciarMecanico() {
         boolean sair = false;
@@ -358,7 +344,6 @@ public class Main {
             }
         }
     }
-
     private static void exibirMenuMecanico() {
         System.out.println("------ MENU PRINCIPAL ------");
         System.out.println("1. Criar Mecânico");
@@ -370,7 +355,6 @@ public class Main {
         System.out.println("7. Sair");
         System.out.print("Escolha uma opção: ");
     }
-
     private static void criarMecanico() {
         System.out.print("Login: ");
         String login = scanner.nextLine();
@@ -388,7 +372,6 @@ public class Main {
         gereMecanicos.adicionarMecanico(mecanico);
         System.out.println("Mecânico criado com sucesso!");
     }
-
     private static void realizarLoginMecanico() {
         System.out.print("Login: ");
         String login = scanner.nextLine();
@@ -403,22 +386,18 @@ public class Main {
             System.out.println("Login inválido. Tente novamente.");
         }
     }
-
     private static void consultarServicosMecanicoAtual() {
         mecanicoAtual.consultarServicos();
     }
-
     private static void listarServicosRealizadosMecanicoAtual() {
         mecanicoAtual.listarServicosRealizados();
     }
-
     private static void pesquisarServicosRealizadosMecanicoAtual() {
         System.out.print("Termo de Pesquisa: ");
         String termoPesquisa = scanner.nextLine();
 
         mecanicoAtual.pesquisarServicosRealizados(termoPesquisa);
     }
-
     private static void logoutMecanico() {
         mecanicoAtual = null;
         System.out.println("Logout realizado com sucesso.");
