@@ -14,8 +14,7 @@ public class Main {
         gereMecanicos = new GereMecanico();
         scanner = new Scanner(System.in);
 
-        menuVeiculo();
-        //realizarOperacoes();
+        realizarOperacoes();
     }
     private static void mostrarDespedida() {
         if (utilizadorAutenticado != null) {
@@ -103,6 +102,7 @@ public class Main {
             System.out.println("\n===== Menu do Gestor =====");
             System.out.println("1. Aprovar pedidos");
             System.out.println("2. Gerir utilizadores");
+            System.out.println("3. Definições de Veiculos");
             System.out.println("0. Sair");
             System.out.print("Opção: ");
             int opcao = lerOpcao();
@@ -115,6 +115,9 @@ public class Main {
                 }
                 case 2 -> {
                     // Lógica para gerir utilizadores
+                }
+                case 3 -> {
+                    menuVeiculo();
                 }
                 case 0 -> {
                     sair = true;

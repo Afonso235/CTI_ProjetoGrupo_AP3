@@ -181,12 +181,18 @@ class GereVeiculos {
         }
 
         Mecanico mecanicoResponsavel = mecanicos.get(mecanicoIndex - 1);
+
+
         Cliente cliente = gereUtilizadores.getClienteByLogin(loginCliente);
+        cliente = new Cliente(loginCliente, "", "", true, "");
 
         if (cliente == null) {
             System.out.println("Cliente não encontrado. Veículo não inserido.");
             return;
         }
+
+        // Add the cliente to the list
+        gereUtilizadores.adicionarCliente(cliente);
 
         Veiculo veiculo = new Veiculo(cliente, matricula, marca, modelo, anoFabrico,
                 numeroChassis, listagemReparacoes, mecanicoResponsavel);
@@ -196,6 +202,7 @@ class GereVeiculos {
 
         System.out.println("Veículo inserido com sucesso.");
     }
+
 
 
     public void removerVeiculo(Scanner scanner) {

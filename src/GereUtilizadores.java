@@ -17,6 +17,7 @@ public class GereUtilizadores {
     public GereUtilizadores() {
         this.utilizadores = new ArrayList<>();
         this.pedidosPendentes = new ArrayList<>();
+        this.clientes = new ArrayList<>();
 
         carregarCredenciais();
     }
@@ -26,6 +27,11 @@ public class GereUtilizadores {
                 .filter(utilizador -> !utilizador.isAtivo())
                 .collect(Collectors.toList());
     }
+
+    public void adicionarCliente(Cliente cliente) {
+        clientes.add(cliente);
+    }
+
 
     public void adicionarPedido(Utilizador utilizador) {
         pedidosPendentes.add(utilizador);
@@ -48,8 +54,9 @@ public class GereUtilizadores {
                 return cliente;
             }
         }
-        return null; // If the cliente is not found
+        return null;
     }
+
     public List<Utilizador> getUtilizadores() {
         return utilizadores;
     }
