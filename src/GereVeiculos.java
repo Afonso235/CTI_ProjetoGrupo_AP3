@@ -163,16 +163,12 @@ class GereVeiculos {
         String listagemReparacoesInput = scanner.nextLine();
         List<String> listagemReparacoes = Arrays.asList(listagemReparacoesInput.split(","));
 
-        System.out.print("Data de Entrada: ");
-        String dataEntrada = scanner.nextLine();
-
-        System.out.print("Data de Conclusão: ");
-        String dataConclusao = scanner.nextLine();
-
         System.out.println("Lista de Mecânicos Disponíveis:");
         List<Mecanico> mecanicos = gereMecanico.listarMecanicos();
-        for (int i = 0; i < mecanicos.size(); i++) {
-            System.out.println((i + 1) + ". " + mecanicos.get(i).getNome());
+        int counter = 1;
+        for (Mecanico mecanico : mecanicos) {
+            System.out.println(counter + ". " + mecanico.getNome());
+            counter++;
         }
 
         System.out.print("Selecione o número do Mecânico Responsável: ");
@@ -193,14 +189,14 @@ class GereVeiculos {
         }
 
         Veiculo veiculo = new Veiculo(cliente, matricula, marca, modelo, anoFabrico,
-                numeroChassis, listagemReparacoes, dataEntrada, dataConclusao,
-                mecanicoResponsavel);
+                numeroChassis, listagemReparacoes, mecanicoResponsavel);
         inserirVeiculo(veiculo);
 
         salvarVeiculo(veiculo, nomeArquivoVeiculo);
 
         System.out.println("Veículo inserido com sucesso.");
     }
+
 
     public void removerVeiculo(Scanner scanner) {
         System.out.println("=== Remover Veículo ===");

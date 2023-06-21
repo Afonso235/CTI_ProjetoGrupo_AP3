@@ -14,7 +14,7 @@ class Veiculo {
 
 
     public Veiculo(Cliente cliente, String matricula, String marca, String modelo, int anoFabrico,
-                   String numeroChassis, List<String> listagemReparacoes, String dataEntrada, String dataConclusao, Mecanico mecanicoResponsavel) {
+                   String numeroChassis, List<String> listagemReparacoes, Mecanico mecanicoResponsavel) {
         this.cliente = cliente;
         this.matricula = matricula;
         this.marca = marca;
@@ -22,8 +22,6 @@ class Veiculo {
         this.anoFabrico = anoFabrico;
         this.numeroChassis = numeroChassis;
         this.listagemReparacoes = listagemReparacoes;
-        this.dataEntrada = dataEntrada;
-        this.dataConclusao = dataConclusao;
         this.mecanicoResponsavel = mecanicoResponsavel;
     }
 

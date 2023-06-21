@@ -4,7 +4,7 @@ import java.util.List;
 class Mecanico extends Utilizador {
 
     private List<Servico> servicosRealizados;
-    public Mecanico(String login, String password, String nome, boolean ativo, String email) {
+    public Mecanico(String login, String password, String nome, boolean ativo, String email, TipoUtilizador tipoUtilizador) {
         super(login, password, nome, ativo, email, TipoUtilizador.MECANICO);
         servicosRealizados = new ArrayList<>();
     }
@@ -44,4 +44,10 @@ class Mecanico extends Utilizador {
         this.servicosRealizados = servicosRealizados;
     }
 
+    @Override
+    public String toString() {
+        return "Mecanico{" +
+                "servicosRealizados=" + servicosRealizados +
+                '}';
+    }
 }

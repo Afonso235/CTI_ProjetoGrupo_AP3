@@ -368,7 +368,7 @@ public class Main {
         String email = scanner.nextLine();
         scanner.nextLine(); // Consume the newline character
 
-        Mecanico mecanico = new Mecanico(login, password, nome, ativo, email);
+        Mecanico mecanico = new Mecanico(login, password, nome, ativo, email, TipoUtilizador.MECANICO);
         gereMecanicos.adicionarMecanico(mecanico);
         System.out.println("Mecânico criado com sucesso!");
     }
