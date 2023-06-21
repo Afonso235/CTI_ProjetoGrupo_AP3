@@ -152,6 +152,8 @@ public class GereUtilizadores {
         }
     }
 
+
+
     public void alterarInfos(String login, String aPassword, String aNome, String aEmail) {
         for (Utilizador utilizador : utilizadores) {
             if (utilizador.getLogin().equals(login)) {

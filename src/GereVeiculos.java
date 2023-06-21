@@ -1,3 +1,6 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -7,6 +10,7 @@ class GereVeiculos {
     private List<Veiculo> veiculos;
     private GereMecanico gereMecanico = new GereMecanico();
     private GereUtilizadores gereUtilizadores = new GereUtilizadores();
+    private String nomeArquivoVeiculo = "credenciais_veiculo.txt";
 
     public GereVeiculos() {
         veiculos = new ArrayList<>();
@@ -108,6 +112,30 @@ class GereVeiculos {
         // Lógica para calcular o tempo despendido em um veículo
         return 0;
     }
+
+    public void salvarVeiculo(Veiculo veiculo, String nomeArquivoVeiculos) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivoVeiculos, true))) {
+            String linha = veiculo.getCliente().getLogin() + ":" +
+                     veiculo.getMatricula() + ":" +
+                     veiculo.getMarca() + ":" +
+                     veiculo.getModelo() + ":" +
+                     veiculo.getAnoFabrico() + ":" +
+                     veiculo.getNumeroChassis() + ":" +
+                     String.join(",", veiculo.getListagemReparacoes()) + ":" +
+                     veiculo.getDataEntrada() + ":" +
+                     veiculo.getDataConclusao() + ":" +
+                     veiculo.getMecanicoResponsavel().getNome();
+
+            writer.write(linha);
+            writer.newLine();
+
+            System.out.println("Dados do veículo guardados com sucesso no ficheiro!");
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar os dados do veículo.");
+        }
+    }
+
+
     public void inserirVeiculo(Scanner scanner) {
         System.out.println("=== Inserir Veículo ===");
 
@@ -141,16 +169,22 @@ class GereVeiculos {
         System.out.print("Data de Conclusão: ");
         String dataConclusao = scanner.nextLine();
 
-        System.out.print("Mecânico Responsável: ");
-        String nomeMecanico = scanner.nextLine();
+        System.out.println("Lista de Mecânicos Disponíveis:");
+        List<Mecanico> mecanicos = gereMecanico.listarMecanicos();
+        for (int i = 0; i < mecanicos.size(); i++) {
+            System.out.println((i + 1) + ". " + mecanicos.get(i).getNome());
+        }
 
-        Mecanico mecanicoResponsavel = gereMecanico.getMecanicoByNome(nomeMecanico);
+        System.out.print("Selecione o número do Mecânico Responsável: ");
+        int mecanicoIndex = scanner.nextInt();
+        scanner.nextLine();
 
-        if (mecanicoResponsavel == null) {
-            System.out.println("Mecânico não encontrado. Veículo não inserido.");
+        if (mecanicoIndex < 1 || mecanicoIndex > mecanicos.size()) {
+            System.out.println("Número inválido. Veículo não inserido.");
             return;
         }
 
+        Mecanico mecanicoResponsavel = mecanicos.get(mecanicoIndex - 1);
         Cliente cliente = gereUtilizadores.getClienteByLogin(loginCliente);
 
         if (cliente == null) {
@@ -158,15 +192,15 @@ class GereVeiculos {
             return;
         }
 
-        // Create a new Veiculo object and add it to the GereVeiculos instance
         Veiculo veiculo = new Veiculo(cliente, matricula, marca, modelo, anoFabrico,
                 numeroChassis, listagemReparacoes, dataEntrada, dataConclusao,
                 mecanicoResponsavel);
         inserirVeiculo(veiculo);
 
+        salvarVeiculo(veiculo, nomeArquivoVeiculo);
+
         System.out.println("Veículo inserido com sucesso.");
     }
-
 
     public void removerVeiculo(Scanner scanner) {
         System.out.println("=== Remover Veículo ===");

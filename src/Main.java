@@ -14,8 +14,8 @@ public class Main {
         gereMecanicos = new GereMecanico();
         scanner = new Scanner(System.in);
 
-        //menuVeiculo();
-        realizarOperacoes();
+        menuVeiculo();
+        //realizarOperacoes();
     }
     private static void mostrarDespedida() {
         if (utilizadorAutenticado != null) {

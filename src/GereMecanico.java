@@ -15,6 +15,14 @@ class GereMecanico {
             }
         }
     }
+
+    public List<Mecanico> listarMecanicos() {
+        for (Mecanico mecanico : mecanicos) {
+            System.out.println(mecanico);
+        }
+        return null;
+    }
+
     public Mecanico loginMecanico(String login, String password, TipoUtilizador tipo) {
         for (Mecanico mecanico : mecanicos) {
             if (mecanico.getLogin().equals(login) && mecanico.getPassword().equals(password)) {
