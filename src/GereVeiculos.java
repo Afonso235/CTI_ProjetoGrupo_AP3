@@ -1,10 +1,8 @@
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.*;
 
 class GereVeiculos {
     private List<Veiculo> veiculos;
@@ -20,9 +18,6 @@ class GereVeiculos {
         veiculos.add(veiculo);
     }
 
-    public void removerVeiculo(Veiculo veiculo) {
-        veiculos.remove(veiculo);
-    }
 
     public List<Veiculo> listarVeiculos() {
         return veiculos;
@@ -112,7 +107,6 @@ class GereVeiculos {
         // Lógica para calcular o tempo despendido em um veículo
         return 0;
     }
-
     public void salvarVeiculo(Veiculo veiculo, String nomeArquivoVeiculos) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivoVeiculos, true))) {
             String linha = veiculo.getCliente().getLogin() + ":" +
@@ -203,18 +197,74 @@ class GereVeiculos {
         System.out.println("Veículo inserido com sucesso.");
     }
 
-
-
     public void removerVeiculo(Scanner scanner) {
-        System.out.println("=== Remover Veículo ===");
-        System.out.print("Informe a matrícula do veículo a ser removido: ");
+        System.out.println("Digite a matrícula do veículo a ser removido: ");
         String matricula = scanner.nextLine();
 
-        // Call the removeVeiculo method of GereVeiculos
-        // gereVeiculos.removerVeiculo(matricula);
+        Veiculo veiculoRemovido = null;
 
-        System.out.println("Veículo removido com sucesso.");
+        for (Veiculo veiculo : veiculos) {
+            if (veiculo.getMatricula().equals(matricula)) {
+                veiculoRemovido = veiculo;
+                break;
+            }
+        }
+
+        if (veiculoRemovido != null) {
+            veiculos.remove(veiculoRemovido);
+            System.out.println("Veículo removido com sucesso.");
+
+            // Remover veículo do arquivo
+            removerVeiculoDoArquivo(matricula);
+        } else {
+            System.out.println("Matrícula não encontrada.");
+        }
     }
+
+    private void removerVeiculoDoArquivo(String matricula) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivoVeiculo));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivoVeiculo + ".tmp"))) {
+            String line;
+            boolean linhaRemovida = false;
+            while ((line = reader.readLine()) != null) {
+                String[] campos = line.split(":");
+                if (campos.length >= 2 && campos[1].equals(matricula)) {
+                    linhaRemovida = true;
+                } else {
+                    writer.write(line);
+                    writer.newLine();
+                }
+            }
+            if (linhaRemovida) {
+                System.out.println("Veículo removido do arquivo com sucesso.");
+            } else {
+                System.out.println("Matrícula não encontrada no arquivo.");
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao ler ou escrever no arquivo de veículos.");
+        }
+
+        // Mover o arquivo temporário para substituir o arquivo original
+        try {
+            Files.move(Paths.get(nomeArquivoVeiculo + ".tmp"), Paths.get(nomeArquivoVeiculo), StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("Arquivo atualizado com sucesso.");
+        } catch (IOException e) {
+            System.out.println("Erro ao atualizar o arquivo.");
+        }
+    }
+
+
+    private boolean verificarExistenciaMatricula(String matricula) {
+        for (Veiculo veiculo : veiculos) {
+            if (veiculo.getMatricula().equals(matricula)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
 
   /*  private void listarVeiculos() {
         System.out.println("=== Listar Veículos ===");

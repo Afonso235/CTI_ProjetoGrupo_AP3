@@ -29,6 +29,13 @@ public class Main {
         System.out.println("0. xau");
         System.out.print("Opção: ");
     }
+    private static void exibirMenuCliente(){
+        System.out.println("===== Menu Cliente =====");
+        System.out.println("1. Pedir Serviço");
+        System.out.println("2. Consultar Serviços");
+        System.out.println("0. xau");
+        System.out.print("Opção: ");
+    }
     private static int lerOpcao() {
         int opcao = scanner.nextInt();
         scanner.nextLine();
