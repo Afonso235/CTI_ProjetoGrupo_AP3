@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="77c9f258-7ca2-44c5-9da7-f8eb17bab1d6" name="Changes" comment="gestor já aprova pedidos">
+    <list default="true" id="77c9f258-7ca2-44c5-9da7-f8eb17bab1d6" name="Changes" comment="changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GereUtilizadores.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GereUtilizadores.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,11 +19,14 @@
       </list>
     </option>
   </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="origin/BernardoCenas" />
+  </component>
   <component name="Git.Settings">
     <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="BernardoCenas" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -47,7 +48,9 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2QW4qUPpATqqLeSokhjoZdwKCJ6" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -57,6 +60,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "CENASCNEDAS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -84,6 +88,9 @@
       <list>
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.GestaoOficina" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.GestaoOficina" />
+        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -168,7 +175,49 @@
       <option name="project" value="LOCAL" />
       <updated>1687342406950</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="GereAplicacao.java">
+      <created>1687510777586</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1687510777586</updated>
+    </task>
+    <task id="LOCAL-00012" summary="ficheiro dat 100%">
+      <created>1687511043420</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1687511043420</updated>
+    </task>
+    <task id="LOCAL-00013" summary="ficheiro log">
+      <created>1687512573375</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1687512573375</updated>
+    </task>
+    <task id="LOCAL-00014" summary="ficheiro log e dat 100%">
+      <created>1687515577237</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1687515577237</updated>
+    </task>
+    <task id="LOCAL-00015" summary="changes">
+      <created>1687517148106</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1687517148106</updated>
+    </task>
+    <task id="LOCAL-00016" summary="changes">
+      <created>1687525026667</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1687525026667</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -194,6 +243,11 @@
     <MESSAGE value="ponto R4 feito" />
     <MESSAGE value="login true false" />
     <MESSAGE value="gestor já aprova pedidos" />
-    <option name="LAST_COMMIT_MESSAGE" value="gestor já aprova pedidos" />
+    <MESSAGE value="GereAplicacao.java" />
+    <MESSAGE value="ficheiro dat 100%" />
+    <MESSAGE value="ficheiro log" />
+    <MESSAGE value="ficheiro log e dat 100%" />
+    <MESSAGE value="changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="changes" />
   </component>
 </project>
