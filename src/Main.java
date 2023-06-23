@@ -7,8 +7,8 @@ public class Main {
     private static GereMecanico gereMecanicos;
     private static Mecanico mecanicoAtual;
     private static Scanner scanner;
-    private static Utilizador utilizadorAutenticado = new Utilizador();
-    private static GereAplicacao gereAplicacao = new GereAplicacao();
+    private static Utilizador utilizadorAutenticado;
+    private static GereAplicacao gereAplicacao;
     private static  SistemaInfo sistemaInfo;
 
     public static void main(String[] args) {
@@ -18,7 +18,7 @@ public class Main {
         sistemaInfo = new SistemaInfo();
         scanner = new Scanner(System.in);
         sistemaInfo.incrementarNumeroExecucoes();
-        GereAplicacao.carregarDados();
+        gereAplicacao.carregarDados();
 
         gereUtilizadores.carregarCredenciais();
         gereAplicacao.carregarDados();
@@ -78,7 +78,6 @@ public class Main {
         System.out.println("===== Menu Principal =====");
         System.out.println("1. Criar conta");
         System.out.println("2. Fazer login");
-        System.out.println("3. Consultar Log");
         System.out.println("0. Sair");
         System.out.print("Opção: ");
     }
@@ -144,7 +143,7 @@ public class Main {
         while (!sair) {
             System.out.println("\n===== Menu do Gestor =====");
             System.out.println("1. Aprovar pedidos");
-            System.out.println("2. Gerir utilizadores");
+            System.out.println("2. Gerir Log");
             System.out.println("3. Definições de Veiculos");
             System.out.println("4. Alterar Dados");
             System.out.println("0. Logout");
@@ -158,8 +157,9 @@ public class Main {
                     gereUtilizadores.processarPedidos();
                 }
                 case 2 -> {
-                    // Lógica para gerir utilizadores
-                }
+                    gereAplicacao.consultarLog();
+                    System.out.println("Pressione qualquer tecla para continuar...");
+                    new Scanner(System.in).nextLine();                }
                 case 3 -> {
                     menuVeiculo();
                 }
@@ -192,7 +192,7 @@ public class Main {
                 String loginUtilizadorSelecionado = utilizadorSelecionado.getLogin();
                 gereUtilizadores.definirAtivo(loginUtilizadorSelecionado, true);
                 System.out.println("Utilizador " + utilizadorSelecionado.getLogin() + " aprovado com sucesso.");
-                GereAplicacao.registarAcao("Gestor", "Aprovou login de utilizador");
+                gereAplicacao.registarAcao("Gestor", "Aprovou login de utilizador");
                 SistemaInfo.carregarInfo();
             } else {
                 System.out.println("Número inválido. Tente novamente.");
@@ -255,7 +255,6 @@ public class Main {
         switch (opcao) {
             case 1 -> criarConta();
             case 2 -> fazerLogin();
-            case 3 -> GereAplicacao.consultarLog();
             case 0 -> {
                 mostrarDespedida();
                 sair = true;

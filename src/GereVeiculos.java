@@ -1,12 +1,20 @@
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.File;
+import java.io.FileReader;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Date;
+import java.util.Scanner;
 
 class GereVeiculos {
     private List<Veiculo> veiculos;
+    private GereAplicacao gereAplicacao = new GereAplicacao();
     private GereMecanico gereMecanico = new GereMecanico();
     private GereUtilizadores gereUtilizadores = new GereUtilizadores();
     private String nomeArquivoVeiculo = "credenciais_veiculo.txt";
@@ -124,13 +132,11 @@ class GereVeiculos {
             writer.newLine();
 
             System.out.println("Dados do veículo guardados com sucesso no ficheiro!");
-            GereAplicacao.registarAcao("Gestor", "Inserir veiculo");
+            gereAplicacao.registarAcao("Gestor", "Inserir veiculo");
         } catch (IOException e) {
             System.out.println("Erro ao salvar os dados do veículo.");
         }
     }
-
-
     public void inserirVeiculo(Scanner scanner) {
         System.out.println("=== Inserir Veículo ===");
 

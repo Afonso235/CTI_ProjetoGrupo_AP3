@@ -13,7 +13,7 @@ import java.io.FileWriter;
 public class GereAplicacao {
     private static final String NOME_ARQUIVO = "dados_apl.dat";
     private static final String NOME_ARQUIVO_LOG = "log.txt";
-    public static void registarAcao(String utilizador, String acao) {
+    public void registarAcao(String utilizador, String acao) {
         try {
             File arquivoLog = new File(NOME_ARQUIVO_LOG);
 
@@ -43,7 +43,7 @@ public class GereAplicacao {
         }
     }
 
-    public static void consultarLog() {
+    public void consultarLog() {
         try {
             File arquivoLog = new File(NOME_ARQUIVO_LOG);
 
@@ -61,7 +61,7 @@ public class GereAplicacao {
             System.out.println("Erro ao consultar o log: " + e.getMessage());
         }
     }
-    public static void guardarDados() {
+    public void guardarDados() {
         try {
             File arquivo = new File(NOME_ARQUIVO);
             if (!arquivo.exists()) {
@@ -77,7 +77,7 @@ public class GereAplicacao {
     }
 
 
-    public static void carregarDados() {
+    public void carregarDados() {
         try {
             ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(NOME_ARQUIVO));
             inputStream.close();
