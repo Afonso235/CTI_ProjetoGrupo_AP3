@@ -12,6 +12,7 @@ public class GereUtilizadores {
     private List<Cliente> clientes;
     private List<Utilizador> utilizadores;
     private List<Utilizador> pedidosPendentes;
+    private GereAplicacao gereAplicacao = new GereAplicacao();
     private String nomeArquivoCredenciais = "credenciais_acesso.txt";
 
     public GereUtilizadores() {
@@ -119,7 +120,7 @@ public class GereUtilizadores {
             utilizador.setAtivo(ativo);
             salvarCredenciais();
             System.out.println("Status de ativação do utilizador '" + login + "' atualizado com sucesso!");
-            GereAplicacao.registarAcao("Gestor", "Admite um utilizador na base de dados");
+            gereAplicacao.registarAcao("Gestor", "Admite um utilizador na base de dados");
 
             try {
                 List<String> linhas = Files.readAllLines(Path.of(nomeArquivoCredenciais));
@@ -156,7 +157,7 @@ public class GereUtilizadores {
         } catch (IOException e) {
             System.out.println("Erro ao salvar as credenciais de acesso.");
         }
-        GereAplicacao.registarAcao("Utilizador", "Foi inserido no ficheiro credenciais_acesso.txt ");
+        gereAplicacao.registarAcao("Utilizador", "Foi inserido no ficheiro credenciais_acesso.txt ");
     }
 
 
@@ -169,7 +170,7 @@ public class GereUtilizadores {
                 utilizador.setEmail(aEmail);
                 salvarCredenciais();
                 System.out.println("Dados guardados com sucesso!");
-                GereAplicacao.registarAcao("Cliente", "Alterar Dados de login");
+                gereAplicacao.registarAcao("Cliente", "Alterar Dados de login");
                 return;
             }
         }

@@ -13,6 +13,10 @@ import java.io.FileWriter;
 public class GereAplicacao {
     private static final String NOME_ARQUIVO = "dados_apl.dat";
     private static final String NOME_ARQUIVO_LOG = "log.txt";
+
+    public GereAplicacao() {
+    }
+
     public void registarAcao(String utilizador, String acao) {
         try {
             File arquivoLog = new File(NOME_ARQUIVO_LOG);
@@ -37,9 +41,9 @@ public class GereAplicacao {
                 writer.write(conteudoLog.toString());
             }
 
-            System.out.println("Ação registrada com sucesso.");
+            System.out.println("Ação registada com sucesso.");
         } catch (IOException e) {
-            System.out.println("Erro ao registrar ação: " + e.getMessage());
+            System.out.println("Erro ao registar ação: " + e.getMessage());
         }
     }
 
