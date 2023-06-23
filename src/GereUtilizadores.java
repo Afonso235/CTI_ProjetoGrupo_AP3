@@ -18,8 +18,6 @@ public class GereUtilizadores {
         this.utilizadores = new ArrayList<>();
         this.pedidosPendentes = new ArrayList<>();
         this.clientes = new ArrayList<>();
-
-        carregarCredenciais();
     }
 
     public List<Utilizador> getUtilizadoresPorAprovarLogin() {
