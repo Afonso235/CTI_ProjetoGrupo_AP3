@@ -1,3 +1,5 @@
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 class Veiculo {
@@ -14,7 +16,7 @@ class Veiculo {
 
 
     public Veiculo(Cliente cliente, String matricula, String marca, String modelo, int anoFabrico,
-                   String numeroChassis, List<String> listagemReparacoes, Mecanico mecanicoResponsavel) {
+                   String numeroChassis, List<String> listagemReparacoes, String dataEntrada, Mecanico mecanicoResponsavel) {
         this.cliente = cliente;
         this.matricula = matricula;
         this.marca = marca;
@@ -22,6 +24,7 @@ class Veiculo {
         this.anoFabrico = anoFabrico;
         this.numeroChassis = numeroChassis;
         this.listagemReparacoes = listagemReparacoes;
+        this.dataEntrada = dataEntrada;
         this.mecanicoResponsavel = mecanicoResponsavel;
     }
 

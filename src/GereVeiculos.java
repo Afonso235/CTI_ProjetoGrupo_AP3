@@ -2,6 +2,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 class GereVeiculos {
@@ -117,7 +118,6 @@ class GereVeiculos {
                      veiculo.getNumeroChassis() + ":" +
                      String.join(",", veiculo.getListagemReparacoes()) + ":" +
                      veiculo.getDataEntrada() + ":" +
-                     veiculo.getDataConclusao() + ":" +
                      veiculo.getMecanicoResponsavel().getNome();
 
             writer.write(linha);
@@ -157,6 +157,11 @@ class GereVeiculos {
         String listagemReparacoesInput = scanner.nextLine();
         List<String> listagemReparacoes = Arrays.asList(listagemReparacoesInput.split(","));
 
+        SimpleDateFormat formatoData = new SimpleDateFormat("yyyy/MM/dd");
+        String dataAtual = formatoData.format(new Date());
+
+        System.out.println("Dia de entrada do veículo: " + dataAtual);
+
         System.out.println("Lista de Mecânicos Disponíveis:");
         List<Mecanico> mecanicos = gereMecanico.listarMecanicos();
         int counter = 1;
@@ -189,7 +194,7 @@ class GereVeiculos {
         gereUtilizadores.adicionarCliente(cliente);
 
         Veiculo veiculo = new Veiculo(cliente, matricula, marca, modelo, anoFabrico,
-                numeroChassis, listagemReparacoes, mecanicoResponsavel);
+                numeroChassis, listagemReparacoes, dataAtual, mecanicoResponsavel);
         inserirVeiculo(veiculo);
 
         salvarVeiculo(veiculo, nomeArquivoVeiculo);
@@ -201,67 +206,86 @@ class GereVeiculos {
         System.out.println("Digite a matrícula do veículo a ser removido: ");
         String matricula = scanner.nextLine();
 
-        Veiculo veiculoRemovido = null;
+        if (verificarExistenciaMatricula(matricula)) {
+            Veiculo veiculoRemovido = veiculos.stream()
+                    .filter(veiculo -> veiculo.getMatricula().equals(matricula))
+                    .findFirst()
+                    .orElse(null);
 
-        for (Veiculo veiculo : veiculos) {
-            if (veiculo.getMatricula().equals(matricula)) {
-                veiculoRemovido = veiculo;
-                break;
-            }
-        }
-
-        if (veiculoRemovido != null) {
             veiculos.remove(veiculoRemovido);
-            System.out.println("Veículo removido com sucesso.");
-
             // Remover veículo do arquivo
             removerVeiculoDoArquivo(matricula);
+
+            System.out.println("Veículo removido com sucesso.");
         } else {
             System.out.println("Matrícula não encontrada.");
         }
     }
 
+
+
+
     private void removerVeiculoDoArquivo(String matricula) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivoVeiculo));
-             BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivoVeiculo + ".tmp"))) {
+        File arquivoVeiculos = new File(nomeArquivoVeiculo);
+        File arquivoTemporario = new File(nomeArquivoVeiculo + ".tmp");
+
+        boolean linhaRemovida = false;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(arquivoVeiculos));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(arquivoTemporario))) {
+
             String line;
-            boolean linhaRemovida = false;
+
             while ((line = reader.readLine()) != null) {
                 String[] campos = line.split(":");
-                if (campos.length >= 2 && campos[1].equals(matricula)) {
-                    linhaRemovida = true;
-                } else {
-                    writer.write(line);
-                    writer.newLine();
+                if (campos.length >= 2) {
+                    String matriculaVeiculo = campos[1].trim();
+                    if (matriculaVeiculo.equals(matricula)) {
+                        linhaRemovida = true;
+                        continue;
+                    }
                 }
+
+                writer.write(line);
+                writer.newLine();
             }
-            if (linhaRemovida) {
-                System.out.println("Veículo removido do arquivo com sucesso.");
-            } else {
-                System.out.println("Matrícula não encontrada no arquivo.");
-            }
+
         } catch (IOException e) {
             System.out.println("Erro ao ler ou escrever no arquivo de veículos.");
+            return;
         }
 
-        // Mover o arquivo temporário para substituir o arquivo original
-        try {
-            Files.move(Paths.get(nomeArquivoVeiculo + ".tmp"), Paths.get(nomeArquivoVeiculo), StandardCopyOption.REPLACE_EXISTING);
-            System.out.println("Arquivo atualizado com sucesso.");
-        } catch (IOException e) {
-            System.out.println("Erro ao atualizar o arquivo.");
+        if (linhaRemovida) {
+            if (arquivoVeiculos.delete() && arquivoTemporario.renameTo(arquivoVeiculos)) {
+                System.out.println("Veículo removido do arquivo com sucesso.");
+            } else {
+                System.out.println("Falha ao atualizar o arquivo de veículos.");
+            }
+        } else {
+            System.out.println("Matrícula não encontrada no arquivo.");
         }
     }
+
 
 
     private boolean verificarExistenciaMatricula(String matricula) {
-        for (Veiculo veiculo : veiculos) {
-            if (veiculo.getMatricula().equals(matricula)) {
-                return true;
+        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivoVeiculo))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] campos = line.split(":");
+                if (campos.length >= 2) {
+                    String matriculaVeiculo = campos[1].trim();
+                    if (matriculaVeiculo.equals(matricula)) {
+                        return true;
+                    }
+                }
             }
+        } catch (IOException e) {
+            System.out.println("Erro ao ler o arquivo de veículos.");
         }
         return false;
     }
+
 
 
 
