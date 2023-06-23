@@ -10,20 +10,25 @@ public class Main {
     private static Scanner scanner;
     private static Utilizador utilizadorAutenticado = new Utilizador();
     private static GereAplicacao gereAplicacao = new GereAplicacao();
+    private static  SistemaInfo sistemaInfo;
 
     public static void main(String[] args) {
         gereUtilizadores = new GereUtilizadores();
         gereMecanicos = new GereMecanico();
+        sistemaInfo = new SistemaInfo();
         scanner = new Scanner(System.in);
-
-        gereAplicacao.carregarDados();
+        sistemaInfo.incrementarNumeroExecucoes();
+        GereAplicacao.carregarDados();
         realizarOperacoes();
+        sistemaInfo.guardarInfo();
     }
     private static void mostrarDespedida() {
-        gereAplicacao.guardarDados();
+        GereAplicacao.guardarDados();
         if (utilizadorAutenticado != null) {
+            sistemaInfo.setUltimoUtilizadorAcesso("Último Utilizador");
             System.out.println("Adeus " + utilizadorAutenticado.getLogin());
         } else {
+            sistemaInfo.setUltimoUtilizadorAcesso("Último Utilizador");
             System.out.println("Adeus!");
         }
     }
@@ -94,10 +99,12 @@ public class Main {
             switch (tipo) {
                 case 1:
                     ativo = false;
+                    SistemaInfo.carregarInfo();
                     gereUtilizadores.criarConta(login, password, nome, email, TipoUtilizador.CLIENTE);
                     break;
                 case 2:
                     ativo = false;
+                    SistemaInfo.carregarInfo();
                     //gereMecanicos.loginMecanico(login, password, TipoUtilizador.MECANICO);
                     iniciarMecanico();
                     gereUtilizadores.criarConta(login, password, nome, email, TipoUtilizador.MECANICO);
@@ -177,6 +184,7 @@ public class Main {
                 gereUtilizadores.definirAtivo(loginUtilizadorSelecionado, true);
                 System.out.println("Utilizador " + utilizadorSelecionado.getLogin() + " aprovado com sucesso.");
                 GereAplicacao.registarAcao("Gestor", "Aprovou login de utilizador");
+                SistemaInfo.carregarInfo();
             } else {
                 System.out.println("Número inválido. Tente novamente.");
             }
