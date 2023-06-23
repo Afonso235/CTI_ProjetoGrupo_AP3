@@ -38,7 +38,9 @@ public class Main {
 
         switch (opcao) {
             case 1 -> {
-                //pedir serviço
+                GereServico gereServico = new GereServico();
+                gereServico.solicitarServico();
+                System.out.println();
             }
             case 2 -> {
                 //consultar serviço

@@ -8,6 +8,8 @@ class Mecanico extends Utilizador {
         super(login, password, nome, ativo, email, TipoUtilizador.MECANICO);
         servicosRealizados = new ArrayList<>();
     }
+
+
     public void consultarServicos() {
         // Implement logic to allow mechanics to view their services
     }
