@@ -9,15 +9,18 @@ public class Main {
     private static Mecanico mecanicoAtual;
     private static Scanner scanner;
     private static Utilizador utilizadorAutenticado = new Utilizador();
+    private static GereAplicacao gereAplicacao = new GereAplicacao();
 
     public static void main(String[] args) {
         gereUtilizadores = new GereUtilizadores();
         gereMecanicos = new GereMecanico();
         scanner = new Scanner(System.in);
 
+        gereAplicacao.carregarDados();
         realizarOperacoes();
     }
     private static void mostrarDespedida() {
+        gereAplicacao.guardarDados();
         if (utilizadorAutenticado != null) {
             System.out.println("Adeus " + utilizadorAutenticado.getLogin());
         } else {

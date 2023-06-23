@@ -4,13 +4,19 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.File;
 
 public class GereAplicacao {
 
     private static final String NOME_ARQUIVO = "dados_apl.dat";
-    private static void guardarDados() {
+    public static void guardarDados() {
         try {
-            ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(NOME_ARQUIVO));
+            File arquivo = new File(NOME_ARQUIVO);
+            if (!arquivo.exists()) {
+                arquivo.createNewFile();
+            }
+
+            ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(arquivo));
             outputStream.close();
             System.out.println("Os dados foram guardados com sucesso.");
         } catch (IOException e) {
@@ -18,7 +24,8 @@ public class GereAplicacao {
         }
     }
 
-    private static void carregarDados() {
+
+    public static void carregarDados() {
         try {
             ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(NOME_ARQUIVO));
             inputStream.close();
