@@ -5,7 +5,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -159,7 +158,7 @@ public class GereUtilizadores {
         } catch (IOException e) {
             System.out.println("Erro ao salvar as credenciais de acesso.");
         }
-        GereAplicacao.registarAcao("Utilizador", "Foi inserido no sistema");
+        GereAplicacao.registarAcao("Utilizador", "Foi inserido no ficheiro credenciais_acesso.txt ");
     }
 
 
