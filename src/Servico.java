@@ -2,7 +2,6 @@ import java.util.List;
 
 class Servico {
     private Mecanico mecanicoResponsavel;
-    private Mecanico mecanicoPrincipal;
     private String data;
     private int tempoDespendido;
     private double custoReparacao;
@@ -12,11 +11,10 @@ class Servico {
     private EstadoServico estado;
     private List<SubTarefa> subTarefas;
 
-    public Servico(Mecanico mecanicoResponsavel, Mecanico mecanicoPrincipal, String data, int tempoDespendido, double custoReparacao,
+    public Servico(Mecanico mecanicoResponsavel, String data, int tempoDespendido, double custoReparacao,
                    String descricao, List<Peca> pecasUsadas, TipoServico tipo, EstadoServico estado,
                    List<SubTarefa> subTarefas) {
         this.mecanicoResponsavel = mecanicoResponsavel;
-        this.mecanicoPrincipal = mecanicoPrincipal;
         this.data = data;
         this.tempoDespendido = tempoDespendido;
         this.custoReparacao = custoReparacao;
@@ -35,14 +33,6 @@ class Servico {
 
     public void setMecanicoResponsavel(Mecanico mecanicoResponsavel) {
         this.mecanicoResponsavel = mecanicoResponsavel;
-    }
-
-    public Mecanico getMecanicoPrincipal() {
-        return mecanicoPrincipal;
-    }
-
-    public void setMecanicoPrincipal(Mecanico mecanicoPrincipal) {
-        this.mecanicoPrincipal = mecanicoPrincipal;
     }
 
     public String getData() {
@@ -119,6 +109,7 @@ enum TipoServico {
 
 // Enumeração para os estados do serviço
 enum EstadoServico {
+    PENDENTE,
     ACEITE,
     EM_ANDAMENTO,
     CONCLUIDO,

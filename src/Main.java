@@ -33,34 +33,41 @@ public class Main {
         }
     }
 
-    private static void exibirMenuCliente(){
+    private static void exibirMenuCliente() {
         boolean sair = false;
-        System.out.println("===== Menu Cliente =====");
-        System.out.println("1. Pedir Serviço");
-        System.out.println("2. Consultar Serviços");
-        System.out.println("3. Alterar Dados");
-        System.out.println("0. Sair");
-        System.out.print("Opção: ");
 
-        int opcao = lerOpcao();
+        while (!sair) {
+            System.out.println("===== Menu Cliente =====");
+            System.out.println("1. Pedir Serviço");
+            System.out.println("2. Consultar Serviços");
+            System.out.println("3. Alterar Dados");
+            System.out.println("0. Sair");
+            System.out.print("Opção: ");
 
-        switch (opcao) {
-            case 1 -> {
-                //pedir serviço
+            GereServico gereServico = new GereServico();
+            int opcao = lerOpcao();
+
+            switch (opcao) {
+                case 1 -> {
+                    gereServico.solicitarServico();
+                    System.out.println();
+                }
+                case 2 -> {
+                    gereServico.consultarServicos();
+                    System.out.println();
+                }
+                case 3 -> {
+                    alterarDados();
+                }
+                case 0 -> {
+                    sair = true;
+                    realizarOperacoes();
+                }
+                default -> System.out.println("Opção inválida. Tente novamente.");
             }
-            case 2 -> {
-                //consultar serviço
-            }
-            case 3 -> {
-                alterarDados();
-            }
-            case 0 -> {
-                sair = true;
-                realizarOperacoes();
-            }
-            default -> System.out.println("Opção inválida. Tente novamente.");
         }
     }
+
     private static int lerOpcao() {
         int opcao = scanner.nextInt();
         scanner.nextLine();
