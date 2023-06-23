@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -121,6 +122,7 @@ public class GereUtilizadores {
             utilizador.setAtivo(ativo);
             salvarCredenciais();
             System.out.println("Status de ativação do utilizador '" + login + "' atualizado com sucesso!");
+            GereAplicacao.registarAcao("Gestor", "Admite um utilizador na base de dados");
 
             try {
                 List<String> linhas = Files.readAllLines(Path.of(nomeArquivoCredenciais));
@@ -157,6 +159,7 @@ public class GereUtilizadores {
         } catch (IOException e) {
             System.out.println("Erro ao salvar as credenciais de acesso.");
         }
+        GereAplicacao.registarAcao("Utilizador", "Foi inserido no sistema");
     }
 
 
@@ -169,6 +172,7 @@ public class GereUtilizadores {
                 utilizador.setEmail(aEmail);
                 salvarCredenciais();
                 System.out.println("Dados guardados com sucesso!");
+                GereAplicacao.registarAcao("Cliente", "Alterar Dados de login");
                 return;
             }
         }

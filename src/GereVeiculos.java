@@ -124,6 +124,7 @@ class GereVeiculos {
             writer.newLine();
 
             System.out.println("Dados do veículo guardados com sucesso no ficheiro!");
+            GereAplicacao.registarAcao("Gestor", "Inserir veiculo");
         } catch (IOException e) {
             System.out.println("Erro ao salvar os dados do veículo.");
         }

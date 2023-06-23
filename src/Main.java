@@ -65,6 +65,7 @@ public class Main {
         System.out.println("===== Menu Principal =====");
         System.out.println("1. Criar conta");
         System.out.println("2. Fazer login");
+        System.out.println("3. Consultar Log");
         System.out.println("0. Sair");
         System.out.print("Opção: ");
     }
@@ -175,6 +176,7 @@ public class Main {
                 String loginUtilizadorSelecionado = utilizadorSelecionado.getLogin();
                 gereUtilizadores.definirAtivo(loginUtilizadorSelecionado, true);
                 System.out.println("Utilizador " + utilizadorSelecionado.getLogin() + " aprovado com sucesso.");
+                GereAplicacao.registarAcao("Gestor", "Aprovou login de utilizador");
             } else {
                 System.out.println("Número inválido. Tente novamente.");
             }
@@ -235,7 +237,8 @@ public class Main {
 
         switch (opcao) {
             case 1 -> criarConta();
-            case 2 -> fazerLogin(); // Armazena o utilizador autenticado na variável global
+            case 2 -> fazerLogin();
+            case 3 -> GereAplicacao.consultarLog();
             case 0 -> {
                 mostrarDespedida();
                 sair = true;
@@ -393,7 +396,6 @@ public class Main {
         gereMecanicos.adicionarMecanico(mecanico);
         System.out.println("Mecânico criado com sucesso!");
     }
-
     public static void alterarDados() {
         System.out.println("Insira a nova Password: ");
         String newPassword = scanner.nextLine();
@@ -403,7 +405,6 @@ public class Main {
         String newEmail = scanner.nextLine();
         gereUtilizadores.alterarInfos(utilizadorAutenticado.getLogin(), newPassword, newNome, newEmail);
     }
-
     private static void realizarLoginMecanico() {
         System.out.print("Login: ");
         String login = scanner.nextLine();

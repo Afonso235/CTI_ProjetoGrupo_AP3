@@ -5,10 +5,62 @@ import java.io.ObjectOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 
 public class GereAplicacao {
-
     private static final String NOME_ARQUIVO = "dados_apl.dat";
+    private static final String NOME_ARQUIVO_LOG = "log.txt";
+    public static void registarAcao(String utilizador, String acao) {
+        try {
+            File arquivoLog = new File(NOME_ARQUIVO_LOG);
+
+            StringBuilder conteudoLog = new StringBuilder();
+            if (arquivoLog.exists()) {
+                try (BufferedReader reader = new BufferedReader(new FileReader(arquivoLog))) {
+                    String linha;
+                    while ((linha = reader.readLine()) != null) {
+                        conteudoLog.append(linha).append("\n");
+                    }
+                }
+            }
+
+
+            // Adicionar a nova ação no início do conteúdo com o prefixo correto
+            String novaAcao = utilizador + " " + acao + "\n";
+            conteudoLog.insert(0, novaAcao);
+
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(arquivoLog))) {
+                writer.write(conteudoLog.toString());
+            }
+
+            System.out.println("Ação registrada com sucesso.");
+        } catch (IOException e) {
+            System.out.println("Erro ao registrar ação: " + e.getMessage());
+        }
+    }
+
+    public static void consultarLog() {
+        try {
+            File arquivoLog = new File(NOME_ARQUIVO_LOG);
+
+            if (arquivoLog.exists()) {
+                try (BufferedReader reader = new BufferedReader(new FileReader(arquivoLog))) {
+                    String linha;
+                    while ((linha = reader.readLine()) != null) {
+                        System.out.println(linha);
+                    }
+                }
+            } else {
+                System.out.println("O arquivo de log não existe ou está vazio.");
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao consultar o log: " + e.getMessage());
+        }
+    }
     public static void guardarDados() {
         try {
             File arquivo = new File(NOME_ARQUIVO);
