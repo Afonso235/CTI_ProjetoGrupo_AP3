@@ -222,9 +222,6 @@ class GereVeiculos {
         }
     }
 
-
-
-
     private void removerVeiculoDoArquivo(String matricula) {
         File arquivoVeiculos = new File(nomeArquivoVeiculo);
         File arquivoTemporario = new File(nomeArquivoVeiculo + ".tmp");
@@ -265,9 +262,6 @@ class GereVeiculos {
             System.out.println("Matrícula não encontrada no arquivo.");
         }
     }
-
-
-
     private boolean verificarExistenciaMatricula(String matricula) {
         try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivoVeiculo))) {
             String line;
@@ -285,10 +279,6 @@ class GereVeiculos {
         }
         return false;
     }
-
-
-
-
 
   /*  private void listarVeiculos() {
         System.out.println("=== Listar Veículos ===");

@@ -8,6 +8,8 @@ import java.util.Scanner;
 
 public class GereServico {
     private List<Servico> servicos;
+    private GereAplicacao gereAplicacao;
+
 
     public GereServico() {
         servicos = new ArrayList<>();

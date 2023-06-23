@@ -7,9 +7,12 @@ import java.io.FileNotFoundException;
 import java.io.File;
 
 public class GereAplicacao {
-
     private static final String NOME_ARQUIVO = "dados_apl.dat";
-    public static void guardarDados() {
+
+    public GereAplicacao() {
+    }
+
+    public void guardarDados() {
         try {
             File arquivo = new File(NOME_ARQUIVO);
             if (!arquivo.exists()) {
@@ -25,7 +28,7 @@ public class GereAplicacao {
     }
 
 
-    public static void carregarDados() {
+    public void carregarDados() {
         try {
             ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(NOME_ARQUIVO));
             inputStream.close();

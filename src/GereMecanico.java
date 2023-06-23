@@ -7,11 +7,11 @@ import java.util.stream.Collectors;
 
 class GereMecanico {
     private List<Mecanico> mecanicos;
+    private GereAplicacao gereAplicacao;
     private String nomeArquivo = "credenciais_acesso.txt";
 
     public GereMecanico() {
         mecanicos = new ArrayList<>();
-        listarMecanicos();
     }
 
     public void listarMecanicosAssociadosAoServico(Servico servico) {

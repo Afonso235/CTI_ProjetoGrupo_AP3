@@ -1,4 +1,3 @@
-import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Scanner;
 
@@ -9,13 +8,15 @@ public class Main {
     private static Mecanico mecanicoAtual;
     private static Scanner scanner;
     private static Utilizador utilizadorAutenticado = new Utilizador();
-    private static GereAplicacao gereAplicacao = new GereAplicacao();
+    private static GereAplicacao gereAplicacao;
 
     public static void main(String[] args) {
         gereUtilizadores = new GereUtilizadores();
         gereMecanicos = new GereMecanico();
+        gereAplicacao = new GereAplicacao();
         scanner = new Scanner(System.in);
 
+        gereUtilizadores.carregarCredenciais();
         gereAplicacao.carregarDados();
         realizarOperacoes();
     }
@@ -27,7 +28,6 @@ public class Main {
             System.out.println("Adeus!");
         }
     }
-
     private static void exibirMenuCliente() {
         boolean sair = false;
 
@@ -62,7 +62,6 @@ public class Main {
             }
         }
     }
-
     private static int lerOpcao() {
         int opcao = scanner.nextInt();
         scanner.nextLine();
@@ -138,7 +137,7 @@ public class Main {
             System.out.println("2. Gerir utilizadores");
             System.out.println("3. Definições de Veiculos");
             System.out.println("4. Alterar Dados");
-            System.out.println("0. Sair");
+            System.out.println("0. Logout");
             System.out.print("Opção: ");
             int opcao = lerOpcao();
 
@@ -159,6 +158,7 @@ public class Main {
                 }
                 case 0 -> {
                     sair = true;
+                    utilizadorAutenticado = null;
                     realizarOperacoes();
                 }
                 default -> System.out.println("Opção inválida. Tente novamente.");
@@ -269,7 +269,7 @@ public class Main {
             System.out.println("9. Pesquisar veículos por peça");
             System.out.println("10. Pesquisar veículos após um determinado ano");
             System.out.println("11. Pesquisar veículos com tempo despendido superior a um limite");
-            System.out.println("0. Sair");
+            System.out.println("0. Voltar");
             System.out.print("Escolha uma opção: ");
             choice = scanner.nextInt();
             scanner.nextLine(); // Consume the newline character
@@ -309,7 +309,7 @@ public class Main {
                     gereVeiculos.pesquisarVeiculosComTempoDespendidoSuperior(scanner);
                     break;
                 case 0:
-                    System.out.println("Saindo do programa...");
+                    exibirMenuGestor();
                     break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
