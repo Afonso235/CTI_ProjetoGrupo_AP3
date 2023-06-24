@@ -19,9 +19,7 @@ public class Main {
         scanner = new Scanner(System.in);
         sistemaInfo.incrementarNumeroExecucoes();
         gereAplicacao.carregarDados();
-
         gereUtilizadores.carregarCredenciais();
-        gereAplicacao.carregarDados();
         realizarOperacoes();
         sistemaInfo.guardarInfo();
     }
@@ -113,13 +111,13 @@ public class Main {
                     ativo = false;
                     SistemaInfo.carregarInfo();
                     //gereMecanicos.loginMecanico(login, password, TipoUtilizador.MECANICO);
-                    iniciarMecanico();
+                    //iniciarMecanico();
                     gereUtilizadores.criarConta(login, password, nome, email, TipoUtilizador.MECANICO);
                     break;
                 case 3:
                     Utilizador gestor = new Utilizador(login, password, nome, true, email, TipoUtilizador.GESTOR);
                     gereUtilizadores.getUtilizadores().add(gestor);
-                    gereUtilizadores.salvarCredenciais();
+                    gereUtilizadores.salvarCredenciais(utilizadorAutenticado);
                     System.out.println("Conta de gestor criada com sucesso!");
 
                     break;
@@ -146,6 +144,7 @@ public class Main {
             System.out.println("2. Gerir Log");
             System.out.println("3. Definições de Veiculos");
             System.out.println("4. Alterar Dados");
+
             System.out.println("0. Logout");
             System.out.print("Opção: ");
             int opcao = lerOpcao();
@@ -242,9 +241,6 @@ public class Main {
         }
     }
     private static void realizarOperacoes() {
-        boolean sair = false;
-        boolean xau = false;
-
         while (gereUtilizadores.getUtilizadores() == null || gereUtilizadores.getUtilizadores().isEmpty()) {
             System.out.println("Nenhum utilizador encontrado, por favor criar conta!");
             criarConta();
@@ -255,10 +251,7 @@ public class Main {
         switch (opcao) {
             case 1 -> criarConta();
             case 2 -> fazerLogin();
-            case 0 -> {
-                mostrarDespedida();
-                sair = true;
-            }
+            case 0 -> mostrarDespedida();
             default -> System.out.println("Opção inválida. Tente novamente.");
         }
     }

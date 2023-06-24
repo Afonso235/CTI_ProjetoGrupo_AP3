@@ -1,9 +1,6 @@
-import java.util.HashSet;
-import java.util.Set;
 
 class Utilizador {
-    private static Set<String> logins = new HashSet<>();
-    private static Set<String> emails = new HashSet<>();
+
     private String login;
     private String password;
     private String nome;
@@ -15,25 +12,13 @@ class Utilizador {
     private String contactoTelefonico;
 
     public Utilizador(String login, String password, String nome, boolean ativo, String email, TipoUtilizador tipo) {
-        /*if (logins.contains(login)) {
-            throw new IllegalArgumentException("Login already exists: " + login);
-        }
-        if (emails.contains(email)) {
-            throw new IllegalArgumentException("Email already exists: " + email);
-        }*/
-
         this.login = login;
         this.password = password;
         this.nome = nome;
         this.ativo = ativo;
         this.email = email;
         this.tipo = tipo;
-
-        logins.add(login);
-        emails.add(email);
     }
-
-
     public Utilizador() {
     }
     public Utilizador(String nome, String nif, String morada, String contactoTelefonico) {

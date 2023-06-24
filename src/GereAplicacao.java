@@ -16,7 +16,6 @@ public class GereAplicacao {
 
     public GereAplicacao() {
     }
-
     public void registarAcao(String utilizador, String acao) {
         try {
             File arquivoLog = new File(NOME_ARQUIVO_LOG);
@@ -30,13 +29,8 @@ public class GereAplicacao {
                     }
                 }
             }
-
-
-            // Adicionar a nova ação no início do conteúdo com o prefixo correto
             String novaAcao = utilizador + " " + acao + "\n";
             conteudoLog.insert(0, novaAcao);
-
-
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(arquivoLog))) {
                 writer.write(conteudoLog.toString());
             }

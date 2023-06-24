@@ -194,6 +194,7 @@ class GereVeiculos {
 
         if (cliente == null) {
             System.out.println("Cliente não encontrado. Veículo não inserido.");
+            gereAplicacao.registarAcao("Gestor", "Cliente não encontrado. Veiculo não inserido.");
             return;
         }
 
@@ -206,7 +207,7 @@ class GereVeiculos {
 
         salvarVeiculo(veiculo, nomeArquivoVeiculo);
 
-        System.out.println("Veículo inserido com sucesso.");
+        gereAplicacao.registarAcao("Gestor","Veículo inserido com sucesso.");
     }
 
     public void removerVeiculo(Scanner scanner) {
@@ -255,18 +256,18 @@ class GereVeiculos {
             }
 
         } catch (IOException e) {
-            System.out.println("Erro ao ler ou escrever no arquivo de veículos.");
+            gereAplicacao.registarAcao("Gestor","Erro ao ler ou escrever no arquivo de veículos.");
             return;
         }
 
         if (linhaRemovida) {
             if (arquivoVeiculos.delete() && arquivoTemporario.renameTo(arquivoVeiculos)) {
-                System.out.println("Veículo removido do arquivo com sucesso.");
+                gereAplicacao.registarAcao("Gestor","Veículo removido do arquivo com sucesso.");
             } else {
-                System.out.println("Falha ao atualizar o arquivo de veículos.");
+                gereAplicacao.registarAcao("Gestor","Falha ao atualizar o arquivo de veículos.");
             }
         } else {
-            System.out.println("Matrícula não encontrada no arquivo.");
+            gereAplicacao.registarAcao("Gestor","Matrícula não encontrada no arquivo.");
         }
     }
     private boolean verificarExistenciaMatricula(String matricula) {
