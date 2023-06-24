@@ -374,10 +374,11 @@ public class Main {
                     gereVeiculos.removerVeiculo(scanner);
                     break;
                 case 3:
-                    List<Veiculo> todosVeiculos = gereVeiculos.listarVeiculos("credenciais_veiculo.txt");
+                    gereVeiculos.listarVeiculos("credenciais_veiculo.txt");
+                    /*List<Veiculo> todosVeiculos = gereVeiculos.listarVeiculos("credenciais_veiculo.txt");
                     for (Veiculo veiculo : todosVeiculos) {
                         System.out.println(veiculo);
-                    }
+                    }*/
                     System.out.println("Pressione a tecla enter para voltar...");
                     new Scanner(System.in).nextLine();
                     menuVeiculo();

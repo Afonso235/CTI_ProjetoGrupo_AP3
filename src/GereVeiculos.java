@@ -192,7 +192,6 @@ class GereVeiculos {
 
         Veiculo veiculo = new Veiculo(cliente, matricula, marca, modelo, anoFabrico,
                 numeroChassis, listagemReparacoes, dataAtual, mecanicoResponsavel);
-        inserirVeiculo(veiculo);
 
         salvarVeiculo(veiculo, nomeArquivoVeiculo);
 
