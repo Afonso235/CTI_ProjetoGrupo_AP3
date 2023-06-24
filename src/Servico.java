@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Objects;
 
 class Servico {
     private Mecanico mecanicoResponsavel;
@@ -10,10 +11,11 @@ class Servico {
     private TipoServico tipo;
     private EstadoServico estado;
     private List<SubTarefa> subTarefas;
+    private boolean aceite;
 
     public Servico(Mecanico mecanicoResponsavel, String data, int tempoDespendido, double custoReparacao,
                    String descricao, List<Peca> pecasUsadas, TipoServico tipo, EstadoServico estado,
-                   List<SubTarefa> subTarefas) {
+                   List<SubTarefa> subTarefas, boolean aceite) {
         this.mecanicoResponsavel = mecanicoResponsavel;
         this.data = data;
         this.tempoDespendido = tempoDespendido;
@@ -23,9 +25,15 @@ class Servico {
         this.tipo = tipo;
         this.estado = estado;
         this.subTarefas = subTarefas;
+        this.aceite = aceite;
     }
 
     // Getters e setters
+
+
+    public void setAceite(boolean aceite) {
+        this.aceite = aceite;
+    }
 
     public Mecanico getMecanicoResponsavel() {
         return mecanicoResponsavel;
@@ -98,7 +106,25 @@ class Servico {
     public void setSubTarefas(List<SubTarefa> subTarefas) {
         this.subTarefas = subTarefas;
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mecanicoResponsavel.getNome(), data, descricao);
+    }
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Servico servico = (Servico) o;
+        return Objects.equals(mecanicoResponsavel.getNome(), servico.mecanicoResponsavel.getNome()) &&
+                Objects.equals(data, servico.data) &&
+                Objects.equals(descricao, servico.descricao);
+    }
 }
+
+
+
+
 
 // Enumeração para os tipos de serviço
 enum TipoServico {

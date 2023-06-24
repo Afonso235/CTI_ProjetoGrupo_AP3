@@ -6,11 +6,7 @@ import java.io.IOException;
 import java.io.File;
 import java.io.FileReader;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Date;
-import java.util.Scanner;
+import java.util.*;
 
 class GereVeiculos {
     private List<Veiculo> veiculos;
@@ -286,6 +282,7 @@ class GereVeiculos {
         }
         return false;
     }
+
 
   /*  private void listarVeiculos() {
         System.out.println("=== Listar Veículos ===");

@@ -13,6 +13,10 @@ import java.io.FileWriter;
 public class GereAplicacao {
     private static final String NOME_ARQUIVO = "dados_apl.dat";
     private static final String NOME_ARQUIVO_LOG = "log.txt";
+
+    public GereAplicacao() {
+    }
+
     public void registarAcao(String utilizador, String acao) {
         try {
             File arquivoLog = new File(NOME_ARQUIVO_LOG);
