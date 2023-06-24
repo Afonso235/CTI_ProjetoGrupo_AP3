@@ -3,5 +3,8 @@ class Cliente extends Utilizador {
         super(login, password, nome, ativo, email, TipoUtilizador.CLIENTE);
     }
 
+    public Cliente(String login) {
+    }
+
     // Outros métodos específicos para Cliente
 }

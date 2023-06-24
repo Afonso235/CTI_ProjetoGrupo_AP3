@@ -11,12 +11,15 @@ public class Main {
     private static GereAplicacao gereAplicacao;
     private static  SistemaInfo sistemaInfo;
 
+
+
     public static void main(String[] args) {
         gereUtilizadores = new GereUtilizadores();
         gereMecanicos = new GereMecanico();
         gereAplicacao = new GereAplicacao();
         sistemaInfo = new SistemaInfo();
         scanner = new Scanner(System.in);
+        gereVeiculos = new GereVeiculos();
         sistemaInfo.incrementarNumeroExecucoes();
         gereAplicacao.carregarDados();
 
@@ -183,7 +186,7 @@ public class Main {
                 }
                 case 4 -> {
                     gereAplicacao.consultarLog();
-                    System.out.println("Pressione qualquer tecla para continuar...");
+                    System.out.println("Pressione a tecla enter para voltar...");
                     new Scanner(System.in).nextLine();
                 }
                 case 5 -> {
@@ -288,12 +291,21 @@ public class Main {
             }
             case 3 -> {
                 gereUtilizadores.ordenarUtilizadoresPorNome();
+                System.out.println("Pressione a tecla enter para voltar...");
+                new Scanner(System.in).nextLine();
+                realizarOperacoes();
             }
             case 4 -> {
                 System.out.println("4. Ordenar todos os veiculos por matricula");
+                System.out.println("Pressione a tecla enter para voltar...");
+                new Scanner(System.in).nextLine();
+                realizarOperacoes();
             }
             case 5 -> {
                 gereUtilizadores.listarTodosUtilizadores();
+                System.out.println("Pressione a tecla enter para voltar...");
+                new Scanner(System.in).nextLine();
+                realizarOperacoes();
             }
             case 6 -> {
                 System.out.println("Utilizador tipo Cliente:");
@@ -302,12 +314,24 @@ public class Main {
                 gereUtilizadores.listarUtilizadoresPorTipo(TipoUtilizador.GESTOR);
                 System.out.println("Utilizador tipo Mecanico:");
                 gereUtilizadores.listarUtilizadoresPorTipo(TipoUtilizador.MECANICO);
+                System.out.println("Pressione a tecla enter para voltar...");
+                new Scanner(System.in).nextLine();
+                realizarOperacoes();
             }
             case 7 -> {
-                System.out.println("7. Listar todos os veiculos");
+                List<Veiculo> todosVeiculos = gereVeiculos.listarVeiculos("credenciais_veiculo.txt");
+                for (Veiculo veiculo : todosVeiculos) {
+                    System.out.println(veiculo);
+                }
+                System.out.println("Pressione a tecla enter para voltar...");
+                new Scanner(System.in).nextLine();
+                realizarOperacoes();
             }
             case 8 -> {
                 System.out.println("8. Listar todos os mecanicos associados a um serviço");
+                System.out.println("Pressione a tecla enter para voltar...");
+                new Scanner(System.in).nextLine();
+                realizarOperacoes();
             }
             case 0 -> {
                 mostrarDespedida();
@@ -350,7 +374,13 @@ public class Main {
                     gereVeiculos.removerVeiculo(scanner);
                     break;
                 case 3:
-                    gereVeiculos.listarVeiculos();
+                    List<Veiculo> todosVeiculos = gereVeiculos.listarVeiculos("credenciais_veiculo.txt");
+                    for (Veiculo veiculo : todosVeiculos) {
+                        System.out.println(veiculo);
+                    }
+                    System.out.println("Pressione a tecla enter para voltar...");
+                    new Scanner(System.in).nextLine();
+                    menuVeiculo();
                     break;
                 case 4:
                     gereVeiculos.listarVeiculosPorCliente(scanner);

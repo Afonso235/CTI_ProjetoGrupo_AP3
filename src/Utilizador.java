@@ -103,7 +103,7 @@ class Utilizador {
 
     @Override
     public String toString() {
-        return "login= " + login;
+        return "Nome Login: " + login;
     }
 }
 

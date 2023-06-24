@@ -48,8 +48,11 @@ class Mecanico extends Utilizador {
 
     @Override
     public String toString() {
-        return "Mecanico{" +
-                "servicosRealizados=" + servicosRealizados +
-                '}';
+
+        return "\nMecanico [\n" +
+                "  Login: " + getLogin() + "\n" +
+                "  Ativo: " + isAtivo() + "\n" +
+                "  Serviços Realizados: " + servicosRealizados + "\n" +
+                "]";
     }
 }
