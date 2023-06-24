@@ -18,16 +18,9 @@ class GereVeiculos {
     public GereVeiculos() {
         veiculos = new ArrayList<>();
     }
-
     public void inserirVeiculo(Veiculo veiculo) {
         veiculos.add(veiculo);
     }
-
-
-    public List<Veiculo> listarVeiculos() {
-        return veiculos;
-    }
-
     public List<Veiculo> listarVeiculosPorCliente(Cliente cliente) {
         List<Veiculo> veiculosPorCliente = new ArrayList<>();
         for (Veiculo veiculo : veiculos) {
@@ -226,6 +219,39 @@ class GereVeiculos {
         }
     }
 
+    public List<Veiculo> listarVeiculos(String nomeArquivoVeiculos) {
+        List<Veiculo> veiculos = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivoVeiculos))) {
+            String linha;
+            while ((linha = reader.readLine()) != null) {
+                String[] dados = linha.split(":");
+                String loginCliente = dados[0];
+                String matricula = dados[1];
+                String marca = dados[2];
+                String modelo = dados[3];
+                int anoFabrico = Integer.parseInt(dados[4]);
+                String numeroChassis = dados[5];
+                List<String> listagemReparacoes = Arrays.asList(dados[6].split(","));
+                String dataEntrada = dados[7];
+                String nomeMecanico = dados[8];
+
+                Cliente cliente = gereUtilizadores.getClienteByLogin(loginCliente);
+                Mecanico mecanicoResponsavel = gereMecanico.getMecanicoByNome(nomeMecanico);
+
+                if (cliente != null && mecanicoResponsavel != null) {
+                    Veiculo veiculo = new Veiculo(cliente, matricula, marca, modelo, anoFabrico,
+                            numeroChassis, listagemReparacoes, dataEntrada, mecanicoResponsavel);
+                    veiculos.add(veiculo);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao ler os dados dos veículos.");
+        }
+
+        return veiculos;
+    }
+
     private void removerVeiculoDoArquivo(String matricula) {
         File arquivoVeiculos = new File(nomeArquivoVeiculo);
         File arquivoTemporario = new File(nomeArquivoVeiculo + ".tmp");
@@ -283,17 +309,6 @@ class GereVeiculos {
         }
         return false;
     }
-
-
-  /*  private void listarVeiculos() {
-        System.out.println("=== Listar Veículos ===");
-        // Call the listarVeiculos method of GereVeiculos and display the list of vehicles
-        // List<Veiculo> veiculos = gereVeiculos.listarVeiculos();
-        // for (Veiculo veiculo : veiculos) {
-        //     System.out.println(veiculo);
-        // }
-    }*/
-
     public void listarVeiculosPorCliente(Scanner scanner) {
         System.out.println("=== Listar Veículos por Cliente ===");
         // Read input values from the user
