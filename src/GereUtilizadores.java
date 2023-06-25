@@ -197,6 +197,25 @@ public class GereUtilizadores {
         System.out.println("Utilizador inexistente!");
     }
 
+    public boolean verificarNomeUtilizador(String nome) {
+        for (Utilizador utilizador : utilizadores) {
+            if (utilizador.getLogin().equalsIgnoreCase(nome)) {
+                return true; // Nome de usuário já existe
+            }
+        }
+        return false; // Nome de usuário não existe
+    }
+
+    public boolean verificarEmailUtilizador(String email) {
+        for (Utilizador utilizador : utilizadores) {
+            if (utilizador.getEmail().equalsIgnoreCase(email)) {
+                return true; // Email já existe
+            }
+        }
+        return false; // Email não existe
+    }
+
+
     @Override
     public String toString() {
         return "pedidosPendentes= " + pedidosPendentes;

@@ -120,6 +120,15 @@ public class Main {
 
             boolean ativo;
 
+            // Check if name or email already exist
+            boolean duplicateName = gereUtilizadores.verificarNomeUtilizador(login);
+            boolean duplicateEmail = gereUtilizadores.verificarEmailUtilizador(email);
+
+            if (duplicateName || duplicateEmail) {
+                System.out.println("Nome de utilizador ou email já existe. Por favor, insira novamente.");
+                continue;
+            }
+
             switch (tipo) {
                 case 1 -> {
                     ativo = false;
@@ -129,7 +138,6 @@ public class Main {
                 case 2 -> {
                     ativo = false;
                     SistemaInfo.carregarInfo();
-                    //gereMecanicos.loginMecanico(login, password, TipoUtilizador.MECANICO);
                     iniciarMecanico();
                     gereUtilizadores.criarConta(login, password, nome, email, TipoUtilizador.MECANICO);
                 }
@@ -155,6 +163,8 @@ public class Main {
             sair = true;
         }
     }
+
+
     public static void exibirMenuGestor() {
         boolean sair = false;
         while (!sair) {
