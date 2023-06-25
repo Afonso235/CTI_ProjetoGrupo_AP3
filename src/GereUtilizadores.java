@@ -92,7 +92,7 @@ public class GereUtilizadores {
                     .map(linha -> linha.split(":"))
                     .filter(partes -> partes.length == 4) // Verificar se a linha possui 4 partes
                     .map(partes -> {
-                        boolean ativo = Boolean.parseBoolean(partes[3]);
+                        boolean ativo = partes[3].equalsIgnoreCase("true");
                         return new Utilizador(partes[0], partes[1], "", ativo, "", TipoUtilizador.valueOf(partes[2]));
                     })
                     .collect(Collectors.toList());

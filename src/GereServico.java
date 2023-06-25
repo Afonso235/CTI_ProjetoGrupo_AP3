@@ -11,7 +11,6 @@ import java.util.Scanner;
 public class GereServico {
     private List<Servico> servicos;
     private GereAplicacao gereAplicacao;
-
     private String clienteAtual;
 
     public GereServico() {
@@ -53,6 +52,7 @@ public class GereServico {
         servicos.add(servico);
 
         System.out.println("Serviço solicitado com sucesso!");
+        gereAplicacao.registarAcao("Cliente", "Registou um serviço");
 
         try (FileWriter writer = new FileWriter("credenciais_servico.txt", true)) {
             String linha = String.format("%s:%s:%d:%.2f:%s:%s\n",
@@ -239,7 +239,8 @@ public class GereServico {
 
     public void aceitarServico(Servico servico) {
         servico.setAceite(true);
-        System.out.println("Serviço aceito com sucesso!");
+        System.out.println("Serviço aceite com sucesso!");
+        gereAplicacao.registarAcao("Gestor", "Serviço aceite com sucesso!");
 
         try {
             List<String> linhas = new ArrayList<>();

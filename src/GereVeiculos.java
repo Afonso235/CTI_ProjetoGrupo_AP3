@@ -175,7 +175,7 @@ class GereVeiculos {
 
 
         Cliente cliente = gereUtilizadores.getClienteByLogin(loginCliente);
-        cliente = new Cliente(loginCliente, "", "", true, "");
+        cliente = new Cliente(loginCliente, "", "", true, "", TipoUtilizador.CLIENTE);
 
         if (cliente == null) {
             System.out.println("Cliente não encontrado. Veículo não inserido.");
