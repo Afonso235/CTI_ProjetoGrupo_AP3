@@ -7,7 +7,6 @@ public class Main {
     private static GereMecanico gereMecanicos;
     private static Mecanico mecanicoAtual;
     private static Scanner scanner;
-    private static Cliente cliente;
     private static Utilizador utilizadorAutenticado;
     private static GereAplicacao gereAplicacao;
     private static  SistemaInfo sistemaInfo;
@@ -121,6 +120,15 @@ public class Main {
 
             boolean ativo;
 
+            // Check if name or email already exist
+            boolean duplicateName = gereUtilizadores.verificarNomeUtilizador(login);
+            boolean duplicateEmail = gereUtilizadores.verificarEmailUtilizador(email);
+
+            if (duplicateName || duplicateEmail) {
+                System.out.println("Nome de utilizador ou email já existe. Por favor, insira novamente.");
+                continue;
+            }
+
             switch (tipo) {
                 case 1 -> {
                     ativo = false;
@@ -130,9 +138,8 @@ public class Main {
                 case 2 -> {
                     ativo = false;
                     SistemaInfo.carregarInfo();
-                    //gereMecanicos.loginMecanico(login, password, TipoUtilizador.MECANICO);
+                    iniciarMecanico();
                     gereUtilizadores.criarConta(login, password, nome, email, TipoUtilizador.MECANICO);
-                    mecanicoAtual = new Mecanico(login, password, nome, ativo, email, TipoUtilizador.MECANICO);
                 }
                 case 3 -> {
                     Utilizador gestor = new Utilizador(login, password, nome, true, email, TipoUtilizador.GESTOR);
@@ -156,6 +163,8 @@ public class Main {
             sair = true;
         }
     }
+
+
     public static void exibirMenuGestor() {
         boolean sair = false;
         while (!sair) {
@@ -246,15 +255,13 @@ public class Main {
                 case GESTOR -> exibirMenuGestor();
                 case CLIENTE -> {
                     if(processarConta(utilizador)){
-                        utilizadorAutenticado = new Cliente(loginLogin, passwordLogin, "", utilizador.isAtivo(), "", TipoUtilizador.CLIENTE);
                         exibirMenuCliente();
                     }
                 }
                 case MECANICO ->  {
-                        if (processarConta(utilizador)) {
-                            mecanicoAtual = new Mecanico(loginLogin, passwordLogin, "", utilizador.isAtivo(), "", TipoUtilizador.MECANICO);
-                            iniciarMecanico();
-                        }
+                    if(processarConta(utilizador)){
+                        exibirMenuMecanico();
+                    }
                 }
                 default -> System.out.println("Tipo de utilizador desconhecido.");
             }
@@ -288,6 +295,9 @@ public class Main {
             case 1 -> criarConta();
             case 2 -> {
                 fazerLogin();
+                if (utilizadorAutenticado != null && utilizadorAutenticado.getTipo() == TipoUtilizador.CLIENTE) {
+                    exibirMenuCliente();
+                }
             }
             case 3 -> {
                 gereUtilizadores.ordenarUtilizadoresPorNome();
@@ -340,6 +350,8 @@ public class Main {
             default -> System.out.println("Opção inválida. Tente novamente.");
         }
     }
+
+
     //  GereVeículos
     private static void menuVeiculo() {
         gereVeiculos = new GereVeiculos();
@@ -373,10 +385,10 @@ public class Main {
                     break;
                 case 3:
                     gereVeiculos.listarVeiculos("credenciais_veiculo.txt");
-                    List<Veiculo> todosVeiculos = gereVeiculos.listarVeiculos("credenciais_veiculo.txt");
+                    /*List<Veiculo> todosVeiculos = gereVeiculos.listarVeiculos("credenciais_veiculo.txt");
                     for (Veiculo veiculo : todosVeiculos) {
                         System.out.println(veiculo);
-                    }
+                    }*/
                     System.out.println("Pressione a tecla enter para voltar...");
                     new Scanner(System.in).nextLine();
                     menuVeiculo();
@@ -424,32 +436,35 @@ public class Main {
             scanner.nextLine(); // Consume the newline character
 
             switch (opcao) {
+                case 1:
+                    criarMecanico();
+                    break;
                 case 2:
-                        alterarDados();
+                    realizarLoginMecanico();
                     break;
                 case 3:
+                    if (mecanicoAtual != null) {
+                        consultarServicosMecanicoAtual();
+                    } else {
+                        System.out.println("Faça o login como mecânico primeiro.");
+                    }
+                    break;
+                case 4:
                     if (mecanicoAtual != null) {
                         listarServicosRealizadosMecanicoAtual();
                     } else {
                         System.out.println("Faça o login como mecânico primeiro.");
                     }
                     break;
-                case 4:
-                    if (utilizadorAutenticado != null) {
-                        consultarServicosMecanicoAtual();
-                    } else {
-                        System.out.println("Faça o login como mecânico primeiro.");
-                    }
-                    break;
                 case 5:
-                    if (utilizadorAutenticado != null) {
+                    if (mecanicoAtual != null) {
                         pesquisarServicosRealizadosMecanicoAtual();
                     } else {
                         System.out.println("Faça o login como mecânico primeiro.");
                     }
                     break;
                 case 6:
-                    if (utilizadorAutenticado != null) {
+                    if (mecanicoAtual != null) {
                         logoutMecanico();
                     } else {
                         System.out.println("Faça o login como mecânico primeiro.");
@@ -466,13 +481,33 @@ public class Main {
         }
     }
     private static void exibirMenuMecanico() {
-        System.out.println("------ MENU MECANICO ------");
+        System.out.println("------ MENU PRINCIPAL ------");
+        System.out.println("1. Criar Mecânico");
         System.out.println("2. Alterar Dados");
-        System.out.println("3. listarServicosRealizadosMecanicoAtual");
-        System.out.println("4. consultarServicosMecanicoAtual");
-        System.out.println("5. pesquisarServicosRealizadosMecanicoAtual");
-        System.out.println("6. logoutMecanico");
+        System.out.println("3. Realizar Login como Mecânico");
+        System.out.println("4. Consultar Serviços (Mecânico Atual)");
+        System.out.println("5. Listar Serviços Realizados (Mecânico Atual)");
+        System.out.println("6. Pesquisar Serviços Realizados (Mecânico Atual)");
+        System.out.println("7. Logout (Mecânico Atual)");
+        System.out.println("0. Sair");
         System.out.print("Escolha uma opção: ");
+    }
+    private static void criarMecanico() {
+        System.out.print("Login: ");
+        String login = scanner.nextLine();
+        System.out.print("Password: ");
+        String password = scanner.nextLine();
+        System.out.print("Nome: ");
+        String nome = scanner.nextLine();
+        System.out.print("Ativo (true/false): ");
+        boolean ativo = scanner.nextBoolean();
+        System.out.print("Email: ");
+        String email = scanner.nextLine();
+        scanner.nextLine(); // Consume the newline character
+
+        Mecanico mecanico = new Mecanico(login, password, nome, ativo, email, TipoUtilizador.MECANICO);
+        gereMecanicos.adicionarMecanico(mecanico);
+        System.out.println("Mecânico criado com sucesso!");
     }
     public static void alterarDados() {
         System.out.println("Insira a nova Password: ");
@@ -482,6 +517,20 @@ public class Main {
         System.out.println("Insira o novo Email");
         String newEmail = scanner.nextLine();
         gereUtilizadores.alterarInfos(utilizadorAutenticado.getLogin(), newPassword, newNome, newEmail);
+    }
+    private static void realizarLoginMecanico() {
+        System.out.print("Login: ");
+        String login = scanner.nextLine();
+        System.out.print("Password: ");
+        String password = scanner.nextLine();
+
+        Mecanico mecanico = gereMecanicos.loginMecanico(login, password, TipoUtilizador.MECANICO);
+        if (mecanico != null) {
+            mecanicoAtual = mecanico;
+            System.out.println("Login realizado com sucesso como " + mecanico.getNome());
+        } else {
+            System.out.println("Login inválido. Tente novamente.");
+        }
     }
     private static void consultarServicosMecanicoAtual() {
         mecanicoAtual.consultarServicos();
