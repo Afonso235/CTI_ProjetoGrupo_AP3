@@ -16,6 +16,7 @@ public class GereServico {
     public GereServico() {
         servicos = new ArrayList<>();
         clienteAtual = null;
+        gereAplicacao = new GereAplicacao();
     }
 
     public void solicitarServico() {
@@ -25,7 +26,7 @@ public class GereServico {
         System.out.print("Responsável: ");
         String responsavel = scanner.nextLine();
 
-        SimpleDateFormat formatoData = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat formatoData = new SimpleDateFormat("yyyyMMdd");
         String dataAtual = formatoData.format(new Date());
 
         System.out.println("Dia de entrada do veículo: " + dataAtual);
@@ -36,32 +37,38 @@ public class GereServico {
         String aceiteString = "false";
         boolean aceite = false;
 
+        int numeroServicosRealizados = servicos.size() + 1;
+
+        String codigoServico = dataAtual + numeroServicosRealizados;
+
         Servico servico = new Servico(
                 new Mecanico(responsavel, "", "", true, "", TipoUtilizador.MECANICO),
                 dataAtual,
-                0,
+                numeroServicosRealizados,
                 0.0,
                 descricao,
                 new ArrayList<>(),
                 TipoServico.REPARACAO,
                 EstadoServico.PENDENTE,
                 new ArrayList<>(),
-                aceite
+                aceite,
+                codigoServico
         );
-
+        servico.setCodUnico(codigoServico);
         servicos.add(servico);
 
         System.out.println("Serviço solicitado com sucesso!");
         gereAplicacao.registarAcao("Cliente", "Registou um serviço");
 
         try (FileWriter writer = new FileWriter("credenciais_servico.txt", true)) {
-            String linha = String.format("%s:%s:%d:%.2f:%s:%s\n",
-                    responsavel, dataAtual, 0, 0.0, descricao, aceite ? "true" : "false");
+            String linha = String.format("%s:%s:%d:%.2f:%s:%s:%s\n",
+                    responsavel, dataAtual, numeroServicosRealizados, 0.0, descricao, aceite ? "true" : "false", codigoServico);
             writer.write(linha);
         } catch (IOException e) {
             System.out.println("Erro ao escrever no arquivo.");
         }
     }
+
 
     public void aceitarServicos() {
         try (BufferedReader reader = new BufferedReader(new FileReader("credenciais_servico.txt"))) {
@@ -87,9 +94,10 @@ public class GereServico {
                             descricao,
                             new ArrayList<>(),
                             TipoServico.REPARACAO,
-                            EstadoServico.PENDENTE,
+                            EstadoServico.ACEITE,
                             new ArrayList<>(),
-                            aceite
+                            aceite,
+                            ""
                     );
 
                     servicosDisponiveis.add(servico);
@@ -147,7 +155,8 @@ public class GereServico {
                             TipoServico.REPARACAO,
                             EstadoServico.PENDENTE,
                             new ArrayList<>(),
-                            aceite
+                            aceite,
+                            ""
                     );
 
                     servicosDisponiveis.add(servico);
@@ -155,6 +164,7 @@ public class GereServico {
                     System.out.println(contador + ". Responsável: " + dados[0]);
                     System.out.println("   Data: " + servico.getData());
                     System.out.println("   Descrição: " + servico.getDescricao());
+                    System.out.println("   Codigo: " + servico.getCodUnico());
                     System.out.println("--------------------------------");
                     contador++;
                 }
@@ -211,7 +221,8 @@ public class GereServico {
                                 TipoServico.REPARACAO,
                                 EstadoServico.PENDENTE,
                                 new ArrayList<>(),
-                                aceite
+                                aceite,
+                                ""
                         );
 
                         servicosCliente.add(servico);
@@ -219,6 +230,7 @@ public class GereServico {
                         System.out.println(contador + ". Responsável: " + dados[0]);
                         System.out.println("   Data: " + servico.getData());
                         System.out.println("   Descrição: " + servico.getDescricao());
+                        System.out.println("   Codigo: " + servico.getCodUnico());
                         System.out.println("--------------------------------");
                         contador++;
                     }
@@ -268,7 +280,8 @@ public class GereServico {
                                 TipoServico.REPARACAO,
                                 EstadoServico.PENDENTE,
                                 new ArrayList<>(),
-                                false
+                                false,
+                                ""
                         ));
 
                         // Atualizar o parâmetro de aceite

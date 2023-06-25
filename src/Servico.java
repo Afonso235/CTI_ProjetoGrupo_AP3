@@ -11,11 +11,12 @@ class Servico {
     private TipoServico tipo;
     private EstadoServico estado;
     private List<SubTarefa> subTarefas;
+    private String codUnico;
     private boolean aceite;
 
     public Servico(Mecanico mecanicoResponsavel, String data, int tempoDespendido, double custoReparacao,
                    String descricao, List<Peca> pecasUsadas, TipoServico tipo, EstadoServico estado,
-                   List<SubTarefa> subTarefas, boolean aceite) {
+                   List<SubTarefa> subTarefas, boolean aceite, String codUnico) {
         this.mecanicoResponsavel = mecanicoResponsavel;
         this.data = data;
         this.tempoDespendido = tempoDespendido;
@@ -26,10 +27,23 @@ class Servico {
         this.estado = estado;
         this.subTarefas = subTarefas;
         this.aceite = aceite;
+        this.codUnico = codUnico;
     }
 
     // Getters e setters
 
+
+    public String getCodUnico() {
+        return codUnico;
+    }
+
+    public void setCodUnico(String codUnico) {
+        this.codUnico = codUnico;
+    }
+
+    public boolean isAceite() {
+        return aceite;
+    }
 
     public void setAceite(boolean aceite) {
         this.aceite = aceite;
