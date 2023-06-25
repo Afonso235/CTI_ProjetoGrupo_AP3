@@ -2,7 +2,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -24,8 +26,10 @@ public class GereServico {
         System.out.print("Responsável: ");
         String responsavel = scanner.nextLine();
 
-        System.out.print("Data: ");
-        String data = scanner.nextLine();
+        SimpleDateFormat formatoData = new SimpleDateFormat("yyyy/MM/dd");
+        String dataAtual = formatoData.format(new Date());
+
+        System.out.println("Dia de entrada do veículo: " + dataAtual);
 
         System.out.print("Descrição: ");
         String descricao = scanner.nextLine();
@@ -35,7 +39,7 @@ public class GereServico {
 
         Servico servico = new Servico(
                 new Mecanico(responsavel, "", "", true, "", TipoUtilizador.MECANICO),
-                data,
+                dataAtual,
                 0,
                 0.0,
                 descricao,
@@ -52,7 +56,7 @@ public class GereServico {
 
         try (FileWriter writer = new FileWriter("credenciais_servico.txt", true)) {
             String linha = String.format("%s:%s:%d:%.2f:%s:%s\n",
-                    responsavel, data, 0, 0.0, descricao, aceite ? "true" : "false");
+                    responsavel, dataAtual, 0, 0.0, descricao, aceite ? "true" : "false");
             writer.write(linha);
         } catch (IOException e) {
             System.out.println("Erro ao escrever no arquivo.");

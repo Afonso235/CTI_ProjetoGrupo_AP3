@@ -160,11 +160,7 @@ class GereVeiculos {
 
         System.out.println("Lista de Mecânicos Disponíveis:");
         List<Mecanico> mecanicos = gereMecanico.listarMecanicos();
-        int counter = 1;
-        for (Mecanico mecanico : mecanicos) {
-            System.out.println(counter + ". " + mecanico.getNome());
-            counter++;
-        }
+
 
         System.out.print("Selecione o número do Mecânico Responsável: ");
         int mecanicoIndex = scanner.nextInt();
