@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="77c9f258-7ca2-44c5-9da7-f8eb17bab1d6" name="Changes" comment="changes">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GereAplicacao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GereAplicacao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GereServico.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GereServico.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GereUtilizadores.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GereUtilizadores.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GereVeiculos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GereVeiculos.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Servico.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Servico.java" afterDir="false" />
-    </list>
+    <list default="true" id="77c9f258-7ca2-44c5-9da7-f8eb17bab1d6" name="Changes" comment="changes" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
