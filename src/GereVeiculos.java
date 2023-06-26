@@ -10,12 +10,14 @@ import java.util.*;
 
 class GereVeiculos {
     private List<Veiculo> veiculos;
+
     private GereAplicacao gereAplicacao = new GereAplicacao();
     private GereMecanico gereMecanico = new GereMecanico();
     private GereUtilizadores gereUtilizadores = new GereUtilizadores();
     private String nomeArquivoVeiculo = "credenciais_veiculo.txt";
 
     public GereVeiculos() {
+
         veiculos = new ArrayList<>();
     }
     public void inserirVeiculo(Veiculo veiculo) {
@@ -213,38 +215,41 @@ class GereVeiculos {
             System.out.println("Matrícula não encontrada.");
         }
     }
-
-    public List<Veiculo> listarVeiculos(String nomeArquivoVeiculos) {
-        List<Veiculo> veiculos = new ArrayList<>();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivoVeiculos))) {
+    public void listarVeiculos(String nomeArquivo) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivo))) {
             String linha;
             while ((linha = reader.readLine()) != null) {
-                String[] dados = linha.split(":");
-                String loginCliente = dados[0];
-                String matricula = dados[1];
-                String marca = dados[2];
-                String modelo = dados[3];
-                int anoFabrico = Integer.parseInt(dados[4]);
-                String numeroChassis = dados[5];
-                List<String> listagemReparacoes = Arrays.asList(dados[6].split(","));
-                String dataEntrada = dados[7];
-                String nomeMecanico = dados[8];
+                String[] campos = linha.split(":");
+                if (campos.length >= 8) {
+                    String loginCliente = campos[0];
+                    String matricula = campos[1];
+                    String marca = campos[2];
+                    String modelo = campos[3];
+                    String ano = campos[4];
+                    String dataInicio = campos[7];
+                    String mecanicoResponsavel = campos[8];
 
-                Cliente cliente = gereUtilizadores.getClienteByLogin(loginCliente);
-                Mecanico mecanicoResponsavel = gereMecanico.getMecanicoByNome(nomeMecanico);
+                    System.out.printf("Login Cliente: %s\n", loginCliente);
+                    System.out.printf("Matrícula: %s\n", matricula);
+                    System.out.printf("Marca: %s\n", marca);
+                    System.out.printf("Modelo: %s\n", modelo);
+                    System.out.printf("Ano: %s\n", ano);
+                    System.out.printf("Data de Chegada: %s\n", dataInicio);
+                    System.out.printf("Mecânico Responsável: %s\n", mecanicoResponsavel);
 
-                if (cliente != null && mecanicoResponsavel != null) {
-                    Veiculo veiculo = new Veiculo(cliente, matricula, marca, modelo, anoFabrico,
-                            numeroChassis, listagemReparacoes, dataEntrada, mecanicoResponsavel);
-                    veiculos.add(veiculo);
+                    System.out.println();
                 }
             }
         } catch (IOException e) {
-            System.out.println("Erro ao ler os dados dos veículos.");
+            System.out.println("Erro ao ler o arquivo.");
         }
+    }
 
-        return veiculos;
+    public void mostrarServicosOrdenadosPorMatricula() {
+        veiculos.sort(Comparator.comparing(Veiculo::getMatricula));
+        for (Veiculo veiculo : veiculos) {
+            System.out.println(veiculo);
+        }
     }
 
     private void removerVeiculoDoArquivo(String matricula) {
@@ -358,8 +363,8 @@ class GereVeiculos {
         String matricula = scanner.nextLine();
 
         // Call the pesquisarVeiculoPorMatricula method of GereVeiculos and display the result
-        // Veiculo veiculo = gereVeiculos.pesquisarVeiculoPorMatricula(matricula);
-        // System.out.println(veiculo);
+         Veiculo veiculo = pesquisarVeiculoPorMatricula(matricula);
+        System.out.println(veiculo);
     }
 
     public void pesquisarVeiculosPorPeca(Scanner scanner) {

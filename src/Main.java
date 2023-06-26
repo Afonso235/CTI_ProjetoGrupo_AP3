@@ -307,6 +307,7 @@ public class Main {
             }
             case 4 -> {
                 System.out.println("4. Ordenar todos os veiculos por matricula");
+                gereVeiculos.mostrarServicosOrdenadosPorMatricula();
                 System.out.println("Pressione a tecla enter para voltar...");
                 new Scanner(System.in).nextLine();
                 realizarOperacoes();
@@ -329,10 +330,7 @@ public class Main {
                 realizarOperacoes();
             }
             case 7 -> {
-                List<Veiculo> todosVeiculos = gereVeiculos.listarVeiculos("credenciais_veiculo.txt");
-                for (Veiculo veiculo : todosVeiculos) {
-                    System.out.println(veiculo);
-                }
+                gereVeiculos.listarVeiculos("credenciais_veiculo.txt");
                 System.out.println("Pressione a tecla enter para voltar...");
                 new Scanner(System.in).nextLine();
                 realizarOperacoes();
@@ -385,10 +383,6 @@ public class Main {
                     break;
                 case 3:
                     gereVeiculos.listarVeiculos("credenciais_veiculo.txt");
-                    /*List<Veiculo> todosVeiculos = gereVeiculos.listarVeiculos("credenciais_veiculo.txt");
-                    for (Veiculo veiculo : todosVeiculos) {
-                        System.out.println(veiculo);
-                    }*/
                     System.out.println("Pressione a tecla enter para voltar...");
                     new Scanner(System.in).nextLine();
                     menuVeiculo();
