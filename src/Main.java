@@ -402,14 +402,9 @@ public class Main {
             System.out.println("1. Inserir veículo");
             System.out.println("2. Remover veículo");
             System.out.println("3. Listar veículos");
-            System.out.println("4. Listar veículos por cliente");
-            System.out.println("5. Listar veículos com serviço concluído");
-            System.out.println("6. Listar veículos com serviço em andamento");
-            System.out.println("7. Listar veículos por mecânico");
-            System.out.println("8. Pesquisar veículo por matrícula");
-            System.out.println("9. Pesquisar veículos por peça");
-            System.out.println("10. Pesquisar veículos após um determinado ano");
-            System.out.println("11. Pesquisar veículos com tempo despendido superior a um limite");
+            System.out.println("4. Listar veículos por mecânico");
+            System.out.println("5. Pesquisar veículo por matrícula");
+            System.out.println("6. Pesquisar veículos após um determinado ano");
             System.out.println("0. Voltar");
             System.out.print("Escolha uma opção: ");
             choice = scanner.nextInt();
@@ -429,35 +424,15 @@ public class Main {
                     menuVeiculo();
                     break;
                 case 4:
-                    gereVeiculos.listarVeiculosPorCliente(scanner);
-                    menuVeiculo();
-                    break;
-                case 5:
-                    gereVeiculos.listarVeiculosComServicoConcluido();
-                    menuVeiculo();
-                    break;
-                case 6:
-                    gereVeiculos.listarVeiculosComServicoEmAndamento();
-                    menuVeiculo();
-                    break;
-                case 7:
                     gereVeiculos.listarVeiculosPorMecanico(mecanicoAtual);
                     menuVeiculo();
                     break;
-                case 8:
+                case 5:
                     gereVeiculos.pesquisarVeiculoPorMatricula(scanner, "credenciais_veiculo.txt");
                     menuVeiculo();
                     break;
-                case 9:
-                    gereVeiculos.pesquisarVeiculosPorPeca(scanner);
-                    menuVeiculo();
-                    break;
-                case 10:
+                case 6:
                     gereVeiculos.pesquisarVeiculosAposAno(scanner, "credenciais_veiculo.txt");
-                    menuVeiculo();
-                    break;
-                case 11:
-                    gereVeiculos.pesquisarVeiculosComTempoDespendidoSuperior(scanner);
                     menuVeiculo();
                     break;
                 case 0:

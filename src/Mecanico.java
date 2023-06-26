@@ -8,44 +8,6 @@ class Mecanico extends Utilizador {
         super(login, password, nome, ativo, email, TipoUtilizador.MECANICO);
         servicosRealizados = new ArrayList<>();
     }
-
-    public Mecanico() {
-    }
-
-
-    public boolean realizouServico(Servico servico) {
-        return servicosRealizados.contains(servico);
-    }
-    public void listarServicosRealizados() {
-        for (Servico servico : servicosRealizados) {
-            System.out.println(servico);
-        }
-    }
-
-    public void pesquisarServicosRealizados(String termoPesquisa) {
-        for (Servico servico : servicosRealizados) {
-            if (servico.getDescricao().contains(termoPesquisa)) {
-                System.out.println(servico);
-            }
-        }
-    }
-
-    public void adicionarServicoRealizado(Servico servico) {
-        servicosRealizados.add(servico);
-    }
-
-    public void removerServicoRealizado(Servico servico) {
-        servicosRealizados.remove(servico);
-    }
-
-    public List<Servico> getServicosRealizados() {
-        return servicosRealizados;
-    }
-
-    public void setServicosRealizados(List<Servico> servicosRealizados) {
-        this.servicosRealizados = servicosRealizados;
-    }
-
     @Override
     public String toString() {
 

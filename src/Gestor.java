@@ -3,12 +3,5 @@ class Gestor extends Utilizador {
         super(login, password, nome, ativo, email, TipoUtilizador.GESTOR);
     }
 
-    public void aprovarPedido(Utilizador utilizador) {
-        utilizador.setAtivo(true);
-    }
-    public void rejeitarPeidido(Utilizador utilizador){
-        utilizador.setAtivo(false);
-    }
-
 
 }

@@ -12,13 +12,10 @@ public class GereServico {
     private List<Servico> servicos;
     private GereAplicacao gereAplicacao;
     private String clienteAtual;
-
-
     public GereServico() {
         servicos = new ArrayList<>();
         gereAplicacao = new GereAplicacao();
     }
-
     public void solicitarServico(Utilizador utilizador) {
         Scanner scanner = new Scanner(System.in);
 

@@ -12,19 +12,9 @@ class GereMecanico {
     private List<Mecanico> mecanicos;
     private GereAplicacao gereAplicacao;
     private String nomeArquivo = "credenciais_acesso.txt";
-
     public GereMecanico() {
         mecanicos = new ArrayList<>();
     }
-
-    public void listarMecanicosAssociadosAoServico(Servico servico) {
-        for (Mecanico mecanico : mecanicos) {
-            if (mecanico.realizouServico(servico)) {
-                System.out.println(mecanico);
-            }
-        }
-    }
-
     public void pesquisarServicosPorLoginMecanico(Scanner scanner, String nomeArquivo) {
         System.out.println("=== Pesquisar Serviços por Login do Mecânico Responsável ===");
         System.out.print("Informe o nome de login parcial do Mecânico: ");
@@ -62,9 +52,6 @@ class GereMecanico {
             System.out.println("Arquivo não encontrado: " + nomeArquivo);
         }
     }
-
-
-
     public List<Mecanico> listarMecanicos() {
         if (mecanicos.isEmpty()) {
             try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivo))) {
@@ -90,27 +77,15 @@ class GereMecanico {
 
         return mecanicos;
     }
-
-
-
-
     @Override
     public String toString() {
         return "GereMecanico{" +
                 "mecanicos=" + mecanicos +
                 '}';
     }
-
-
-
     public void adicionarMecanico(Mecanico mecanico) {
         mecanicos.add(mecanico);
     }
-
-    public void removerMecanico(Mecanico mecanico) {
-        mecanicos.remove(mecanico);
-    }
-
     public Mecanico getMecanicoByNome(String nome) {
         for (Mecanico mecanico : mecanicos) {
             if (mecanico.getNome().equals(nome)) {

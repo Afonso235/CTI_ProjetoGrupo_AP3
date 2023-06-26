@@ -8,6 +8,4 @@ class SubTarefa {
         this.mecanico = mecanico;
         this.descricao = descricao;
     }
-
-    // Getters e setters
 }

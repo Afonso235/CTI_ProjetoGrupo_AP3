@@ -17,6 +17,4 @@ class Peca {
         this.preco = preco;
         this.fornecedor = fornecedor;
     }
-
-    // Getters e setters
 }

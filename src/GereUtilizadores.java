@@ -21,21 +21,14 @@ public class GereUtilizadores {
         this.pedidosPendentes = new ArrayList<>();
         this.clientes = new ArrayList<>();
     }
-
     public List<Utilizador> getUtilizadoresPorAprovarLogin() {
         return utilizadores.stream()
                 .filter(utilizador -> !utilizador.isAtivo())
                 .collect(Collectors.toList());
     }
-
     public void adicionarCliente(Cliente cliente) {
         clientes.add(cliente);
     }
-
-    public void adicionarPedido(Utilizador utilizador) {
-        pedidosPendentes.add(utilizador);
-    }
-
     public void processarPedidos() {
         for (Utilizador utilizador : pedidosPendentes) {
             if (utilizador.isAtivo()) {
@@ -47,7 +40,6 @@ public class GereUtilizadores {
             }
         }
     }
-
     public Cliente getClienteByLogin(String login) {
         for (Cliente cliente : clientes) {
             if (cliente.getLogin().equals(login)) {
@@ -56,18 +48,15 @@ public class GereUtilizadores {
         }
         return null;
     }
-
     public List<Utilizador> getUtilizadores() {
         return utilizadores;
     }
-
     public void criarConta(String login, String password, String nome, String email, TipoUtilizador tipo) {
         boolean ativo = tipo == TipoUtilizador.GESTOR; // Definir como ativo se for um gestor
         Utilizador utilizador = new Utilizador(login, password, nome, ativo, email, tipo);
         utilizadores.add(utilizador);
         salvarCredenciais();
     }
-
     public Utilizador login(String login, String password) {
         for (Utilizador utilizador : utilizadores) {
             if (utilizador.getLogin().equals(login) && utilizador.getPassword().equals(password)) {
@@ -76,7 +65,6 @@ public class GereUtilizadores {
         }
         return null;
     }
-
     public List<Utilizador> pesquisaLogin(String login) {
         List<Utilizador> resultados = new ArrayList<>();
         for (Utilizador utilizador : utilizadores) {
@@ -86,7 +74,6 @@ public class GereUtilizadores {
         }
         return resultados;
     }
-
     public void carregarCredenciais() {
         try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivoCredenciais))) {
             utilizadores = reader.lines()
@@ -102,7 +89,6 @@ public class GereUtilizadores {
             System.out.println("Erro ao carregar as credenciais de acesso.");
         }
     }
-
     public Utilizador encontrarUtilizadorPorLogin(String login) {
         for (Utilizador utilizador : utilizadores) {
             if (utilizador.getLogin().equals(login)) {
@@ -111,7 +97,6 @@ public class GereUtilizadores {
         }
         return null;
     }
-
     public void definirAtivo(String login, boolean ativo) {
         Utilizador utilizador = encontrarUtilizadorPorLogin(login);
         if (utilizador != null) {
@@ -140,7 +125,6 @@ public class GereUtilizadores {
             System.out.println("Utilizador não encontrado!");
         }
     }
-
     public void salvarCredenciais() {
         try {
             List<String> linhas = new ArrayList<>();
@@ -160,7 +144,6 @@ public class GereUtilizadores {
         }
         gereAplicacao.registarAcao("Utilizador", "Foi inserido no ficheiro credenciais_acesso.txt ");
     }
-
     public void ordenarUtilizadoresPorNome() {
         List<Utilizador> utilizadores = getUtilizadores();
         utilizadores.sort(Comparator.comparing(Utilizador::getLogin));
@@ -168,14 +151,12 @@ public class GereUtilizadores {
             System.out.println(utilizador.getLogin());
         }
     }
-
     public void listarTodosUtilizadores() {
         List<Utilizador> utilizadores = getUtilizadores();
         for (Utilizador utilizador : utilizadores) {
             System.out.println(utilizador.getLogin());
         }
     }
-
     public void listarUtilizadoresPorTipo(TipoUtilizador tipo) {
         List<Utilizador> utilizadores = getUtilizadores();
         for (Utilizador utilizador : utilizadores) {
@@ -184,7 +165,6 @@ public class GereUtilizadores {
             }
         }
     }
-
     public void alterarInfos(String login, String aPassword, String aNome, String aEmail) {
         for (Utilizador utilizador : utilizadores) {
             if (utilizador.getLogin().equals(login)) {
@@ -199,7 +179,6 @@ public class GereUtilizadores {
         }
         System.out.println("Utilizador inexistente!");
     }
-
     public boolean verificarNomeUtilizador(String nome) {
         for (Utilizador utilizador : utilizadores) {
             if (utilizador.getLogin().equalsIgnoreCase(nome)) {
@@ -208,7 +187,6 @@ public class GereUtilizadores {
         }
         return false; // Nome de utilizador não existe
     }
-
     public boolean verificarEmailUtilizador(String email) {
         for (Utilizador utilizador : utilizadores) {
             if (utilizador.getEmail().equalsIgnoreCase(email)) {
@@ -217,8 +195,6 @@ public class GereUtilizadores {
         }
         return false; // Email não existe
     }
-
-
     @Override
     public String toString() {
         return "pedidosPendentes= " + pedidosPendentes;
