@@ -30,9 +30,6 @@ public class GereAplicacao {
                     }
                 }
             }
-
-
-            // Adicionar a nova ação no início do conteúdo com o prefixo correto
             String novaAcao = utilizador + " " + acao + "\n";
             conteudoLog.insert(0, novaAcao);
 

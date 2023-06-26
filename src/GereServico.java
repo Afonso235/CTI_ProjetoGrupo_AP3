@@ -13,16 +13,15 @@ public class GereServico {
     private GereAplicacao gereAplicacao;
     private String clienteAtual;
 
+
     public GereServico() {
         servicos = new ArrayList<>();
-        clienteAtual = null;
         gereAplicacao = new GereAplicacao();
     }
 
-    public void solicitarServico() {
+    public void solicitarServico(Utilizador utilizador) {
         Scanner scanner = new Scanner(System.in);
 
-        // Obtenha os detalhes do serviço a ser solicitado
         System.out.print("Responsável: ");
         String responsavel = scanner.nextLine();
 
@@ -56,20 +55,54 @@ public class GereServico {
         );
         servico.setCodUnico(codigoServico);
         servicos.add(servico);
+        //servico.setMecanicoResponsavel(responsavel);
 
         System.out.println("Serviço solicitado com sucesso!");
         gereAplicacao.registarAcao("Cliente", "Registou um serviço");
 
         try (FileWriter writer = new FileWriter("credenciais_servico.txt", true)) {
-            String linha = String.format("%s:%s:%d:%.2f:%s:%s:%s\n",
-                    responsavel, dataAtual, numeroServicosRealizados, 0.0, descricao, aceite ? "true" : "false", codigoServico);
+            String linha = String.format("%s:%s:%d:%.2f:%s:%s:%s:%s\n",
+                    servico.getMecanicoResponsavel(), dataAtual, numeroServicosRealizados, servico.getCustoReparacao(), servico.getDescricao(), aceite ? "true" : "false", servico.getCodUnico(), servico.getEstado());
             writer.write(linha);
         } catch (IOException e) {
             System.out.println("Erro ao escrever no arquivo.");
         }
     }
+    public Servico pesquisarServicoPorCodigo(String codigo) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("credenciais_servico.txt"))) {
+            String linha;
+            while ((linha = reader.readLine()) != null) {
+                String[] dados = linha.split(":");
+                if (dados.length == 8 && dados[6].equals(codigo)) {
+                    String responsavel = dados[0];
+                    String data = dados[1];
+                    int tempoDespendido = Integer.parseInt(dados[2]);
+                    double custoReparacao = Double.parseDouble(dados[3]);
+                    String descricao = dados[4];
+                    boolean aceite = Boolean.parseBoolean(dados[5]);
+                    String codUnico = dados[6];
+                    EstadoServico estadoServico = EstadoServico.valueOf(dados[7]);
 
-
+                    return new Servico(
+                            new Mecanico(responsavel, "", "", true, "", TipoUtilizador.MECANICO),
+                            data,
+                            tempoDespendido,
+                            custoReparacao,
+                            descricao,
+                            new ArrayList<>(),
+                            TipoServico.REPARACAO,
+                            estadoServico,
+                            new ArrayList<>(),
+                            aceite,
+                            codUnico
+                    );
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao ler o arquivo de serviços.");
+        }
+        return null;
+    }
     public void aceitarServicos() {
         try (BufferedReader reader = new BufferedReader(new FileReader("credenciais_servico.txt"))) {
             String linha;
@@ -78,13 +111,16 @@ public class GereServico {
             System.out.println("===== Serviços Disponíveis =====");
             while ((linha = reader.readLine()) != null) {
                 String[] dados = linha.split(":");
-                if (dados.length == 6) {
+                if (dados.length == 8) {
                     String responsavel = dados[0];
                     String data = dados[1];
                     int tempoDespendido = Integer.parseInt(dados[2]);
                     double custoReparacao = Double.parseDouble(dados[3]);
                     String descricao = dados[4];
                     boolean aceite = Boolean.parseBoolean(dados[5]);
+                    String codUnico = dados[6];
+                    EstadoServico estadoServico = EstadoServico.valueOf(dados[7]);
+
 
                     Servico servico = new Servico(
                             new Mecanico(responsavel, "", "", true, "", TipoUtilizador.MECANICO),
@@ -97,12 +133,12 @@ public class GereServico {
                             EstadoServico.ACEITE,
                             new ArrayList<>(),
                             aceite,
-                            ""
+                            codUnico
                     );
 
                     servicosDisponiveis.add(servico);
 
-                    System.out.println(contador + ". Responsável: " + servico.getMecanicoResponsavel().getNome());
+                    System.out.println(contador + ". Responsável: " + servico.getMecanicoResponsavel());
                     System.out.println("   Data: " + servico.getData());
                     System.out.println("   Descrição: " + servico.getDescricao());
                     System.out.println("--------------------------------");
@@ -137,14 +173,15 @@ public class GereServico {
             System.out.println("===== Serviços Disponíveis =====");
             while ((linha = reader.readLine()) != null) {
                 String[] dados = linha.split(":");
-                if (dados.length == 6) {
+                if (dados.length == 8) {
                     String responsavel = dados[0];
                     String data = dados[1];
                     int tempoDespendido = Integer.parseInt(dados[2]);
                     double custoReparacao = Double.parseDouble(dados[3]);
                     String descricao = dados[4];
                     boolean aceite = Boolean.parseBoolean(dados[5]);
-
+                    String codUnico = dados[6];
+                    EstadoServico estadoServico = EstadoServico.valueOf(dados[7]);
                     Servico servico = new Servico(
                             new Mecanico(responsavel, "", "", true, "", TipoUtilizador.MECANICO),
                             data,
@@ -153,18 +190,19 @@ public class GereServico {
                             descricao,
                             new ArrayList<>(),
                             TipoServico.REPARACAO,
-                            EstadoServico.PENDENTE,
+                            estadoServico,
                             new ArrayList<>(),
                             aceite,
-                            ""
+                            codUnico
                     );
 
                     servicosDisponiveis.add(servico);
 
+                    gereAplicacao.registarAcao("Gestor", "Consulta os pedidos de serviço");
                     System.out.println(contador + ". Responsável: " + dados[0]);
                     System.out.println("   Data: " + servico.getData());
                     System.out.println("   Descrição: " + servico.getDescricao());
-                    System.out.println("   Codigo: " + servico.getCodUnico());
+                    System.out.println("   Codigo: " + codUnico);
                     System.out.println("--------------------------------");
                     contador++;
                 }
@@ -172,23 +210,19 @@ public class GereServico {
 
             if (servicosDisponiveis.isEmpty()) {
                 System.out.println("Não há serviços disponíveis.");
-                return;
             }
         } catch (IOException e) {
             System.out.println("Erro ao ler o arquivo de serviços.");
         }
     }
-
     public void fazerLoginCliente(String nomeCliente){
         clienteAtual = nomeCliente;
         System.out.println("Login efetuado com sucesso para o cliente: " + nomeCliente);
     }
-
     public void fazerLogoutCliente() {
         clienteAtual = null;
         System.out.println("Logout feito com sucesso");
     }
-
     public void consultarServicosCliente() {
         if (clienteAtual == null) {
             System.out.println("Nenhum cliente está logado.");
@@ -198,19 +232,21 @@ public class GereServico {
         try (BufferedReader reader = new BufferedReader(new FileReader("credenciais_servico.txt"))) {
             String linha;
             List<Servico> servicosCliente = new ArrayList<>();
+            Veiculo veiculo = new Veiculo();
             int contador = 1;
             System.out.println("===== Serviços do Cliente " + clienteAtual + " =====");
             while ((linha = reader.readLine()) != null) {
                 String[] dados = linha.split(":");
-                if (dados.length == 6) {
+                if (dados.length == 7) {
                     String responsavel = dados[0];
                     String data = dados[1];
                     int tempoDespendido = Integer.parseInt(dados[2]);
                     double custoReparacao = Double.parseDouble(dados[3]);
                     String descricao = dados[4];
                     boolean aceite = Boolean.parseBoolean(dados[5]);
+                    String codUnico = dados[6];
 
-                    if (responsavel.equals(clienteAtual)) {
+                    if (responsavel.equals(veiculo.getMecanicoResponsavel())) {
                         Servico servico = new Servico(
                                 new Mecanico(responsavel, "", "", true, "", TipoUtilizador.MECANICO),
                                 data,
@@ -222,15 +258,16 @@ public class GereServico {
                                 EstadoServico.PENDENTE,
                                 new ArrayList<>(),
                                 aceite,
-                                ""
+                                codUnico
                         );
 
                         servicosCliente.add(servico);
-
+                        gereAplicacao.registarAcao("Cliente", "Consultou os seus serviços");
                         System.out.println(contador + ". Responsável: " + dados[0]);
+                        System.out.println(contador + ". Cliente: " + clienteAtual);
                         System.out.println("   Data: " + servico.getData());
                         System.out.println("   Descrição: " + servico.getDescricao());
-                        System.out.println("   Codigo: " + servico.getCodUnico());
+                        System.out.println("   Codigo: " + codUnico);
                         System.out.println("--------------------------------");
                         contador++;
                     }
@@ -245,70 +282,44 @@ public class GereServico {
             System.out.println("Erro ao ler o arquivo de serviços.");
         }
     }
-
-
-
-
     public void aceitarServico(Servico servico) {
         servico.setAceite(true);
         System.out.println("Serviço aceite com sucesso!");
         gereAplicacao.registarAcao("Gestor", "Serviço aceite com sucesso!");
-
         try {
             List<String> linhas = new ArrayList<>();
             String linha;
-
-            // Ler o arquivo e atualizar as linhas
             try (BufferedReader reader = new BufferedReader(new FileReader("credenciais_servico.txt"))) {
                 while ((linha = reader.readLine()) != null) {
                     String[] dados = linha.split(":");
-                    if (dados.length == 6) {
+                    if (dados.length == 8) {
                         String responsavel = dados[0];
                         String data = dados[1];
                         int tempoDespendido = Integer.parseInt(dados[2]);
                         double custoReparacao = Double.parseDouble(dados[3]);
                         String descricao = dados[4];
                         String aceite = dados[5];
+                        String codUnico = dados[6];
+                        EstadoServico estadoServico = EstadoServico.valueOf(dados[7]);
 
-                        boolean aceiteAtualizado = servico.equals(new Servico(
-                                new Mecanico(responsavel, "", "", true, "", TipoUtilizador.MECANICO),
-                                data,
-                                tempoDespendido,
-                                custoReparacao,
-                                descricao,
-                                new ArrayList<>(),
-                                TipoServico.REPARACAO,
-                                EstadoServico.PENDENTE,
-                                new ArrayList<>(),
-                                false,
-                                ""
+                        boolean aceiteAtualizado = servico.equals(new Servico(new Mecanico(responsavel, "", "", true, "", TipoUtilizador.MECANICO), data, tempoDespendido, custoReparacao, descricao, new ArrayList<>(), TipoServico.REPARACAO, EstadoServico.PENDENTE, new ArrayList<>(), true, codUnico
                         ));
-
-                        // Atualizar o parâmetro de aceite
                         if (aceiteAtualizado) {
-                            linha = String.format("%s:%s:%d:%.2f:%s:%s\n",
-                                    responsavel, data, tempoDespendido, custoReparacao, descricao, "true");
+                            linha = String.format("%s:%s:%d:%.2f:%s:%s:%s:%s\n",
+                                    servico.getMecanicoResponsavel(), servico.getData(), 0, servico.getCustoReparacao(), servico.getDescricao(), "true", servico.getCodUnico(), servico.getEstado());
                         }
-
                         linhas.add(linha);
                     }
                 }
             }
-
             try (FileWriter writer = new FileWriter("credenciais_servico.txt", false)) {
                 for (String updatedLine : linhas) {
                     writer.write(updatedLine);
                 }
             }
-
-            // Atualizar a lista de serviços com o status de aceite atualizado
             servico.setAceite(true);
         } catch (IOException e) {
             System.out.println("Erro ao atualizar o arquivo de serviços.");
         }
     }
-
-
-
-
 }

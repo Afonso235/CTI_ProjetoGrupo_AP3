@@ -9,10 +9,10 @@ class Mecanico extends Utilizador {
         servicosRealizados = new ArrayList<>();
     }
 
-
-    public void consultarServicos() {
-        // Implement logic to allow mechanics to view their services
+    public Mecanico() {
     }
+
+
     public boolean realizouServico(Servico servico) {
         return servicosRealizados.contains(servico);
     }

@@ -17,7 +17,11 @@ class Veiculo {
 
     public Veiculo(Cliente cliente, String matricula, String marca, String modelo, int anoFabrico,
                    String numeroChassis, List<String> listagemReparacoes, String dataEntrada, Mecanico mecanicoResponsavel) {
-        this.cliente = cliente;
+        if (cliente != null) {
+            this.cliente = cliente;
+        } else {
+            throw new IllegalArgumentException("Cliente não pode ser nulo");
+        }
         this.matricula = matricula;
         this.marca = marca;
         this.modelo = modelo;

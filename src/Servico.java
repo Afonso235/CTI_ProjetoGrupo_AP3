@@ -49,8 +49,8 @@ class Servico {
         this.aceite = aceite;
     }
 
-    public Mecanico getMecanicoResponsavel() {
-        return mecanicoResponsavel;
+    public String getMecanicoResponsavel() {
+        return mecanicoResponsavel.getLogin();
     }
 
     public void setMecanicoResponsavel(Mecanico mecanicoResponsavel) {
@@ -74,7 +74,7 @@ class Servico {
     }
 
     public double getCustoReparacao() {
-        return custoReparacao;
+        return custoReparacao++;
     }
 
     public void setCustoReparacao(double custoReparacao) {

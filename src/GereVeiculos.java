@@ -20,9 +20,6 @@ class GereVeiculos {
 
         veiculos = new ArrayList<>();
     }
-    public void inserirVeiculo(Veiculo veiculo) {
-        veiculos.add(veiculo);
-    }
     public List<Veiculo> listarVeiculosPorCliente(Cliente cliente) {
         List<Veiculo> veiculosPorCliente = new ArrayList<>();
         for (Veiculo veiculo : veiculos) {
@@ -72,16 +69,6 @@ class GereVeiculos {
         return null;
     }
 
-    public List<Veiculo> pesquisarVeiculosPorPeca(String codigoPeca) {
-        List<Veiculo> veiculosComPeca = new ArrayList<>();
-        for (Veiculo veiculo : veiculos) {
-            if (veiculo.getListagemReparacoes().contains(codigoPeca)) {
-                veiculosComPeca.add(veiculo);
-            }
-        }
-        return veiculosComPeca;
-    }
-
     public List<Veiculo> pesquisarVeiculosAposAno(int ano) {
         List<Veiculo> veiculosAposAno = new ArrayList<>();
         for (Veiculo veiculo : veiculos) {
@@ -92,20 +79,42 @@ class GereVeiculos {
         return veiculosAposAno;
     }
 
-    public List<Veiculo> pesquisarVeiculosComTempoDespendidoSuperior(int limiteTempo) {
-        List<Veiculo> veiculosComTempoDespendidoSuperior = new ArrayList<>();
-        for (Veiculo veiculo : veiculos) {
-            int tempoDespendido = calcularTempoDespendido(veiculo);
-            if (tempoDespendido > limiteTempo) {
-                veiculosComTempoDespendidoSuperior.add(veiculo);
-            }
-        }
-        return veiculosComTempoDespendidoSuperior;
-    }
-
     private int calcularTempoDespendido(Veiculo veiculo) {
         // Lógica para calcular o tempo despendido em um veículo
         return 0;
+    }
+    private List<Veiculo> carregarVeiculos(String nomeArquivoVeiculo) {
+        List<Veiculo> veiculos = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivoVeiculo))) {
+            String linha;
+            while ((linha = reader.readLine()) != null) {
+                String[] dados = linha.split(":");
+
+                String loginCliente = dados[0];
+                String matricula = dados[1];
+                String marca = dados[2];
+                String modelo = dados[3];
+                int anoFabrico = Integer.parseInt(dados[4]);
+                String numeroChassis = dados[5];
+                List<String> listagemReparacoes = Arrays.asList(dados[6].split(","));
+                String dataEntrada = dados[7];
+                String nomeMecanicoResponsavel = dados[8];
+
+                Cliente cliente = new Cliente(loginCliente);
+                Mecanico mecanicoResponsavel = gereMecanico.getMecanicoByNome(nomeMecanicoResponsavel);
+
+                if (cliente != null && mecanicoResponsavel != null) {
+                    Veiculo veiculo = new Veiculo(cliente, matricula, marca, modelo, anoFabrico,
+                            numeroChassis, listagemReparacoes, dataEntrada, mecanicoResponsavel);
+                    veiculos.add(veiculo);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao ler o arquivo de veículos.");
+        }
+
+        return veiculos;
     }
     public void salvarVeiculo(Veiculo veiculo, String nomeArquivoVeiculos) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivoVeiculos, true))) {
@@ -122,6 +131,8 @@ class GereVeiculos {
             writer.write(linha);
             writer.newLine();
 
+            veiculos.add(veiculo);
+
             System.out.println("Dados do veículo guardados com sucesso no ficheiro!");
             gereAplicacao.registarAcao("Gestor", "Inserir veiculo");
         } catch (IOException e) {
@@ -131,7 +142,6 @@ class GereVeiculos {
     public void inserirVeiculo(Scanner scanner) {
         System.out.println("=== Inserir Veículo ===");
 
-        // Read input values from the user
         System.out.print("Login do Cliente: ");
         String loginCliente = scanner.nextLine();
 
@@ -185,7 +195,6 @@ class GereVeiculos {
             return;
         }
 
-        // Add the cliente to the list
         gereUtilizadores.adicionarCliente(cliente);
 
         Veiculo veiculo = new Veiculo(cliente, matricula, marca, modelo, anoFabrico,
@@ -195,7 +204,6 @@ class GereVeiculos {
 
         gereAplicacao.registarAcao("Gestor","Veículo inserido com sucesso.");
     }
-
     public void removerVeiculo(Scanner scanner) {
         System.out.println("Digite a matrícula do veículo a ser removido: ");
         String matricula = scanner.nextLine();
@@ -213,6 +221,53 @@ class GereVeiculos {
             System.out.println("Veículo removido com sucesso.");
         } else {
             System.out.println("Matrícula não encontrada.");
+        }
+    }
+    public void listarVeiculosOrdenadosPorMatricula(String nomeArquivo) {
+        List<Veiculo> veiculos = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivo))) {
+            String linha;
+            while ((linha = reader.readLine()) != null) {
+                String[] campos = linha.split(":");
+                if (campos.length >= 9) {
+                    String loginCliente = campos[0];
+                    String matricula = campos[1];
+                    String marca = campos[2];
+                    String modelo = campos[3];
+                    int anoFabrico = Integer.parseInt(campos[4]);
+                    String numeroChassis = campos[5];
+                    List<String> listagemReparacoes = Arrays.asList(campos[6].split(","));
+                    String dataEntrada = campos[7];
+                    String mecanicoResponsavel = campos[8];
+
+                    Cliente cliente = gereUtilizadores.getClienteByLogin(loginCliente);
+                    if (cliente != null) {
+                        Mecanico mecanico = new Mecanico(mecanicoResponsavel, "", "", true, "", TipoUtilizador.MECANICO);
+
+                        Veiculo veiculo = new Veiculo(cliente, matricula, marca, modelo, anoFabrico,
+                                numeroChassis, listagemReparacoes, dataEntrada, mecanico);
+                        veiculos.add(veiculo);
+                    }
+                }
+            }
+
+            Collections.sort(veiculos, Comparator.comparing(Veiculo::getMatricula));
+
+            System.out.println("=== Veículos Ordenados por Matrícula ===");
+            for (Veiculo veiculo : veiculos) {
+                System.out.println("=== Veículo ===");
+                System.out.printf("Login Cliente: %s\n", veiculo.getCliente().getLogin());
+                System.out.printf("Matrícula: %s\n", veiculo.getMatricula());
+                System.out.printf("Marca: %s\n", veiculo.getMarca());
+                System.out.printf("Modelo: %s\n", veiculo.getModelo());
+                System.out.printf("Ano de Fabrico: %s\n", veiculo.getAnoFabrico());
+                System.out.printf("Número de Chassis: %s\n", veiculo.getNumeroChassis());
+                System.out.printf("Mecânico Responsável: %s\n", veiculo.getMecanicoResponsavel().getNome());
+                System.out.println();
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao ler o arquivo.");
         }
     }
     public void listarVeiculos(String nomeArquivo) {
@@ -244,14 +299,6 @@ class GereVeiculos {
             System.out.println("Erro ao ler o arquivo.");
         }
     }
-
-    public void mostrarServicosOrdenadosPorMatricula() {
-        veiculos.sort(Comparator.comparing(Veiculo::getMatricula));
-        for (Veiculo veiculo : veiculos) {
-            System.out.println(veiculo);
-        }
-    }
-
     private void removerVeiculoDoArquivo(String matricula) {
         File arquivoVeiculos = new File(nomeArquivoVeiculo);
         File arquivoTemporario = new File(nomeArquivoVeiculo + ".tmp");
@@ -344,27 +391,41 @@ class GereVeiculos {
         // }
     }
 
-    public void listarVeiculosPorMecanico(Scanner scanner) {
-        System.out.println("=== Listar Veículos por Mecânico ===");
-        // Read input values from the user
-        // Example:
-        // String mecanicoId = ...;
-
-        // Call the listarVeiculosPorMecanico method of GereVeiculos and display the list of vehicles
-        // List<Veiculo> veiculos = gereVeiculos.listarVeiculosPorMecanico(mecanicoId);
-        // for (Veiculo veiculo : veiculos) {
-        //     System.out.println(veiculo);
-        // }
-    }
-
-    public void pesquisarVeiculoPorMatricula(Scanner scanner) {
+    public void pesquisarVeiculoPorMatricula(Scanner scanner, String nomeArquivo) {
         System.out.println("=== Pesquisar Veículo por Matrícula ===");
         System.out.print("Informe a matrícula do veículo: ");
         String matricula = scanner.nextLine();
 
-        // Call the pesquisarVeiculoPorMatricula method of GereVeiculos and display the result
-         Veiculo veiculo = pesquisarVeiculoPorMatricula(matricula);
-        System.out.println(veiculo);
+        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivo))) {
+            String linha;
+            boolean encontrouVeiculo = false;
+            while ((linha = reader.readLine()) != null) {
+                String[] campos = linha.split(":");
+                if (campos.length >= 9) {
+                    String matriculaVeiculo = campos[1];
+                    String marca = campos[2];
+                    String modelo = campos[3];
+                    int anoFabrico = Integer.parseInt(campos[4]);
+
+                    if (matriculaVeiculo.equalsIgnoreCase(matricula)) {
+                        encontrouVeiculo = true;
+                        System.out.println("=== Veículo Encontrado ===");
+                        System.out.printf("Matrícula: %s\n", matriculaVeiculo);
+                        System.out.printf("Marca: %s\n", marca);
+                        System.out.printf("Modelo: %s\n", modelo);
+                        System.out.printf("Ano de Fabrico: %d\n", anoFabrico);
+                        System.out.println();
+                        break; // Se encontrar o veículo, não é necessário continuar lendo o arquivo
+                    }
+                }
+            }
+
+            if (!encontrouVeiculo) {
+                System.out.println("Nenhum veículo encontrado com a matrícula informada.");
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao ler o arquivo.");
+        }
     }
 
     public void pesquisarVeiculosPorPeca(Scanner scanner) {
@@ -379,18 +440,44 @@ class GereVeiculos {
         // }
     }
 
-    public void pesquisarVeiculosAposAno(Scanner scanner) {
+    public void pesquisarVeiculosAposAno(Scanner scanner, String nomeArquivo) {
         System.out.println("=== Pesquisar Veículos após um Determinado Ano ===");
         System.out.print("Informe o ano: ");
         int ano = scanner.nextInt();
         scanner.nextLine(); // Consume the newline character
 
-        // Call the pesquisarVeiculosAposAno method of GereVeiculos and display the list of vehicles
-        // List<Veiculo> veiculos = gereVeiculos.pesquisarVeiculosAposAno(ano);
-        // for (Veiculo veiculo : veiculos) {
-        //     System.out.println(veiculo);
-        // }
+        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivo))) {
+            String linha;
+            boolean encontrouVeiculos = false;
+            System.out.println("=== Veículos Encontrados ===");
+            while ((linha = reader.readLine()) != null) {
+                String[] campos = linha.split(":");
+                if (campos.length >= 9) {
+                    String matricula = campos[1];
+                    String marca = campos[2];
+                    String modelo = campos[3];
+                    int anoFabrico = Integer.parseInt(campos[4]);
+
+                    if (anoFabrico > ano) {
+                        encontrouVeiculos = true;
+                        System.out.println("=== Veículo ===");
+                        System.out.printf("Matrícula: %s\n", matricula);
+                        System.out.printf("Marca: %s\n", marca);
+                        System.out.printf("Modelo: %s\n", modelo);
+                        System.out.printf("Ano de Fabrico: %d\n", anoFabrico);
+                        System.out.println();
+                    }
+                }
+            }
+
+            if (!encontrouVeiculos) {
+                System.out.println("Nenhum veículo encontrado após o ano informado.");
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao ler o arquivo.");
+        }
     }
+
 
     public void pesquisarVeiculosComTempoDespendidoSuperior(Scanner scanner) {
         System.out.println("=== Pesquisar Veículos com Tempo Despendido Superior a um Limite ===");

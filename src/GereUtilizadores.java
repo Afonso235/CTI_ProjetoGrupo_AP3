@@ -41,6 +41,7 @@ public class GereUtilizadores {
             if (utilizador.isAtivo()) {
                 // Realizar ações adicionais, como enviar um email de boas-vindas, por exemplo
                 System.out.println("Pedido de " + utilizador.getNome() + " aprovado!");
+                utilizadores.add(utilizador);
             } else {
                 System.out.println("Pedido de " + utilizador.getNome() + " rejeitado!");
             }
@@ -76,10 +77,10 @@ public class GereUtilizadores {
         return null;
     }
 
-    public List<Utilizador> pesquisa(String nome) {
+    public List<Utilizador> pesquisaLogin(String login) {
         List<Utilizador> resultados = new ArrayList<>();
         for (Utilizador utilizador : utilizadores) {
-            if (utilizador.getNome().equalsIgnoreCase(nome)) {
+            if (utilizador.getLogin().equalsIgnoreCase(login)) {
                 resultados.add(utilizador);
             }
         }
@@ -90,10 +91,10 @@ public class GereUtilizadores {
         try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivoCredenciais))) {
             utilizadores = reader.lines()
                     .map(linha -> linha.split(":"))
-                    .filter(partes -> partes.length == 4) // Verificar se a linha possui 4 partes
+                    .filter(partes -> partes.length == 6)
                     .map(partes -> {
                         boolean ativo = partes[3].equalsIgnoreCase("true");
-                        return new Utilizador(partes[0], partes[1], "", ativo, "", TipoUtilizador.valueOf(partes[2]));
+                        return new Utilizador(partes[0], partes[1], partes[4], ativo, partes[5], TipoUtilizador.valueOf(partes[2]));
                     })
                     .collect(Collectors.toList());
             System.out.println("Credenciais carregadas com sucesso!");
@@ -147,7 +148,9 @@ public class GereUtilizadores {
                 String linha = utilizador.getLogin() + ":" +
                                 utilizador.getPassword() + ":" +
                                 utilizador.getTipo() + ":" +
-                                utilizador.isAtivo();
+                                utilizador.isAtivo() + ":" +
+                                utilizador.getNome() + ":" +
+                                utilizador.getEmail();
                 linhas.add(linha);
             }
             Files.write(Path.of(nomeArquivoCredenciais), linhas, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
@@ -200,10 +203,10 @@ public class GereUtilizadores {
     public boolean verificarNomeUtilizador(String nome) {
         for (Utilizador utilizador : utilizadores) {
             if (utilizador.getLogin().equalsIgnoreCase(nome)) {
-                return true; // Nome de usuário já existe
+                return true; // Nome de utilizador já existe
             }
         }
-        return false; // Nome de usuário não existe
+        return false; // Nome de utilizador não existe
     }
 
     public boolean verificarEmailUtilizador(String email) {
