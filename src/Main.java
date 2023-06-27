@@ -86,9 +86,8 @@ public class Main {
                     alterarDados();
                 }
                 case 0 -> {
-                    sair = true;
                     gereServico.fazerLogoutCliente();
-                    realizarOperacoes();
+                    sair = true;
                 }
                 default -> System.out.println("Opção inválida. Tente novamente.");
             }
@@ -211,7 +210,6 @@ public class Main {
                 case 7 -> menuListas();
                 case 0 -> {
                     sair = true;
-                    realizarOperacoes();
                 }
                 default -> System.out.println("Opção inválida. Tente novamente.");
             }
@@ -370,25 +368,30 @@ public class Main {
     }
     private static void realizarOperacoes() {
 
-        while (gereUtilizadores.getUtilizadores() == null || gereUtilizadores.getUtilizadores().isEmpty()) {
-            System.out.println("Nenhum utilizador encontrado, por favor criar conta!");
-            criarConta();
-        }
-        exibirMenuPrincipal();
-        int opcao = lerOpcao();
+        boolean sair = false;
 
-        switch (opcao) {
-            case 1 -> criarConta();
-            case 2 -> {
-                fazerLogin();
-                if (utilizadorAutenticado != null && utilizadorAutenticado.getTipo() == TipoUtilizador.CLIENTE) {
-                    exibirMenuCliente();
+        while (!sair) {
+            while (gereUtilizadores.getUtilizadores() == null || gereUtilizadores.getUtilizadores().isEmpty()) {
+                System.out.println("Nenhum utilizador encontrado, por favor criar conta!");
+                criarConta();
+            }
+            exibirMenuPrincipal();
+            int opcao = lerOpcao();
+
+            switch (opcao) {
+                case 1 -> criarConta();
+                case 2 -> {
+                    fazerLogin();
+                    if (utilizadorAutenticado != null && utilizadorAutenticado.getTipo() == TipoUtilizador.CLIENTE) {
+                        exibirMenuCliente();
+                    }
                 }
+                case 0 -> {
+                    mostrarDespedida();
+                    sair = true;
+                }
+                default -> System.out.println("Opção inválida. Tente novamente.");
             }
-            case 0 -> {
-                mostrarDespedida();
-            }
-            default -> System.out.println("Opção inválida. Tente novamente.");
         }
     }
     //  GereVeículos
