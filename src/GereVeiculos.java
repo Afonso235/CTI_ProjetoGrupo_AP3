@@ -80,11 +80,17 @@ class GereVeiculos {
 
         System.out.println("Dia de entrada do veículo: " + dataAtual);
 
-        System.out.println("Lista de Mecânicos Disponíveis:");
         List<Mecanico> mecanicos = gereMecanico.listarMecanicos();
+        if (mecanicos.isEmpty()) {
+            System.out.println("Não há mecânicos disponíveis. Veículo não inserido.");
+            return;
+        }
 
-
-        System.out.print("Selecione o número do Mecânico Responsável: ");
+        System.out.println("Lista de Mecânicos Disponíveis:");
+        for (int i = 0; i < mecanicos.size(); i++) {
+            Mecanico mecanico = mecanicos.get(i);
+            System.out.println((i + 1) + ". " + mecanico.getLogin());
+        } System.out.print("Selecione o número do Mecânico Responsável: ");
         int mecanicoIndex = scanner.nextInt();
         scanner.nextLine();
 
@@ -96,7 +102,7 @@ class GereVeiculos {
         Mecanico mecanicoResponsavel = mecanicos.get(mecanicoIndex - 1);
 
 
-        Cliente cliente = gereUtilizadores.getClienteByLogin(loginCliente);
+        Cliente cliente;
         cliente = new Cliente(loginCliente, "", "", true, "", TipoUtilizador.CLIENTE);
 
         if (cliente == null) {

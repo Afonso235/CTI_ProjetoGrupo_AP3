@@ -57,7 +57,7 @@ class GereMecanico {
             try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivo))) {
                 mecanicos = reader.lines()
                         .map(linha -> linha.split(":"))
-                        .filter(partes -> partes.length == 4)
+                        .filter(partes -> partes.length == 6)
                         .filter(partes -> partes[3].equalsIgnoreCase("true"))
                         .filter(partes -> partes[2].equalsIgnoreCase("MECANICO"))
                         .map(partes -> {
@@ -65,18 +65,13 @@ class GereMecanico {
                             return new Mecanico(partes[0], partes[1], partes[0], ativo, partes[2], TipoUtilizador.MECANICO);
                         })
                         .collect(Collectors.toList());
-
-                for (int i = 0; i < mecanicos.size(); i++) {
-                    Mecanico mecanico = mecanicos.get(i);
-                    System.out.println((i + 1) + ". " + mecanico.getNome());
-                }
             } catch (IOException e) {
                 System.out.println("Erro ao carregar as credenciais de acesso.");
             }
         }
-
         return mecanicos;
     }
+
     @Override
     public String toString() {
         return "GereMecanico{" +
